@@ -9,12 +9,12 @@ namespace SerialVisualizer
 {
     public partial class Form1 : Form
     {
-        SerialPort serial;
+        SerialPort serial = new SerialPort();
         Thread myThread;
         bool cont = false;
         ManualResetEvent stopEvent = new ManualResetEvent(false);
         Series series;
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public Form1()
         {
@@ -34,13 +34,10 @@ namespace SerialVisualizer
                 MessageBox.Show("Выберите COM-порт");
                 return;
             }
-
-            serial = new SerialPort(selectedState);
-            serial.BaudRate = 9600;
-
+            
             try
             {
-                if (serial.IsOpen)
+                if (serial.IsOpen && serial.PortName != null)
                 {
                     cont = false;
                     stopEvent.Set();
@@ -51,6 +48,8 @@ namespace SerialVisualizer
                 }
                 else
                 {
+                    serial.PortName = selectedState;
+                    serial.BaudRate = 9600;
                     myThread = new Thread(ReadBytes);
                     myThread.IsBackground = true;
                     serial.Open();
