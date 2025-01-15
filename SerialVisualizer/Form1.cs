@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO.Ports;
+using NLog;
 using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -11,16 +12,23 @@ namespace SerialVisualizer
         SerialPort serial;
         Thread myThread;
         bool cont = false;
-        private ManualResetEvent stopEvent = new ManualResetEvent(false);
+        ManualResetEvent stopEvent = new ManualResetEvent(false);
+        Series series;
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         public Form1()
         {
+            logger.Info("Инициализация");
             InitializeComponent();
             comboBox1.Items.AddRange(SerialPort.GetPortNames());
+            series = chart1.Series[0];
+            series.LegendText = "Данные";
         }
 
         private void b_connect(object sender, EventArgs e)
         {
-            string selectedState = comboBox1.SelectedItem?.ToString(); // Обработка null
+            logger.Info("Нажата кнопка 'Connect/Disconnect'");
+            string selectedState = comboBox1.SelectedItem?.ToString();
             if (string.IsNullOrEmpty(selectedState))
             {
                 MessageBox.Show("Выберите COM-порт");
@@ -36,7 +44,7 @@ namespace SerialVisualizer
                 {
                     cont = false;
                     stopEvent.Set();
-                    if (myThread != null && myThread.IsAlive) myThread.Join(); // Проверка на null и IsAlive
+                    if (myThread != null && myThread.IsAlive) myThread.Join();
                     serial.Close();
                     button1.Text = "Connect";
                     label1.Visible = false;
@@ -44,7 +52,7 @@ namespace SerialVisualizer
                 else
                 {
                     myThread = new Thread(ReadBytes);
-                    myThread.IsBackground = true; // Важно для корректного завершения приложения
+                    myThread.IsBackground = true;
                     serial.Open();
                     cont = true;
                     stopEvent.Reset();
@@ -53,55 +61,61 @@ namespace SerialVisualizer
                     label1.Visible = false;
                 }
             }
-            catch (SystemException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}"); // Используем MessageBox для вывода ошибок
+                MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
         private void b_refresh(object sender, EventArgs e)
         {
+            logger.Info("Обновление списка COM-портов");
             comboBox1.Items.Clear();
             string[] ports = SerialPort.GetPortNames();
             comboBox1.Items.AddRange(ports);
         }
         private void CB_SIC(object sender, EventArgs e)
         {
-            // null
+            logger.Debug("Произошел выбор COM-порта");
         }
         private void ReadBytes()
         {
-            while (cont)
+            logger.Info("Поток чтения запущен");
+            while (cont && serial.IsOpen)
             {
-                if (stopEvent.WaitOne(0)) // Проверка события без блокировки
+                if (stopEvent.WaitOne(0))
                 {
                     break;
                 }
                 try
                 {
                     int bytesToRead = serial.BytesToRead;
-                    if (bytesToRead > 0) // Проверка на наличие данных
+                    if (bytesToRead > 0)
                     {
                         byte[] bytes = new byte[bytesToRead];
-                        int bytesRead = serial.Read(bytes, 0, bytesToRead); // Используем bytesRead для проверки
+                        int bytesRead = serial.Read(bytes, 0, bytesToRead);
+                        logger.Debug($"Получено {bytesRead} байт(а): {BitConverter.ToString(bytes)}");
                         if (bytesRead > 0)
                         {
-                            //Обработка данных - нужно убедиться, что вызывается на UI-потоке для WinForms
                             this.BeginInvoke(new Action(() =>
                             {
-                                Series series = chart1.Series[0];
                                 series.Points.AddXY(series.Points.Count + 1, bytes[0]);
                             }));
 
                         }
                     }
                 }
-                catch (InvalidOperationException) { }
+                catch (InvalidOperationException ex)
+                {
+                    logger.Error(ex, "InvalidOperationException произошла");
+                }
                 catch (Exception ex)
                 {
+                    logger.Error(ex, "Произошла ошибка в потоке чтения");
                     cont = false;
                     break;
                 }
             }
+            logger.Info("Поток чтения завершен");
         }
     }
 }
