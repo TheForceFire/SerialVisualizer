@@ -23,6 +23,7 @@ namespace SerialVisualizer
             comboBox1.Items.AddRange(SerialPort.GetPortNames());
             series = chart1.Series[0];
             series.LegendText = "Данные";
+            serial.BaudRate = 115200;
         }
 
         private void b_connect(object sender, EventArgs e)
@@ -49,7 +50,7 @@ namespace SerialVisualizer
                 else
                 {
                     serial.PortName = selectedState;
-                    serial.BaudRate = 9600;
+                    serial.BaudRate = 115200;
                     myThread = new Thread(ReadBytes);
                     myThread.IsBackground = true;
                     serial.Open();
@@ -88,8 +89,17 @@ namespace SerialVisualizer
                 try
                 {
                     int bytesToRead = serial.BytesToRead;
+                    int startBytesToRead;
                     if (bytesToRead > 0)
                     {
+                        do {
+                            startBytesToRead = bytesToRead;
+                            Thread.Sleep(10);
+                            bytesToRead = serial.BytesToRead;
+                        }
+                        while (bytesToRead != startBytesToRead);
+
+
                         byte[] bytes = new byte[bytesToRead];
                         int bytesRead = serial.Read(bytes, 0, bytesToRead);
                         logger.Debug($"Получено {bytesRead} байт(а): {BitConverter.ToString(bytes)}");
