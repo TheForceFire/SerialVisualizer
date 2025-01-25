@@ -45,6 +45,8 @@ namespace SerialVisualizer
                     if (myThread != null && myThread.IsAlive) myThread.Join();
                     serial.Close();
                     button1.Text = "Connect";
+                    pictureBox1.BackColor = System.Drawing.Color.Red;
+                    label2.Text = "Status: Disonnected";
                     label1.Visible = false;
                 }
                 else
@@ -58,12 +60,15 @@ namespace SerialVisualizer
                     stopEvent.Reset();
                     myThread.Start();
                     button1.Text = "Disconnect";
+                    pictureBox1.BackColor = System.Drawing.Color.Green;
+                    label2.Text = "Status: Connected";
                     label1.Visible = false;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка: {ex.Message}");
+                pictureBox1.BackColor = System.Drawing.Color.DarkRed;
             }
         }
         private void b_refresh(object sender, EventArgs e)
