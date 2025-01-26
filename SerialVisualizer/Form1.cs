@@ -11,81 +11,93 @@ namespace SerialVisualizer
     {
         SerialPort serial = new SerialPort();
         Thread myThread;
-        bool cont = false;
         ManualResetEvent stopEvent = new ManualResetEvent(false);
         Series series;
         static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public Form1()
         {
-            logger.Info("Инициализация");
+            logger.Info("Initializing");
             InitializeComponent();
             comboBox1.Items.AddRange(SerialPort.GetPortNames());
             series = chart1.Series[0];
-            series.LegendText = "Данные";
-            serial.BaudRate = 115200;
+            series.LegendText = "Data";
+            button1.Click += b_connect;
+            button2.Click += b_refresh;
+            button3.Click += b_clear;
         }
 
         private void b_connect(object sender, EventArgs e)
         {
-            logger.Info("Нажата кнопка 'Connect/Disconnect'");
-            string selectedState = comboBox1.SelectedItem?.ToString();
-            if (string.IsNullOrEmpty(selectedState))
+            logger.Info("Button 'Connect/Disconnect' clicked");
+            string selectedPort = comboBox1.SelectedItem?.ToString();
+            string selectedBR = comboBox2.SelectedItem?.ToString();
+            if (string.IsNullOrEmpty(selectedPort))
             {
-                MessageBox.Show("Выберите COM-порт");
+                MessageBox.Show("Select COM-port");
                 return;
             }
-            
+            if (string.IsNullOrEmpty(selectedBR))
+            {
+                MessageBox.Show("Select Baud Rate");
+                return;
+            }
+            int BR = int.Parse(selectedBR);
+
             try
             {
                 if (serial.IsOpen && serial.PortName != null)
                 {
-                    cont = false;
                     stopEvent.Set();
                     if (myThread != null && myThread.IsAlive) myThread.Join();
                     serial.Close();
                     button1.Text = "Connect";
                     pictureBox1.BackColor = System.Drawing.Color.Red;
-                    label2.Text = "Status: Disonnected";
-                    label1.Visible = false;
+                    label2.Text = "Disonnected";
                 }
                 else
                 {
-                    serial.PortName = selectedState;
-                    serial.BaudRate = 115200;
+                    serial.PortName = selectedPort;
+                    serial.BaudRate = BR;
                     myThread = new Thread(ReadBytes);
                     myThread.IsBackground = true;
                     serial.Open();
-                    cont = true;
                     stopEvent.Reset();
                     myThread.Start();
                     button1.Text = "Disconnect";
                     pictureBox1.BackColor = System.Drawing.Color.Green;
-                    label2.Text = "Status: Connected";
-                    label1.Visible = false;
+                    label2.Text = $"Connected to {selectedPort}";
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
                 pictureBox1.BackColor = System.Drawing.Color.DarkRed;
+                label2.Text = $"Error: {ex}";
             }
         }
         private void b_refresh(object sender, EventArgs e)
         {
-            logger.Info("Обновление списка COM-портов");
+            logger.Info("Updating the list of COM-port");
             comboBox1.Items.Clear();
             string[] ports = SerialPort.GetPortNames();
             comboBox1.Items.AddRange(ports);
         }
+        private void b_clear(object sender, EventArgs e)
+        {
+            if (series != null)
+            {
+                series.Points.Clear();
+            }
+        }
         private void CB_SIC(object sender, EventArgs e)
         {
-            logger.Debug("Произошел выбор COM-порта");
+            logger.Debug("User select COM-port");
         }
         private void ReadBytes()
         {
-            logger.Info("Поток чтения запущен");
-            while (cont && serial.IsOpen)
+            logger.Info("Read thread start");
+            while (serial.IsOpen)
             {
                 if (stopEvent.WaitOne(0))
                 {
@@ -107,7 +119,7 @@ namespace SerialVisualizer
 
                         byte[] bytes = new byte[bytesToRead];
                         int bytesRead = serial.Read(bytes, 0, bytesToRead);
-                        logger.Debug($"Получено {bytesRead} байт(а): {BitConverter.ToString(bytes)}");
+                        logger.Debug($"Received {bytesRead} byte(s): {BitConverter.ToString(bytes)}");
                         if (bytesRead > 0)
                         {
                             this.BeginInvoke(new Action(() =>
@@ -120,16 +132,16 @@ namespace SerialVisualizer
                 }
                 catch (InvalidOperationException ex)
                 {
-                    logger.Error(ex, "InvalidOperationException произошла");
+                    logger.Error(ex);
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex, "Произошла ошибка в потоке чтения");
-                    cont = false;
+                    logger.Error(ex, "Error in read thread");
+
                     break;
                 }
             }
-            logger.Info("Поток чтения завершен");
+            logger.Info("Read thread finish");
         }
     }
 }
