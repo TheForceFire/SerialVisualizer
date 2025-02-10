@@ -32,17 +32,30 @@ namespace SerialVisualizer
             logger.Info("Button 'Connect/Disconnect' clicked");
             string selectedPort = comboBox1.SelectedItem?.ToString();
             string selectedBR = comboBox2.SelectedItem?.ToString();
+            string selectedP = comboBox3.SelectedItem?.ToString();
+            string enterdDB = numericUpDown1.Value.ToString();
             if (string.IsNullOrEmpty(selectedPort))
             {
                 MessageBox.Show("Select COM-port");
                 return;
             }
-            if (string.IsNullOrEmpty(selectedBR))
+            else if (string.IsNullOrEmpty(selectedBR))
             {
                 MessageBox.Show("Select Baud Rate");
                 return;
             }
+            else if (string.IsNullOrEmpty(selectedP))
+            {
+                MessageBox.Show("Select Parity");
+                return;
+            }
+            else if (string.IsNullOrEmpty(enterdDB))
+            {
+                MessageBox.Show("Select Data Bits");
+                return;
+            }
             int BR = int.Parse(selectedBR);
+            int DB = int.Parse(enterdDB);
 
             try
             {
@@ -59,6 +72,25 @@ namespace SerialVisualizer
                 {
                     serial.PortName = selectedPort;
                     serial.BaudRate = BR;
+                    switch (selectedP)
+                    {
+                        case "None":
+                            serial.Parity = Parity.None;
+                            break;
+                        case "Odd":
+                            serial.Parity = Parity.Odd;
+                            break;
+                        case "Even":
+                            serial.Parity = Parity.Even;
+                            break;
+                        case "Mark":
+                            serial.Parity = Parity.Mark;
+                            break;
+                        case "Space":
+                            serial.Parity = Parity.Space;
+                            break;
+                    }
+                    serial.DataBits = DB;
                     myThread = new Thread(ReadBytes);
                     myThread.IsBackground = true;
                     serial.Open();
@@ -137,7 +169,6 @@ namespace SerialVisualizer
                 catch (Exception ex)
                 {
                     logger.Error(ex, "Error in read thread");
-
                     break;
                 }
             }
