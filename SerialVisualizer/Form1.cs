@@ -4,6 +4,7 @@ using System.IO.Ports;
 using NLog;
 using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Linq;
 
 namespace SerialVisualizer
 {
@@ -19,44 +20,83 @@ namespace SerialVisualizer
         {
             logger.Info("Initializing");
             InitializeComponent();
-            comboBox1.Items.AddRange(SerialPort.GetPortNames());
+            comboBoxStopBits.Items.AddRange(SerialPort.GetPortNames());
             series = chart1.Series[0];
             series.LegendText = "Data";
-            button1.Click += b_connect;
-            button2.Click += b_refresh;
+            buttonConnectComPort.Click += b_connect;
+            buttonRefreshPortList.Click += b_refresh;
             button3.Click += b_clear;
+
+
+            comboBoxBaudRate.SelectedIndex = 4;
+            comboBoxParity.SelectedIndex = 0;
+            numericUpDownDataBits.Value = 8;
+            comboBoxStopBits.SelectedIndex = 1;
+            pictureBox1.BackColor = System.Drawing.Color.Red;
         }
+
+
+        private Parity GetParity(string selectedP)
+        {
+            switch (selectedP)
+            {
+                case "None":
+                    return Parity.None;
+                case "Odd":
+                    return Parity.Odd;
+                case "Even":
+                    return Parity.Even;
+                case "Mark":
+                    return Parity.Mark;
+                case "Space":
+                    return Parity.Space;
+            }
+
+            return Parity.None;
+        }
+
+        private StopBits GetStopBits(string selectedSB)
+        {
+            switch (double.Parse(selectedSB))
+            {
+                case 1:
+                    return StopBits.One;
+                case 1.5:
+                    return StopBits.OnePointFive;
+                case 2:
+                    return StopBits.Two;
+                case 3:
+                    return StopBits.None;
+            }
+
+            return StopBits.None;
+        }
+
 
         private void b_connect(object sender, EventArgs e)
         {
             logger.Info("Button 'Connect/Disconnect' clicked");
-            string selectedPort = comboBox1.SelectedItem?.ToString();
-            string selectedBR = comboBox2.SelectedItem?.ToString();
-            string selectedP = comboBox3.SelectedItem?.ToString();
-            string enterdDB = numericUpDown1.Value.ToString();
-            if (string.IsNullOrEmpty(selectedPort))
-            {
-                MessageBox.Show("Select COM-port");
-                return;
-            }
-            else if (string.IsNullOrEmpty(selectedBR))
-            {
-                MessageBox.Show("Select Baud Rate");
-                return;
-            }
-            else if (string.IsNullOrEmpty(selectedP))
-            {
-                MessageBox.Show("Select Parity");
-                return;
-            }
-            else if (string.IsNullOrEmpty(enterdDB))
-            {
-                MessageBox.Show("Select Data Bits");
-                return;
-            }
+
+            string selectedPort = comboBoxStopBits.SelectedItem?.ToString();
+
+
+            string selectedBR = comboBoxBaudRate.SelectedItem.ToString();
+            string selectedP = comboBoxParity.SelectedItem.ToString();
+            string enterdDB = numericUpDownDataBits.Value.ToString();
+            string selectedSB = comboBoxStopBits.SelectedItem.ToString();
+
+
             int BR = int.Parse(selectedBR);
             int DB = int.Parse(enterdDB);
+            Parity P = GetParity(selectedP);
+            StopBits SB = GetStopBits(selectedSB);
 
+
+            OpenPort(selectedPort, BR, DB, P, SB);
+        }
+
+        private void OpenPort(string selectedPort, int BR, int DB, Parity P, StopBits SB)
+        {
             try
             {
                 if (serial.IsOpen && serial.PortName != null)
@@ -64,56 +104,45 @@ namespace SerialVisualizer
                     stopEvent.Set();
                     if (myThread != null && myThread.IsAlive) myThread.Join();
                     serial.Close();
-                    button1.Text = "Connect";
+                    buttonConnectComPort.Text = "Connect";
                     pictureBox1.BackColor = System.Drawing.Color.Red;
-                    label2.Text = "Disonnected";
+                    labelConnectionStatus.Text = "Disonnected";
                 }
                 else
                 {
-                    serial.PortName = selectedPort;
-                    serial.BaudRate = BR;
-                    switch (selectedP)
-                    {
-                        case "None":
-                            serial.Parity = Parity.None;
-                            break;
-                        case "Odd":
-                            serial.Parity = Parity.Odd;
-                            break;
-                        case "Even":
-                            serial.Parity = Parity.Even;
-                            break;
-                        case "Mark":
-                            serial.Parity = Parity.Mark;
-                            break;
-                        case "Space":
-                            serial.Parity = Parity.Space;
-                            break;
-                    }
-                    serial.DataBits = DB;
+                    SetSerialSettings(selectedPort, BR, DB, P, SB);
+
                     myThread = new Thread(ReadBytes);
                     myThread.IsBackground = true;
                     serial.Open();
                     stopEvent.Reset();
                     myThread.Start();
-                    button1.Text = "Disconnect";
+                    buttonConnectComPort.Text = "Disconnect";
                     pictureBox1.BackColor = System.Drawing.Color.Green;
-                    label2.Text = $"Connected to {selectedPort}";
+                    labelConnectionStatus.Text = $"Connected to {selectedPort}";
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}");
                 pictureBox1.BackColor = System.Drawing.Color.DarkRed;
-                label2.Text = $"Error: {ex}";
+                labelConnectionStatus.Text = $"Closed with error";
             }
+        }
+        private void SetSerialSettings(string selectedPort, int BR, int DB, Parity P, StopBits SB)
+        {
+            serial.PortName = selectedPort;
+            serial.BaudRate = BR;
+            serial.DataBits = DB;
+            serial.Parity = P;
+            serial.StopBits = SB;
         }
         private void b_refresh(object sender, EventArgs e)
         {
             logger.Info("Updating the list of COM-port");
-            comboBox1.Items.Clear();
+            comboBoxStopBits.Items.Clear();
             string[] ports = SerialPort.GetPortNames();
-            comboBox1.Items.AddRange(ports);
+            comboBoxStopBits.Items.AddRange(ports);
         }
         private void b_clear(object sender, EventArgs e)
         {
@@ -126,6 +155,10 @@ namespace SerialVisualizer
         {
             logger.Debug("User select COM-port");
         }
+
+
+
+
         private void ReadBytes()
         {
             logger.Info("Read thread start");
