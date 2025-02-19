@@ -20,7 +20,7 @@ namespace SerialVisualizer
         {
             logger.Info("Initializing");
             InitializeComponent();
-            comboBoxStopBits.Items.AddRange(SerialPort.GetPortNames());
+            comboBoxSelectedPort.Items.AddRange(SerialPort.GetPortNames());
             series = chart1.Series[0];
             series.LegendText = "Data";
             buttonConnectComPort.Click += b_connect;
@@ -140,9 +140,9 @@ namespace SerialVisualizer
         private void b_refresh(object sender, EventArgs e)
         {
             logger.Info("Updating the list of COM-port");
-            comboBoxStopBits.Items.Clear();
+            comboBoxSelectedPort.Items.Clear();
             string[] ports = SerialPort.GetPortNames();
-            comboBoxStopBits.Items.AddRange(ports);
+            comboBoxSelectedPort.Items.AddRange(ports);
         }
         private void b_clear(object sender, EventArgs e)
         {

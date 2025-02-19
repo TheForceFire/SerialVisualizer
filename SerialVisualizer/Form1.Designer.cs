@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.textBoxFrameStart = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.radioButtonEndianLittle = new System.Windows.Forms.RadioButton();
             this.radioButtonEndianBig = new System.Windows.Forms.RadioButton();
@@ -42,6 +43,7 @@
             this.radioButtonYesChecksum = new System.Windows.Forms.RadioButton();
             this.radioButtonNoChecksum = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBoxAddres = new System.Windows.Forms.TextBox();
             this.radioButtonYesAddress = new System.Windows.Forms.RadioButton();
             this.radioButtonNoAddress = new System.Windows.Forms.RadioButton();
             this.comboBoxSelectedPort = new System.Windows.Forms.ComboBox();
@@ -61,8 +63,6 @@
             this.comboBoxStopBits = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
-            this.textBoxFrameStart = new System.Windows.Forms.TextBox();
-            this.textBoxAddres = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -79,17 +79,17 @@
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea7.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea7);
-            legend7.Name = "Legend1";
-            this.chart1.Legends.Add(legend7);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.MinimumSize = new System.Drawing.Size(388, 150);
             this.chart1.Name = "chart1";
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            this.chart1.Series.Add(series7);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(762, 237);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -142,6 +142,13 @@
             this.groupBox4.TabIndex = 32;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Frame Start";
+            // 
+            // textBoxFrameStart
+            // 
+            this.textBoxFrameStart.Location = new System.Drawing.Point(6, 24);
+            this.textBoxFrameStart.Name = "textBoxFrameStart";
+            this.textBoxFrameStart.Size = new System.Drawing.Size(188, 20);
+            this.textBoxFrameStart.TabIndex = 33;
             // 
             // groupBox3
             // 
@@ -221,6 +228,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Address";
             // 
+            // textBoxAddres
+            // 
+            this.textBoxAddres.Location = new System.Drawing.Point(55, 41);
+            this.textBoxAddres.Name = "textBoxAddres";
+            this.textBoxAddres.Size = new System.Drawing.Size(139, 20);
+            this.textBoxAddres.TabIndex = 34;
+            // 
             // radioButtonYesAddress
             // 
             this.radioButtonYesAddress.AutoSize = true;
@@ -247,10 +261,6 @@
             // 
             this.comboBoxSelectedPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSelectedPort.FormattingEnabled = true;
-            this.comboBoxSelectedPort.Items.AddRange(new object[] {
-            "1",
-            "1.5",
-            "2"});
             this.comboBoxSelectedPort.Location = new System.Drawing.Point(38, 8);
             this.comboBoxSelectedPort.Name = "comboBoxSelectedPort";
             this.comboBoxSelectedPort.Size = new System.Drawing.Size(96, 21);
@@ -424,7 +434,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(768, 400);
+            this.tabPage2.Size = new System.Drawing.Size(1278, 551);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Data & Graphics";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -437,20 +447,6 @@
             this.button3.TabIndex = 1;
             this.button3.Text = "Clear Graphic";
             this.button3.UseVisualStyleBackColor = true;
-            // 
-            // textBoxFrameStart
-            // 
-            this.textBoxFrameStart.Location = new System.Drawing.Point(6, 24);
-            this.textBoxFrameStart.Name = "textBoxFrameStart";
-            this.textBoxFrameStart.Size = new System.Drawing.Size(188, 20);
-            this.textBoxFrameStart.TabIndex = 33;
-            // 
-            // textBoxAddres
-            // 
-            this.textBoxAddres.Location = new System.Drawing.Point(55, 41);
-            this.textBoxAddres.Name = "textBoxAddres";
-            this.textBoxAddres.Size = new System.Drawing.Size(139, 20);
-            this.textBoxAddres.TabIndex = 34;
             // 
             // Form1
             // 
