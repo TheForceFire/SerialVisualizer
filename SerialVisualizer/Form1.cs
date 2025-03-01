@@ -5,6 +5,7 @@ using NLog;
 using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Linq;
+using System.Drawing;
 
 namespace SerialVisualizer
 {
@@ -15,6 +16,8 @@ namespace SerialVisualizer
         ManualResetEvent stopEvent = new ManualResetEvent(false);
         Series series;
         static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
+        ClassDataSaverParser classDataSaverParser;
 
         public Form1()
         {
@@ -33,6 +36,9 @@ namespace SerialVisualizer
             numericUpDownDataBits.Value = 8;
             comboBoxStopBits.SelectedIndex = 1;
             pictureBox1.BackColor = System.Drawing.Color.Red;
+
+
+            classDataSaverParser = new ClassDataSaverParser(ReadingType.BigEndian, 1, true, false);
         }
 
 
@@ -77,7 +83,7 @@ namespace SerialVisualizer
         {
             logger.Info("Button 'Connect/Disconnect' clicked");
 
-            string selectedPort = comboBoxStopBits.SelectedItem?.ToString();
+            string selectedPort = comboBoxSelectedPort.SelectedItem?.ToString();
 
 
             string selectedBR = comboBoxBaudRate.SelectedItem.ToString();
@@ -187,6 +193,9 @@ namespace SerialVisualizer
                         logger.Debug($"Received {bytesRead} byte(s): {BitConverter.ToString(bytes)}");
                         if (bytesRead > 0)
                         {
+                            ClassDataSaver dataSaver = classDataSaverParser.Parse(bytes);
+
+
                             this.BeginInvoke(new Action(() =>
                             {
                                 series.Points.AddXY(series.Points.Count + 1, bytes[0]);
@@ -206,6 +215,71 @@ namespace SerialVisualizer
                 }
             }
             logger.Info("Read thread finish");
+        }
+
+        private void textBoxFrameStart_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
+                textBoxFrameStart.BackColor = Color.White;
+            }
+            catch
+            {
+                classDataSaverParser.frameStart = null;
+                textBoxFrameStart.BackColor = Color.OrangeRed;
+            }
+        }
+
+        private void radioButtonEndianLittle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonEndianLittle.Checked)
+            {
+                classDataSaverParser.readingType = ReadingType.LittleEndian;
+            }
+        }
+
+        private void radioButtonEndianBig_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonEndianBig.Checked)
+            {
+                classDataSaverParser.readingType = ReadingType.BigEndian;
+            }
+        }
+
+        private void radioButtonNoAddress_CheckedChanged(object sender, EventArgs e)
+        {
+            classDataSaverParser.isAddressEnable = radioButtonYesAddress.Checked;
+            
+        }
+
+        private void radioButtonYesAddress_CheckedChanged(object sender, EventArgs e)
+        {
+            classDataSaverParser.isAddressEnable = radioButtonYesAddress.Checked;
+        }
+
+        private void textBoxAddresLength_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                classDataSaverParser.addressLength = int.Parse(textBoxAddresLength.Text);
+                textBoxAddresLength.BackColor = Color.White;
+            }
+            catch
+            {
+                classDataSaverParser.addressLength = -1;
+                textBoxAddresLength.BackColor = Color.OrangeRed;
+            }
+        }
+
+        private void radioButtonNoChecksum_CheckedChanged(object sender, EventArgs e)
+        {
+            classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
+        }
+
+        private void radioButtonYesChecksum_CheckedChanged(object sender, EventArgs e)
+        {
+            classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
         }
     }
 }

@@ -13,11 +13,11 @@ namespace SerialVisualizer
         public List<byte> sender_b = new List<byte>();
         public List<byte> data_b = new List<byte>();
         public List<byte> cs_b = new List<byte>();
-        public ClassDataSaver(byte start, byte sender, byte data, byte cs) {
-            start_b.Add(start);
-            sender_b.Add(sender);
-            data_b.Add(data);
-            cs_b.Add(cs);
+        public ClassDataSaver(List<byte> start_b, List<byte> sender_b, List<byte> data_b, List<byte> cs_b) {
+            this.start_b = start_b;
+            this.sender_b = sender_b;
+            this.data_b = data_b;
+            this.cs_b = cs_b;
         }
     }
 }

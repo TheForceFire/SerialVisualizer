@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -43,7 +43,7 @@
             this.radioButtonYesChecksum = new System.Windows.Forms.RadioButton();
             this.radioButtonNoChecksum = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBoxAddres = new System.Windows.Forms.TextBox();
+            this.textBoxAddresLength = new System.Windows.Forms.TextBox();
             this.radioButtonYesAddress = new System.Windows.Forms.RadioButton();
             this.radioButtonNoAddress = new System.Windows.Forms.RadioButton();
             this.comboBoxSelectedPort = new System.Windows.Forms.ComboBox();
@@ -63,6 +63,7 @@
             this.comboBoxStopBits = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -79,17 +80,17 @@
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea11.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea11);
+            legend11.Name = "Legend1";
+            this.chart1.Legends.Add(legend11);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.MinimumSize = new System.Drawing.Size(388, 150);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series11.ChartArea = "ChartArea1";
+            series11.Legend = "Legend1";
+            series11.Name = "Series1";
+            this.chart1.Series.Add(series11);
             this.chart1.Size = new System.Drawing.Size(762, 237);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -149,6 +150,7 @@
             this.textBoxFrameStart.Name = "textBoxFrameStart";
             this.textBoxFrameStart.Size = new System.Drawing.Size(188, 20);
             this.textBoxFrameStart.TabIndex = 33;
+            this.textBoxFrameStart.TextChanged += new System.EventHandler(this.textBoxFrameStart_TextChanged);
             // 
             // groupBox3
             // 
@@ -168,13 +170,14 @@
             this.radioButtonEndianLittle.Name = "radioButtonEndianLittle";
             this.radioButtonEndianLittle.Size = new System.Drawing.Size(83, 17);
             this.radioButtonEndianLittle.TabIndex = 29;
-            this.radioButtonEndianLittle.TabStop = true;
             this.radioButtonEndianLittle.Text = "Little Endian";
             this.radioButtonEndianLittle.UseVisualStyleBackColor = true;
+            this.radioButtonEndianLittle.CheckedChanged += new System.EventHandler(this.radioButtonEndianLittle_CheckedChanged);
             // 
             // radioButtonEndianBig
             // 
             this.radioButtonEndianBig.AutoSize = true;
+            this.radioButtonEndianBig.Checked = true;
             this.radioButtonEndianBig.Location = new System.Drawing.Point(118, 19);
             this.radioButtonEndianBig.Name = "radioButtonEndianBig";
             this.radioButtonEndianBig.Size = new System.Drawing.Size(76, 17);
@@ -182,6 +185,7 @@
             this.radioButtonEndianBig.TabStop = true;
             this.radioButtonEndianBig.Text = "Big Endian";
             this.radioButtonEndianBig.UseVisualStyleBackColor = true;
+            this.radioButtonEndianBig.CheckedChanged += new System.EventHandler(this.radioButtonEndianBig_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -201,13 +205,14 @@
             this.radioButtonYesChecksum.Name = "radioButtonYesChecksum";
             this.radioButtonYesChecksum.Size = new System.Drawing.Size(43, 17);
             this.radioButtonYesChecksum.TabIndex = 29;
-            this.radioButtonYesChecksum.TabStop = true;
             this.radioButtonYesChecksum.Text = "Yes";
             this.radioButtonYesChecksum.UseVisualStyleBackColor = true;
+            this.radioButtonYesChecksum.CheckedChanged += new System.EventHandler(this.radioButtonYesChecksum_CheckedChanged);
             // 
             // radioButtonNoChecksum
             // 
             this.radioButtonNoChecksum.AutoSize = true;
+            this.radioButtonNoChecksum.Checked = true;
             this.radioButtonNoChecksum.Location = new System.Drawing.Point(6, 17);
             this.radioButtonNoChecksum.Name = "radioButtonNoChecksum";
             this.radioButtonNoChecksum.Size = new System.Drawing.Size(39, 17);
@@ -215,10 +220,12 @@
             this.radioButtonNoChecksum.TabStop = true;
             this.radioButtonNoChecksum.Text = "No";
             this.radioButtonNoChecksum.UseVisualStyleBackColor = true;
+            this.radioButtonNoChecksum.CheckedChanged += new System.EventHandler(this.radioButtonNoChecksum_CheckedChanged);
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBoxAddres);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.textBoxAddresLength);
             this.groupBox1.Controls.Add(this.radioButtonYesAddress);
             this.groupBox1.Controls.Add(this.radioButtonNoAddress);
             this.groupBox1.Location = new System.Drawing.Point(367, 117);
@@ -228,16 +235,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Address";
             // 
-            // textBoxAddres
+            // textBoxAddresLength
             // 
-            this.textBoxAddres.Location = new System.Drawing.Point(55, 41);
-            this.textBoxAddres.Name = "textBoxAddres";
-            this.textBoxAddres.Size = new System.Drawing.Size(139, 20);
-            this.textBoxAddres.TabIndex = 34;
+            this.textBoxAddresLength.Location = new System.Drawing.Point(134, 40);
+            this.textBoxAddresLength.Name = "textBoxAddresLength";
+            this.textBoxAddresLength.Size = new System.Drawing.Size(43, 20);
+            this.textBoxAddresLength.TabIndex = 34;
+            this.textBoxAddresLength.Text = "1";
+            this.textBoxAddresLength.TextChanged += new System.EventHandler(this.textBoxAddresLength_TextChanged);
             // 
             // radioButtonYesAddress
             // 
             this.radioButtonYesAddress.AutoSize = true;
+            this.radioButtonYesAddress.Checked = true;
             this.radioButtonYesAddress.Location = new System.Drawing.Point(6, 42);
             this.radioButtonYesAddress.Name = "radioButtonYesAddress";
             this.radioButtonYesAddress.Size = new System.Drawing.Size(43, 17);
@@ -245,6 +255,7 @@
             this.radioButtonYesAddress.TabStop = true;
             this.radioButtonYesAddress.Text = "Yes";
             this.radioButtonYesAddress.UseVisualStyleBackColor = true;
+            this.radioButtonYesAddress.CheckedChanged += new System.EventHandler(this.radioButtonYesAddress_CheckedChanged);
             // 
             // radioButtonNoAddress
             // 
@@ -253,9 +264,9 @@
             this.radioButtonNoAddress.Name = "radioButtonNoAddress";
             this.radioButtonNoAddress.Size = new System.Drawing.Size(39, 17);
             this.radioButtonNoAddress.TabIndex = 30;
-            this.radioButtonNoAddress.TabStop = true;
             this.radioButtonNoAddress.Text = "No";
             this.radioButtonNoAddress.UseVisualStyleBackColor = true;
+            this.radioButtonNoAddress.CheckedChanged += new System.EventHandler(this.radioButtonNoAddress_CheckedChanged);
             // 
             // comboBoxSelectedPort
             // 
@@ -448,6 +459,15 @@
             this.button3.Text = "Clear Graphic";
             this.button3.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(64, 44);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(64, 13);
+            this.label2.TabIndex = 35;
+            this.label2.Text = "Addr length:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -510,7 +530,8 @@
         private System.Windows.Forms.RadioButton radioButtonEndianBig;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox textBoxFrameStart;
-        private System.Windows.Forms.TextBox textBoxAddres;
+        private System.Windows.Forms.TextBox textBoxAddresLength;
+        private System.Windows.Forms.Label label2;
     }
 }
 
