@@ -24,6 +24,10 @@ namespace SerialVisualizer
 
         public ClassDataSaver Parse(byte[] bytes)
         {
+            if (readingType == ReadingType.LittleEndian)
+            {
+                bytes = ConvertEndian(bytes);
+            }
             int startIndex = FindFrameStart(bytes);
             if(startIndex == -1)
             {
@@ -124,6 +128,14 @@ namespace SerialVisualizer
                              .ToArray();
         }
 
+        public byte[] ConvertEndian(byte[] data)
+        {
+            byte[] result = new byte[data.Length];
+            for (int i = 0; i < data.Length; i++) {
+                result[i] = data[data.Length - 1 - i];
+            }
+            return result;
+        }
     }
 }
 
