@@ -4,7 +4,6 @@ using System.IO.Ports;
 using NLog;
 using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
-using System.Linq;
 using System.Drawing;
 
 namespace SerialVisualizer
@@ -35,10 +34,11 @@ namespace SerialVisualizer
             comboBoxParity.SelectedIndex = 0;
             numericUpDownDataBits.Value = 8;
             comboBoxStopBits.SelectedIndex = 1;
-            pictureBox1.BackColor = System.Drawing.Color.Red;
+            pictureBox1.BackColor = Color.Red;
 
 
             classDataSaverParser = new ClassDataSaverParser(ReadingType.BigEndian, 1, true, false);
+            classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
         }
 
 
@@ -111,7 +111,7 @@ namespace SerialVisualizer
                     if (myThread != null && myThread.IsAlive) myThread.Join();
                     serial.Close();
                     buttonConnectComPort.Text = "Connect";
-                    pictureBox1.BackColor = System.Drawing.Color.Red;
+                    pictureBox1.BackColor = Color.Red;
                     labelConnectionStatus.Text = "Disonnected";
                 }
                 else
@@ -124,14 +124,14 @@ namespace SerialVisualizer
                     stopEvent.Reset();
                     myThread.Start();
                     buttonConnectComPort.Text = "Disconnect";
-                    pictureBox1.BackColor = System.Drawing.Color.Green;
+                    pictureBox1.BackColor = Color.Green;
                     labelConnectionStatus.Text = $"Connected to {selectedPort}";
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}");
-                pictureBox1.BackColor = System.Drawing.Color.DarkRed;
+                pictureBox1.BackColor = Color.DarkRed;
                 labelConnectionStatus.Text = $"Closed with error";
             }
         }
@@ -195,11 +195,13 @@ namespace SerialVisualizer
                         {
                             ClassDataSaver dataSaver = classDataSaverParser.Parse(bytes);
 
-
-                            this.BeginInvoke(new Action(() =>
+                            if (dataSaver != null)
                             {
-                                series.Points.AddXY(series.Points.Count + 1, bytes[0]);
-                            }));
+                                this.BeginInvoke(new Action(() =>
+                                {
+                                    series.Points.AddXY(series.Points.Count + 1, dataSaver.ToInt16()[0]);
+                                }));
+                            }
 
                         }
                     }
