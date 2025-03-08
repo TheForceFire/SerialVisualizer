@@ -15,17 +15,7 @@ namespace SerialVisualizer
             this.data_b = data_b;
             this.cs_b = cs_b;
         }
-        public char[] ToChar() {
-            List<char> charData = new List<char>();
-            for (int i = 0; i != data_b.Count; i+=2)
-            {
-                if (i + 1 < data_b.Count)
-                {
-                    charData.Add(BitConverter.ToChar(data_b.ToArray(), i));
-                }
-            }
-            return charData.ToArray();
-        }
+
         public sbyte[] ToInt8() {
             List<sbyte> int8Data = new List<sbyte>();
             foreach (byte b in data_b)
@@ -35,6 +25,12 @@ namespace SerialVisualizer
             }
             return int8Data.ToArray();
         }
+
+        public byte[] ToUInt8()
+        {
+            return data_b.ToArray();
+        }
+
         public short[] ToInt16() {
             List<short> int16Data = new List<short>();
             for (int i = 0; i != data_b.Count; i += 2)
@@ -46,9 +42,7 @@ namespace SerialVisualizer
             }
             return int16Data.ToArray();
         }
-        public byte[] ToUInt8() {
-            return data_b.ToArray();
-        }
+
         public ushort[] ToUInt16() {
             List<ushort> uint16Data = new List<ushort>();
             for (int i = 0; i != data_b.Count; i += 2)
@@ -60,5 +54,58 @@ namespace SerialVisualizer
             }
             return uint16Data.ToArray();
         }
+
+        public int[] ToInt32()
+        {
+            List<int> int32Data = new List<int>();
+            for (int i = 0; i != data_b.Count; i += 4)
+            {
+                if (i + 3 < data_b.Count)
+                {
+                    int32Data.Add(BitConverter.ToInt32(data_b.ToArray(), i));
+                }
+            }
+            return int32Data.ToArray();
+        }
+
+        public uint[] ToUInt32()
+        {
+            List<uint> uint32Data = new List<uint>();
+            for (int i = 0; i != data_b.Count; i += 4)
+            {
+                if (i + 3 < data_b.Count)
+                {
+                    uint32Data.Add(BitConverter.ToUInt32(data_b.ToArray(), i));
+                }
+            }
+            return uint32Data.ToArray();
+        }
+
+        public float[] ToFloat()
+        {
+            List<float> floatData = new List<float>();
+            for (int i = 0; i != data_b.Count; i += 4)
+            {
+                if (i + 3 < data_b.Count)
+                {
+                    floatData.Add(BitConverter.ToSingle(data_b.ToArray(), i));
+                }
+            }
+            return floatData.ToArray();
+        }
+
+        public double[] ToDouble()
+        {
+            List<double> doubleData = new List<double>();
+            for (int i = 0; i != data_b.Count; i += 4)
+            {
+                if (i + 3 < data_b.Count)
+                {
+                    doubleData.Add(BitConverter.ToDouble(data_b.ToArray(), i));
+                }
+            }
+            return doubleData.ToArray();
+        }
+
     }
 }

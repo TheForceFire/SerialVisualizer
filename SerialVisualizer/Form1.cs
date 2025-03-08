@@ -11,6 +11,7 @@ namespace SerialVisualizer
     public partial class Form1 : Form
     {
         SerialPort serial = new SerialPort();
+        DataType currentDataType = DataType.Uint8;
         Thread myThread;
         ManualResetEvent stopEvent = new ManualResetEvent(false);
         Series series;
@@ -199,7 +200,33 @@ namespace SerialVisualizer
                             {
                                 this.BeginInvoke(new Action(() =>
                                 {
-                                    series.Points.AddXY(series.Points.Count + 1, dataSaver.ToInt16()[0]);
+                                    switch (currentDataType)
+                                    {
+                                        case DataType.Int8:
+                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToInt8()[0]);
+                                            break;
+                                        case DataType.Uint8:
+                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToUInt8()[0]);
+                                            break;
+                                        case DataType.Int16:
+                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToInt16()[0]);
+                                            break;
+                                        case DataType.Uint16:
+                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToUInt16()[0]);
+                                            break;
+                                        case DataType.Int32:
+                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToInt32()[0]);
+                                            break;
+                                        case DataType.Uint32:
+                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToUInt32()[0]);
+                                            break;
+                                        case DataType.Float:
+                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToFloat()[0]);
+                                            break;
+                                        case DataType.Double:
+                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToDouble()[0]);
+                                            break;
+                                    }
                                 }));
                             }
 
@@ -283,5 +310,81 @@ namespace SerialVisualizer
         {
             classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
         }
+
+        private void radioButtonInt8_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonInt8.Checked)
+            {
+                currentDataType = DataType.Int8;
+            }
+        }
+
+        private void radioButtonUint8_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonUint8.Checked)
+            {
+                currentDataType = DataType.Uint8;
+            }
+        }
+
+        private void radioButtonInt16_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonInt16.Checked)
+            {
+                currentDataType = DataType.Int16;
+            }
+        }
+
+        private void radioButtonUint16_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonUint16.Checked)
+            {
+                currentDataType = DataType.Uint16;
+            }
+        }
+
+        private void radioButtonInt32_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonInt32.Checked)
+            {
+                currentDataType = DataType.Int32;
+            }
+        }
+
+        private void radioButtonUint32_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonUint32.Checked)
+            {
+                currentDataType = DataType.Uint32;
+            }
+        }
+
+        private void radioButtonFloat_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonFloat.Checked)
+            {
+                currentDataType = DataType.Float;
+            }
+        }
+
+        private void radioButtonDouble_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonDouble.Checked)
+            {
+                currentDataType = DataType.Double;
+            }
+        }
+    }
+
+    enum DataType
+    {
+        Int8,
+        Uint8,
+        Int16,
+        Uint16,
+        Int32,
+        Uint32,
+        Float,
+        Double
     }
 }
