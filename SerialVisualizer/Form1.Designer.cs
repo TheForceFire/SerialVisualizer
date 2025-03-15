@@ -28,12 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.radioButtonDouble = new System.Windows.Forms.RadioButton();
+            this.radioButtonFloat = new System.Windows.Forms.RadioButton();
+            this.radioButtonUint32 = new System.Windows.Forms.RadioButton();
+            this.radioButtonInt32 = new System.Windows.Forms.RadioButton();
+            this.radioButtonUint16 = new System.Windows.Forms.RadioButton();
+            this.radioButtonInt16 = new System.Windows.Forms.RadioButton();
+            this.radioButtonUint8 = new System.Windows.Forms.RadioButton();
+            this.radioButtonInt8 = new System.Windows.Forms.RadioButton();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.textBoxFrameStart = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -64,18 +73,12 @@
             this.comboBoxStopBits = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.radioButtonInt8 = new System.Windows.Forms.RadioButton();
-            this.radioButtonUint8 = new System.Windows.Forms.RadioButton();
-            this.radioButtonInt16 = new System.Windows.Forms.RadioButton();
-            this.radioButtonUint16 = new System.Windows.Forms.RadioButton();
-            this.radioButtonInt32 = new System.Windows.Forms.RadioButton();
-            this.radioButtonUint32 = new System.Windows.Forms.RadioButton();
-            this.radioButtonFloat = new System.Windows.Forms.RadioButton();
-            this.radioButtonDouble = new System.Windows.Forms.RadioButton();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownDataAmount = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -83,26 +86,26 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataBits)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea10.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea10);
-            legend10.Name = "Legend1";
-            this.chart1.Legends.Add(legend10);
-            this.chart1.Location = new System.Drawing.Point(0, 0);
-            this.chart1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.chart1.MinimumSize = new System.Drawing.Size(517, 185);
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(6, 6);
+            this.chart1.MinimumSize = new System.Drawing.Size(388, 150);
             this.chart1.Name = "chart1";
-            series10.ChartArea = "ChartArea1";
-            series10.Legend = "Legend1";
-            series10.Name = "Series1";
-            this.chart1.Series.Add(series10);
-            this.chart1.Size = new System.Drawing.Size(1016, 292);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(1258, 491);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
             // 
@@ -110,15 +113,15 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(-1, 15);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Location = new System.Drawing.Point(-1, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1715, 710);
+            this.tabControl1.Size = new System.Drawing.Size(1286, 577);
             this.tabControl1.TabIndex = 8;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBox6);
             this.tabPage1.Controls.Add(this.groupBox5);
             this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
@@ -139,33 +142,146 @@
             this.tabPage1.Controls.Add(this.buttonRefreshPortList);
             this.tabPage1.Controls.Add(this.buttonConnectComPort);
             this.tabPage1.Controls.Add(this.comboBoxStopBits);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage1.Size = new System.Drawing.Size(1707, 681);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Size = new System.Drawing.Size(1278, 551);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Options";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.radioButtonDouble);
+            this.groupBox5.Controls.Add(this.radioButtonFloat);
+            this.groupBox5.Controls.Add(this.radioButtonUint32);
+            this.groupBox5.Controls.Add(this.radioButtonInt32);
+            this.groupBox5.Controls.Add(this.radioButtonUint16);
+            this.groupBox5.Controls.Add(this.radioButtonInt16);
+            this.groupBox5.Controls.Add(this.radioButtonUint8);
+            this.groupBox5.Controls.Add(this.radioButtonInt8);
+            this.groupBox5.Location = new System.Drawing.Point(502, 8);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox5.Size = new System.Drawing.Size(148, 193);
+            this.groupBox5.TabIndex = 33;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Data type";
+            // 
+            // radioButtonDouble
+            // 
+            this.radioButtonDouble.AutoSize = true;
+            this.radioButtonDouble.Location = new System.Drawing.Point(4, 165);
+            this.radioButtonDouble.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonDouble.Name = "radioButtonDouble";
+            this.radioButtonDouble.Size = new System.Drawing.Size(59, 17);
+            this.radioButtonDouble.TabIndex = 7;
+            this.radioButtonDouble.Text = "Double";
+            this.radioButtonDouble.UseVisualStyleBackColor = true;
+            this.radioButtonDouble.CheckedChanged += new System.EventHandler(this.radioButtonDouble_CheckedChanged);
+            // 
+            // radioButtonFloat
+            // 
+            this.radioButtonFloat.AutoSize = true;
+            this.radioButtonFloat.Location = new System.Drawing.Point(4, 144);
+            this.radioButtonFloat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonFloat.Name = "radioButtonFloat";
+            this.radioButtonFloat.Size = new System.Drawing.Size(48, 17);
+            this.radioButtonFloat.TabIndex = 6;
+            this.radioButtonFloat.Text = "Float";
+            this.radioButtonFloat.UseVisualStyleBackColor = true;
+            this.radioButtonFloat.CheckedChanged += new System.EventHandler(this.radioButtonFloat_CheckedChanged);
+            // 
+            // radioButtonUint32
+            // 
+            this.radioButtonUint32.AutoSize = true;
+            this.radioButtonUint32.Location = new System.Drawing.Point(4, 123);
+            this.radioButtonUint32.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonUint32.Name = "radioButtonUint32";
+            this.radioButtonUint32.Size = new System.Drawing.Size(144, 17);
+            this.radioButtonUint32.TabIndex = 5;
+            this.radioButtonUint32.Text = "Unsigned Integer 4 Bytes";
+            this.radioButtonUint32.UseVisualStyleBackColor = true;
+            this.radioButtonUint32.CheckedChanged += new System.EventHandler(this.radioButtonUint32_CheckedChanged);
+            // 
+            // radioButtonInt32
+            // 
+            this.radioButtonInt32.AutoSize = true;
+            this.radioButtonInt32.Location = new System.Drawing.Point(4, 102);
+            this.radioButtonInt32.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonInt32.Name = "radioButtonInt32";
+            this.radioButtonInt32.Size = new System.Drawing.Size(132, 17);
+            this.radioButtonInt32.TabIndex = 4;
+            this.radioButtonInt32.Text = "Signed Integer 4 Bytes";
+            this.radioButtonInt32.UseVisualStyleBackColor = true;
+            this.radioButtonInt32.CheckedChanged += new System.EventHandler(this.radioButtonInt32_CheckedChanged);
+            // 
+            // radioButtonUint16
+            // 
+            this.radioButtonUint16.AutoSize = true;
+            this.radioButtonUint16.Location = new System.Drawing.Point(4, 80);
+            this.radioButtonUint16.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonUint16.Name = "radioButtonUint16";
+            this.radioButtonUint16.Size = new System.Drawing.Size(144, 17);
+            this.radioButtonUint16.TabIndex = 3;
+            this.radioButtonUint16.Text = "Unsigned Integer 2 Bytes";
+            this.radioButtonUint16.UseVisualStyleBackColor = true;
+            this.radioButtonUint16.CheckedChanged += new System.EventHandler(this.radioButtonUint16_CheckedChanged);
+            // 
+            // radioButtonInt16
+            // 
+            this.radioButtonInt16.AutoSize = true;
+            this.radioButtonInt16.Location = new System.Drawing.Point(4, 59);
+            this.radioButtonInt16.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonInt16.Name = "radioButtonInt16";
+            this.radioButtonInt16.Size = new System.Drawing.Size(132, 17);
+            this.radioButtonInt16.TabIndex = 2;
+            this.radioButtonInt16.Text = "Signed Integer 2 Bytes";
+            this.radioButtonInt16.UseVisualStyleBackColor = true;
+            this.radioButtonInt16.CheckedChanged += new System.EventHandler(this.radioButtonInt16_CheckedChanged);
+            // 
+            // radioButtonUint8
+            // 
+            this.radioButtonUint8.AutoSize = true;
+            this.radioButtonUint8.Checked = true;
+            this.radioButtonUint8.Location = new System.Drawing.Point(4, 38);
+            this.radioButtonUint8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonUint8.Name = "radioButtonUint8";
+            this.radioButtonUint8.Size = new System.Drawing.Size(139, 17);
+            this.radioButtonUint8.TabIndex = 1;
+            this.radioButtonUint8.TabStop = true;
+            this.radioButtonUint8.Text = "Unsigned Integer 1 Byte";
+            this.radioButtonUint8.UseVisualStyleBackColor = true;
+            this.radioButtonUint8.CheckedChanged += new System.EventHandler(this.radioButtonUint8_CheckedChanged);
+            // 
+            // radioButtonInt8
+            // 
+            this.radioButtonInt8.AutoSize = true;
+            this.radioButtonInt8.Location = new System.Drawing.Point(4, 17);
+            this.radioButtonInt8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonInt8.Name = "radioButtonInt8";
+            this.radioButtonInt8.Size = new System.Drawing.Size(127, 17);
+            this.radioButtonInt8.TabIndex = 0;
+            this.radioButtonInt8.Text = "Signed Integer 1 Byte";
+            this.radioButtonInt8.UseVisualStyleBackColor = true;
+            this.radioButtonInt8.CheckedChanged += new System.EventHandler(this.radioButtonInt8_CheckedChanged);
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.textBoxFrameStart);
-            this.groupBox4.Location = new System.Drawing.Point(345, 10);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Location = new System.Drawing.Point(259, 8);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox4.Size = new System.Drawing.Size(267, 62);
+            this.groupBox4.Size = new System.Drawing.Size(200, 50);
             this.groupBox4.TabIndex = 32;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Frame Start";
             // 
             // textBoxFrameStart
             // 
-            this.textBoxFrameStart.Location = new System.Drawing.Point(8, 30);
-            this.textBoxFrameStart.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxFrameStart.Location = new System.Drawing.Point(6, 24);
             this.textBoxFrameStart.Name = "textBoxFrameStart";
-            this.textBoxFrameStart.Size = new System.Drawing.Size(249, 22);
+            this.textBoxFrameStart.Size = new System.Drawing.Size(188, 20);
             this.textBoxFrameStart.TabIndex = 33;
             this.textBoxFrameStart.Text = "AABB";
             this.textBoxFrameStart.TextChanged += new System.EventHandler(this.textBoxFrameStart_TextChanged);
@@ -174,11 +290,9 @@
             // 
             this.groupBox3.Controls.Add(this.radioButtonEndianLittle);
             this.groupBox3.Controls.Add(this.radioButtonEndianBig);
-            this.groupBox3.Location = new System.Drawing.Point(345, 78);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Location = new System.Drawing.Point(259, 63);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox3.Size = new System.Drawing.Size(267, 54);
+            this.groupBox3.Size = new System.Drawing.Size(200, 44);
             this.groupBox3.TabIndex = 32;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Type of reading";
@@ -186,10 +300,9 @@
             // radioButtonEndianLittle
             // 
             this.radioButtonEndianLittle.AutoSize = true;
-            this.radioButtonEndianLittle.Location = new System.Drawing.Point(8, 23);
-            this.radioButtonEndianLittle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonEndianLittle.Location = new System.Drawing.Point(6, 19);
             this.radioButtonEndianLittle.Name = "radioButtonEndianLittle";
-            this.radioButtonEndianLittle.Size = new System.Drawing.Size(100, 20);
+            this.radioButtonEndianLittle.Size = new System.Drawing.Size(83, 17);
             this.radioButtonEndianLittle.TabIndex = 29;
             this.radioButtonEndianLittle.Text = "Little Endian";
             this.radioButtonEndianLittle.UseVisualStyleBackColor = true;
@@ -199,10 +312,9 @@
             // 
             this.radioButtonEndianBig.AutoSize = true;
             this.radioButtonEndianBig.Checked = true;
-            this.radioButtonEndianBig.Location = new System.Drawing.Point(157, 23);
-            this.radioButtonEndianBig.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonEndianBig.Location = new System.Drawing.Point(118, 19);
             this.radioButtonEndianBig.Name = "radioButtonEndianBig";
-            this.radioButtonEndianBig.Size = new System.Drawing.Size(93, 20);
+            this.radioButtonEndianBig.Size = new System.Drawing.Size(76, 17);
             this.radioButtonEndianBig.TabIndex = 30;
             this.radioButtonEndianBig.TabStop = true;
             this.radioButtonEndianBig.Text = "Big Endian";
@@ -213,11 +325,9 @@
             // 
             this.groupBox2.Controls.Add(this.radioButtonYesChecksum);
             this.groupBox2.Controls.Add(this.radioButtonNoChecksum);
-            this.groupBox2.Location = new System.Drawing.Point(345, 231);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Location = new System.Drawing.Point(259, 188);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox2.Size = new System.Drawing.Size(267, 78);
+            this.groupBox2.Size = new System.Drawing.Size(200, 63);
             this.groupBox2.TabIndex = 32;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Checksum";
@@ -225,10 +335,9 @@
             // radioButtonYesChecksum
             // 
             this.radioButtonYesChecksum.AutoSize = true;
-            this.radioButtonYesChecksum.Location = new System.Drawing.Point(8, 49);
-            this.radioButtonYesChecksum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonYesChecksum.Location = new System.Drawing.Point(6, 40);
             this.radioButtonYesChecksum.Name = "radioButtonYesChecksum";
-            this.radioButtonYesChecksum.Size = new System.Drawing.Size(52, 20);
+            this.radioButtonYesChecksum.Size = new System.Drawing.Size(43, 17);
             this.radioButtonYesChecksum.TabIndex = 29;
             this.radioButtonYesChecksum.Text = "Yes";
             this.radioButtonYesChecksum.UseVisualStyleBackColor = true;
@@ -238,10 +347,9 @@
             // 
             this.radioButtonNoChecksum.AutoSize = true;
             this.radioButtonNoChecksum.Checked = true;
-            this.radioButtonNoChecksum.Location = new System.Drawing.Point(8, 21);
-            this.radioButtonNoChecksum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonNoChecksum.Location = new System.Drawing.Point(6, 17);
             this.radioButtonNoChecksum.Name = "radioButtonNoChecksum";
-            this.radioButtonNoChecksum.Size = new System.Drawing.Size(46, 20);
+            this.radioButtonNoChecksum.Size = new System.Drawing.Size(39, 17);
             this.radioButtonNoChecksum.TabIndex = 30;
             this.radioButtonNoChecksum.TabStop = true;
             this.radioButtonNoChecksum.Text = "No";
@@ -254,11 +362,9 @@
             this.groupBox1.Controls.Add(this.textBoxAddresLength);
             this.groupBox1.Controls.Add(this.radioButtonYesAddress);
             this.groupBox1.Controls.Add(this.radioButtonNoAddress);
-            this.groupBox1.Location = new System.Drawing.Point(345, 140);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Location = new System.Drawing.Point(259, 114);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(267, 84);
+            this.groupBox1.Size = new System.Drawing.Size(200, 68);
             this.groupBox1.TabIndex = 31;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Address";
@@ -266,19 +372,17 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(85, 54);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(64, 44);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(78, 16);
+            this.label2.Size = new System.Drawing.Size(64, 13);
             this.label2.TabIndex = 35;
             this.label2.Text = "Addr length:";
             // 
             // textBoxAddresLength
             // 
-            this.textBoxAddresLength.Location = new System.Drawing.Point(179, 49);
-            this.textBoxAddresLength.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxAddresLength.Location = new System.Drawing.Point(134, 40);
             this.textBoxAddresLength.Name = "textBoxAddresLength";
-            this.textBoxAddresLength.Size = new System.Drawing.Size(56, 22);
+            this.textBoxAddresLength.Size = new System.Drawing.Size(43, 20);
             this.textBoxAddresLength.TabIndex = 34;
             this.textBoxAddresLength.Text = "1";
             this.textBoxAddresLength.TextChanged += new System.EventHandler(this.textBoxAddresLength_TextChanged);
@@ -287,10 +391,9 @@
             // 
             this.radioButtonYesAddress.AutoSize = true;
             this.radioButtonYesAddress.Checked = true;
-            this.radioButtonYesAddress.Location = new System.Drawing.Point(8, 52);
-            this.radioButtonYesAddress.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonYesAddress.Location = new System.Drawing.Point(6, 42);
             this.radioButtonYesAddress.Name = "radioButtonYesAddress";
-            this.radioButtonYesAddress.Size = new System.Drawing.Size(52, 20);
+            this.radioButtonYesAddress.Size = new System.Drawing.Size(43, 17);
             this.radioButtonYesAddress.TabIndex = 29;
             this.radioButtonYesAddress.TabStop = true;
             this.radioButtonYesAddress.Text = "Yes";
@@ -300,10 +403,9 @@
             // radioButtonNoAddress
             // 
             this.radioButtonNoAddress.AutoSize = true;
-            this.radioButtonNoAddress.Location = new System.Drawing.Point(8, 23);
-            this.radioButtonNoAddress.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButtonNoAddress.Location = new System.Drawing.Point(6, 19);
             this.radioButtonNoAddress.Name = "radioButtonNoAddress";
-            this.radioButtonNoAddress.Size = new System.Drawing.Size(46, 20);
+            this.radioButtonNoAddress.Size = new System.Drawing.Size(39, 17);
             this.radioButtonNoAddress.TabIndex = 30;
             this.radioButtonNoAddress.Text = "No";
             this.radioButtonNoAddress.UseVisualStyleBackColor = true;
@@ -313,42 +415,38 @@
             // 
             this.comboBoxSelectedPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSelectedPort.FormattingEnabled = true;
-            this.comboBoxSelectedPort.Location = new System.Drawing.Point(51, 10);
-            this.comboBoxSelectedPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxSelectedPort.Location = new System.Drawing.Point(38, 8);
             this.comboBoxSelectedPort.Name = "comboBoxSelectedPort";
-            this.comboBoxSelectedPort.Size = new System.Drawing.Size(127, 24);
+            this.comboBoxSelectedPort.Size = new System.Drawing.Size(96, 21);
             this.comboBoxSelectedPort.TabIndex = 18;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 262);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(3, 213);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 16);
+            this.label7.Size = new System.Drawing.Size(52, 13);
             this.label7.TabIndex = 17;
             this.label7.Text = "Stop Bits:";
             // 
             // numericUpDownDataBits
             // 
-            this.numericUpDownDataBits.Location = new System.Drawing.Point(93, 225);
-            this.numericUpDownDataBits.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.numericUpDownDataBits.Location = new System.Drawing.Point(70, 183);
             this.numericUpDownDataBits.Maximum = new decimal(new int[] {
             13,
             0,
             0,
             0});
             this.numericUpDownDataBits.Name = "numericUpDownDataBits";
-            this.numericUpDownDataBits.Size = new System.Drawing.Size(160, 22);
+            this.numericUpDownDataBits.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownDataBits.TabIndex = 16;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(4, 228);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(3, 185);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(64, 16);
+            this.label6.Size = new System.Drawing.Size(53, 13);
             this.label6.TabIndex = 15;
             this.label6.Text = "Data Bits:";
             // 
@@ -362,29 +460,26 @@
             "Even",
             "Mark",
             "Space"});
-            this.comboBoxParity.Location = new System.Drawing.Point(93, 190);
-            this.comboBoxParity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxParity.Location = new System.Drawing.Point(70, 154);
             this.comboBoxParity.Name = "comboBoxParity";
-            this.comboBoxParity.Size = new System.Drawing.Size(160, 24);
+            this.comboBoxParity.Size = new System.Drawing.Size(121, 21);
             this.comboBoxParity.TabIndex = 14;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 193);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(3, 157);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 16);
+            this.label5.Size = new System.Drawing.Size(39, 13);
             this.label5.TabIndex = 13;
             this.label5.Text = "Parity: ";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 159);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(3, 129);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 16);
+            this.label4.Size = new System.Drawing.Size(61, 13);
             this.label4.TabIndex = 12;
             this.label4.Text = "Baud Rate:";
             // 
@@ -406,60 +501,54 @@
             "115200",
             "128000",
             "256000"});
-            this.comboBoxBaudRate.Location = new System.Drawing.Point(93, 155);
-            this.comboBoxBaudRate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBoxBaudRate.Location = new System.Drawing.Point(70, 126);
             this.comboBoxBaudRate.Name = "comboBoxBaudRate";
-            this.comboBoxBaudRate.Size = new System.Drawing.Size(160, 24);
+            this.comboBoxBaudRate.Size = new System.Drawing.Size(121, 21);
             this.comboBoxBaudRate.TabIndex = 11;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 114);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(3, 93);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 16);
+            this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 10;
             this.label3.Text = "Status:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 14);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(3, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 16);
+            this.label1.Size = new System.Drawing.Size(29, 13);
             this.label1.TabIndex = 9;
             this.label1.Text = "Port:";
             // 
             // labelConnectionStatus
             // 
             this.labelConnectionStatus.AutoSize = true;
-            this.labelConnectionStatus.Location = new System.Drawing.Point(149, 114);
-            this.labelConnectionStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelConnectionStatus.Location = new System.Drawing.Point(112, 93);
             this.labelConnectionStatus.Name = "labelConnectionStatus";
-            this.labelConnectionStatus.Size = new System.Drawing.Size(96, 16);
+            this.labelConnectionStatus.Size = new System.Drawing.Size(79, 13);
             this.labelConnectionStatus.TabIndex = 8;
             this.labelConnectionStatus.Text = "Not Connected";
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Orange;
-            this.pictureBox1.Location = new System.Drawing.Point(93, 102);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Location = new System.Drawing.Point(70, 83);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(43, 39);
+            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
             // 
             // buttonRefreshPortList
             // 
             this.buttonRefreshPortList.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonRefreshPortList.Location = new System.Drawing.Point(184, 9);
-            this.buttonRefreshPortList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.buttonRefreshPortList.MinimumSize = new System.Drawing.Size(49, 14);
+            this.buttonRefreshPortList.Location = new System.Drawing.Point(138, 7);
+            this.buttonRefreshPortList.MinimumSize = new System.Drawing.Size(37, 11);
             this.buttonRefreshPortList.Name = "buttonRefreshPortList";
-            this.buttonRefreshPortList.Size = new System.Drawing.Size(100, 26);
+            this.buttonRefreshPortList.Size = new System.Drawing.Size(75, 21);
             this.buttonRefreshPortList.TabIndex = 6;
             this.buttonRefreshPortList.Text = "Refresh";
             this.buttonRefreshPortList.UseVisualStyleBackColor = true;
@@ -467,11 +556,10 @@
             // buttonConnectComPort
             // 
             this.buttonConnectComPort.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonConnectComPort.Location = new System.Drawing.Point(5, 43);
-            this.buttonConnectComPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.buttonConnectComPort.MinimumSize = new System.Drawing.Size(49, 14);
+            this.buttonConnectComPort.Location = new System.Drawing.Point(4, 35);
+            this.buttonConnectComPort.MinimumSize = new System.Drawing.Size(37, 11);
             this.buttonConnectComPort.Name = "buttonConnectComPort";
-            this.buttonConnectComPort.Size = new System.Drawing.Size(279, 49);
+            this.buttonConnectComPort.Size = new System.Drawing.Size(209, 40);
             this.buttonConnectComPort.TabIndex = 5;
             this.buttonConnectComPort.Text = "Connect";
             this.buttonConnectComPort.UseVisualStyleBackColor = true;
@@ -487,158 +575,72 @@
             "1",
             "1,5",
             "2"});
-            this.comboBoxStopBits.Location = new System.Drawing.Point(93, 255);
-            this.comboBoxStopBits.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.comboBoxStopBits.MinimumSize = new System.Drawing.Size(109, 0);
+            this.comboBoxStopBits.Location = new System.Drawing.Point(70, 207);
+            this.comboBoxStopBits.MinimumSize = new System.Drawing.Size(83, 0);
             this.comboBoxStopBits.Name = "comboBoxStopBits";
-            this.comboBoxStopBits.Size = new System.Drawing.Size(159, 24);
+            this.comboBoxStopBits.Size = new System.Drawing.Size(120, 21);
             this.comboBoxStopBits.TabIndex = 4;
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.chart1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage2.Size = new System.Drawing.Size(1707, 681);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Size = new System.Drawing.Size(1278, 551);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Data & Graphics";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(8, 299);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Location = new System.Drawing.Point(9, 513);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(116, 28);
+            this.button3.Size = new System.Drawing.Size(87, 23);
             this.button3.TabIndex = 1;
             this.button3.Text = "Clear Graphic";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // groupBox5
+            // groupBox6
             // 
-            this.groupBox5.Controls.Add(this.radioButtonDouble);
-            this.groupBox5.Controls.Add(this.radioButtonFloat);
-            this.groupBox5.Controls.Add(this.radioButtonUint32);
-            this.groupBox5.Controls.Add(this.radioButtonInt32);
-            this.groupBox5.Controls.Add(this.radioButtonUint16);
-            this.groupBox5.Controls.Add(this.radioButtonInt16);
-            this.groupBox5.Controls.Add(this.radioButtonUint8);
-            this.groupBox5.Controls.Add(this.radioButtonInt8);
-            this.groupBox5.Location = new System.Drawing.Point(669, 10);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(198, 237);
-            this.groupBox5.TabIndex = 33;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Data type";
+            this.groupBox6.Controls.Add(this.numericUpDownDataAmount);
+            this.groupBox6.Location = new System.Drawing.Point(502, 207);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(148, 44);
+            this.groupBox6.TabIndex = 34;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Data Amount";
             // 
-            // radioButtonInt8
+            // numericUpDownDataAmount
             // 
-            this.radioButtonInt8.AutoSize = true;
-            this.radioButtonInt8.Location = new System.Drawing.Point(6, 21);
-            this.radioButtonInt8.Name = "radioButtonInt8";
-            this.radioButtonInt8.Size = new System.Drawing.Size(155, 20);
-            this.radioButtonInt8.TabIndex = 0;
-            this.radioButtonInt8.Text = "Signed Integer 1 Byte";
-            this.radioButtonInt8.UseVisualStyleBackColor = true;
-            this.radioButtonInt8.CheckedChanged += new System.EventHandler(this.radioButtonInt8_CheckedChanged);
-            // 
-            // radioButtonUint8
-            // 
-            this.radioButtonUint8.AutoSize = true;
-            this.radioButtonUint8.Checked = true;
-            this.radioButtonUint8.Location = new System.Drawing.Point(6, 47);
-            this.radioButtonUint8.Name = "radioButtonUint8";
-            this.radioButtonUint8.Size = new System.Drawing.Size(170, 20);
-            this.radioButtonUint8.TabIndex = 1;
-            this.radioButtonUint8.TabStop = true;
-            this.radioButtonUint8.Text = "Unsigned Integer 1 Byte";
-            this.radioButtonUint8.UseVisualStyleBackColor = true;
-            this.radioButtonUint8.CheckedChanged += new System.EventHandler(this.radioButtonUint8_CheckedChanged);
-            // 
-            // radioButtonInt16
-            // 
-            this.radioButtonInt16.AutoSize = true;
-            this.radioButtonInt16.Location = new System.Drawing.Point(6, 73);
-            this.radioButtonInt16.Name = "radioButtonInt16";
-            this.radioButtonInt16.Size = new System.Drawing.Size(162, 20);
-            this.radioButtonInt16.TabIndex = 2;
-            this.radioButtonInt16.Text = "Signed Integer 2 Bytes";
-            this.radioButtonInt16.UseVisualStyleBackColor = true;
-            this.radioButtonInt16.CheckedChanged += new System.EventHandler(this.radioButtonInt16_CheckedChanged);
-            // 
-            // radioButtonUint16
-            // 
-            this.radioButtonUint16.AutoSize = true;
-            this.radioButtonUint16.Location = new System.Drawing.Point(6, 99);
-            this.radioButtonUint16.Name = "radioButtonUint16";
-            this.radioButtonUint16.Size = new System.Drawing.Size(177, 20);
-            this.radioButtonUint16.TabIndex = 3;
-            this.radioButtonUint16.Text = "Unsigned Integer 2 Bytes";
-            this.radioButtonUint16.UseVisualStyleBackColor = true;
-            this.radioButtonUint16.CheckedChanged += new System.EventHandler(this.radioButtonUint16_CheckedChanged);
-            // 
-            // radioButtonInt32
-            // 
-            this.radioButtonInt32.AutoSize = true;
-            this.radioButtonInt32.Location = new System.Drawing.Point(6, 125);
-            this.radioButtonInt32.Name = "radioButtonInt32";
-            this.radioButtonInt32.Size = new System.Drawing.Size(162, 20);
-            this.radioButtonInt32.TabIndex = 4;
-            this.radioButtonInt32.Text = "Signed Integer 4 Bytes";
-            this.radioButtonInt32.UseVisualStyleBackColor = true;
-            this.radioButtonInt32.CheckedChanged += new System.EventHandler(this.radioButtonInt32_CheckedChanged);
-            // 
-            // radioButtonUint32
-            // 
-            this.radioButtonUint32.AutoSize = true;
-            this.radioButtonUint32.Location = new System.Drawing.Point(6, 151);
-            this.radioButtonUint32.Name = "radioButtonUint32";
-            this.radioButtonUint32.Size = new System.Drawing.Size(177, 20);
-            this.radioButtonUint32.TabIndex = 5;
-            this.radioButtonUint32.Text = "Unsigned Integer 4 Bytes";
-            this.radioButtonUint32.UseVisualStyleBackColor = true;
-            this.radioButtonUint32.CheckedChanged += new System.EventHandler(this.radioButtonUint32_CheckedChanged);
-            // 
-            // radioButtonFloat
-            // 
-            this.radioButtonFloat.AutoSize = true;
-            this.radioButtonFloat.Location = new System.Drawing.Point(6, 177);
-            this.radioButtonFloat.Name = "radioButtonFloat";
-            this.radioButtonFloat.Size = new System.Drawing.Size(58, 20);
-            this.radioButtonFloat.TabIndex = 6;
-            this.radioButtonFloat.Text = "Float";
-            this.radioButtonFloat.UseVisualStyleBackColor = true;
-            this.radioButtonFloat.CheckedChanged += new System.EventHandler(this.radioButtonFloat_CheckedChanged);
-            // 
-            // radioButtonDouble
-            // 
-            this.radioButtonDouble.AutoSize = true;
-            this.radioButtonDouble.Location = new System.Drawing.Point(6, 203);
-            this.radioButtonDouble.Name = "radioButtonDouble";
-            this.radioButtonDouble.Size = new System.Drawing.Size(72, 20);
-            this.radioButtonDouble.TabIndex = 7;
-            this.radioButtonDouble.Text = "Double";
-            this.radioButtonDouble.UseVisualStyleBackColor = true;
-            this.radioButtonDouble.CheckedChanged += new System.EventHandler(this.radioButtonDouble_CheckedChanged);
+            this.numericUpDownDataAmount.Location = new System.Drawing.Point(6, 18);
+            this.numericUpDownDataAmount.Name = "numericUpDownDataAmount";
+            this.numericUpDownDataAmount.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownDataAmount.TabIndex = 35;
+            this.numericUpDownDataAmount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownDataAmount.ValueChanged += new System.EventHandler(this.numericUpDownDataAmount_ValueChanged);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1703, 708);
+            this.ClientSize = new System.Drawing.Size(1279, 582);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.MaximumSize = new System.Drawing.Size(1721, 755);
-            this.MinimumSize = new System.Drawing.Size(1721, 755);
+            this.MaximumSize = new System.Drawing.Size(1295, 621);
+            this.MinimumSize = new System.Drawing.Size(1295, 621);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -650,8 +652,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataBits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataAmount)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -700,6 +702,8 @@
         private System.Windows.Forms.RadioButton radioButtonUint8;
         private System.Windows.Forms.RadioButton radioButtonInt8;
         private System.Windows.Forms.RadioButton radioButtonDouble;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.NumericUpDown numericUpDownDataAmount;
     }
 }
 

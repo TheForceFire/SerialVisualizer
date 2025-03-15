@@ -33,7 +33,7 @@ namespace SerialVisualizer
 
         public short[] ToInt16() {
             List<short> int16Data = new List<short>();
-            for (int i = 0; i != data_b.Count; i += 2)
+            for (int i = 0; i < data_b.Count; i += 2)
             {
                 if (i + 1 < data_b.Count)
                 {
@@ -45,7 +45,7 @@ namespace SerialVisualizer
 
         public ushort[] ToUInt16() {
             List<ushort> uint16Data = new List<ushort>();
-            for (int i = 0; i != data_b.Count; i += 2)
+            for (int i = 0; i < data_b.Count; i += 2)
             {
                 if (i + 1 < data_b.Count)
                 {
@@ -58,7 +58,7 @@ namespace SerialVisualizer
         public int[] ToInt32()
         {
             List<int> int32Data = new List<int>();
-            for (int i = 0; i != data_b.Count; i += 4)
+            for (int i = 0; i < data_b.Count; i += 4)
             {
                 if (i + 3 < data_b.Count)
                 {
@@ -71,7 +71,7 @@ namespace SerialVisualizer
         public uint[] ToUInt32()
         {
             List<uint> uint32Data = new List<uint>();
-            for (int i = 0; i != data_b.Count; i += 4)
+            for (int i = 0; i < data_b.Count; i += 4)
             {
                 if (i + 3 < data_b.Count)
                 {
@@ -84,7 +84,7 @@ namespace SerialVisualizer
         public float[] ToFloat()
         {
             List<float> floatData = new List<float>();
-            for (int i = 0; i != data_b.Count; i += 4)
+            for (int i = 0; i < data_b.Count; i += 4)
             {
                 if (i + 3 < data_b.Count)
                 {
@@ -97,7 +97,7 @@ namespace SerialVisualizer
         public double[] ToDouble()
         {
             List<double> doubleData = new List<double>();
-            for (int i = 0; i != data_b.Count; i += 4)
+            for (int i = 0; i < data_b.Count; i += 4)
             {
                 if (i + 3 < data_b.Count)
                 {

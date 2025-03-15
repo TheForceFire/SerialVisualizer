@@ -14,7 +14,7 @@ namespace SerialVisualizer
         DataType currentDataType = DataType.Uint8;
         Thread myThread;
         ManualResetEvent stopEvent = new ManualResetEvent(false);
-        Series series;
+        Series[] series;
         static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         ClassDataSaverParser classDataSaverParser;
@@ -24,12 +24,13 @@ namespace SerialVisualizer
             logger.Info("Initializing");
             InitializeComponent();
             comboBoxSelectedPort.Items.AddRange(SerialPort.GetPortNames());
-            series = chart1.Series[0];
-            series.LegendText = "Data";
             buttonConnectComPort.Click += b_connect;
             buttonRefreshPortList.Click += b_refresh;
             button3.Click += b_clear;
 
+            series = new Series[10];
+            series[0] = chart1.Series[0];
+            series[0].LegendText = "Unnamed";
 
             comboBoxBaudRate.SelectedIndex = 4;
             comboBoxParity.SelectedIndex = 0;
@@ -153,9 +154,10 @@ namespace SerialVisualizer
         }
         private void b_clear(object sender, EventArgs e)
         {
-            if (series != null)
+            for(int i = 0; i < series.Length; i++)
+            if (series[i] != null)
             {
-                series.Points.Clear();
+                series[i].Points.Clear();
             }
         }
         private void CB_SIC(object sender, EventArgs e)
@@ -203,28 +205,100 @@ namespace SerialVisualizer
                                     switch (currentDataType)
                                     {
                                         case DataType.Int8:
-                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToInt8()[0]);
+                                            {
+                                                sbyte[] data = dataSaver.ToInt8();
+                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
+                                                int xCoordinate = GetLastXCoordinate() + 1;
+
+                                                for (int i = 0; i < dataAmount; i++)
+                                                {
+                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                }
+                                            }
                                             break;
                                         case DataType.Uint8:
-                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToUInt8()[0]);
+                                            {
+                                                byte[] data = dataSaver.ToUInt8();
+                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
+                                                int xCoordinate = GetLastXCoordinate() + 1;
+
+                                                for (int i = 0; i < dataAmount; i++)
+                                                {
+                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                }
+                                            }
                                             break;
                                         case DataType.Int16:
-                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToInt16()[0]);
+                                            {
+                                                short[] data = dataSaver.ToInt16();
+                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
+                                                int xCoordinate = GetLastXCoordinate() + 1;
+
+                                                for (int i = 0; i < dataAmount; i++)
+                                                {
+                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                }
+                                            }
                                             break;
                                         case DataType.Uint16:
-                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToUInt16()[0]);
+                                            {
+                                                ushort[] data = dataSaver.ToUInt16();
+                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
+                                                int xCoordinate = GetLastXCoordinate() + 1;
+
+                                                for (int i = 0; i < dataAmount; i++)
+                                                {
+                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                }
+                                            }
                                             break;
                                         case DataType.Int32:
-                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToInt32()[0]);
+                                            {
+                                                int[] data = dataSaver.ToInt32();
+                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
+                                                int xCoordinate = GetLastXCoordinate() + 1;
+
+                                                for (int i = 0; i < dataAmount; i++)
+                                                {
+                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                }
+                                            }
                                             break;
                                         case DataType.Uint32:
-                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToUInt32()[0]);
+                                            {
+                                                uint[] data = dataSaver.ToUInt32();
+                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
+                                                int xCoordinate = GetLastXCoordinate() + 1;
+
+                                                for (int i = 0; i < dataAmount; i++)
+                                                {
+                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                }
+                                            }
                                             break;
                                         case DataType.Float:
-                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToFloat()[0]);
+                                            {
+                                                float[] data = dataSaver.ToFloat();
+                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
+                                                int xCoordinate = GetLastXCoordinate() + 1;
+
+                                                for (int i = 0; i < dataAmount; i++)
+                                                {
+                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                }
+                                            }
                                             break;
                                         case DataType.Double:
-                                            series.Points.AddXY(series.Points.Count + 1, dataSaver.ToDouble()[0]);
+                                            {
+                                                double[] data = dataSaver.ToDouble();
+                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
+                                                int xCoordinate = GetLastXCoordinate() + 1;
+
+                                                for (int i = 0; i < dataAmount; i++)
+                                                {
+                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                }
+                                            }      
                                             break;
                                     }
                                 }));
@@ -373,6 +447,77 @@ namespace SerialVisualizer
             {
                 currentDataType = DataType.Double;
             }
+        }
+
+        private void numericUpDownDataAmount_ValueChanged(object sender, EventArgs e)
+        {
+            int currentSeries = (int) numericUpDownDataAmount.Value;
+
+            if(currentSeries < 1 || currentSeries > 10)
+            {
+                currentSeries = 1;
+            }
+
+
+            int seriesDiff = CountActiveSeries() - currentSeries;
+
+            if(seriesDiff < 0)
+            {
+                for(int i = 0; i < currentSeries; i++)
+                {
+                    if(chart1.Series.Count <= i)
+                    {
+                        chart1.Series.Add("Series" + (i + 1));
+                    }
+
+                    series[i] = chart1.Series[i];
+                    series[i].LegendText = "Unnamed";
+                }
+            }
+            else if(seriesDiff > 0) {
+                for(int i = currentSeries; i > 0; i--)
+                {
+                    if(chart1.Series.Count > currentSeries)
+                    {
+                        chart1.Series.RemoveAt(i);
+                        series[i] = null;
+                    }
+                }
+            }
+
+        }
+
+
+        private int CountActiveSeries()
+        {
+            int length = 0;
+
+            for(int i = 0; i < series.Length; i++) {
+                if (series[i] != null)
+                {
+                    length++;
+                }
+            }
+
+            return length;
+        }
+
+        private int GetLastXCoordinate()
+        {
+            int lastX = 0;
+
+            for (int i = 0; i < series.Length; i++)
+            {
+                if (series[i] != null)
+                {
+                    if(series[i].Points.Count > lastX)
+                    {
+                        lastX = series[i].Points.Count;
+                    }
+                }
+            }
+
+            return lastX;
         }
     }
 
