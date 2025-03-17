@@ -16,6 +16,7 @@ namespace SerialVisualizer
         ManualResetEvent stopEvent = new ManualResetEvent(false);
         Series[] series;
         static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        bool isUserCheckMessage = false;
 
         ClassDataSaverParser classDataSaverParser;
 
@@ -31,6 +32,7 @@ namespace SerialVisualizer
             series = new Series[10];
             series[0] = chart1.Series[0];
             series[0].LegendText = "Unnamed";
+            series[0].ChartType = SeriesChartType.Spline;
 
             comboBoxBaudRate.SelectedIndex = 4;
             comboBoxParity.SelectedIndex = 0;
@@ -99,8 +101,8 @@ namespace SerialVisualizer
             Parity P = GetParity(selectedP);
             StopBits SB = GetStopBits(selectedSB);
 
-
             OpenPort(selectedPort, BR, DB, P, SB);
+            
         }
 
         private void OpenPort(string selectedPort, int BR, int DB, Parity P, StopBits SB)
@@ -112,6 +114,7 @@ namespace SerialVisualizer
                     stopEvent.Set();
                     if (myThread != null && myThread.IsAlive) myThread.Join();
                     serial.Close();
+                    isUserCheckMessage = false;
                     buttonConnectComPort.Text = "Connect";
                     pictureBox1.BackColor = Color.Red;
                     labelConnectionStatus.Text = "Disonnected";
@@ -147,6 +150,7 @@ namespace SerialVisualizer
         }
         private void b_refresh(object sender, EventArgs e)
         {
+            CheckChanges();
             logger.Info("Updating the list of COM-port");
             comboBoxSelectedPort.Items.Clear();
             string[] ports = SerialPort.GetPortNames();
@@ -162,11 +166,9 @@ namespace SerialVisualizer
         }
         private void CB_SIC(object sender, EventArgs e)
         {
+            CheckChanges();
             logger.Debug("User select COM-port");
         }
-
-
-
 
         private void ReadBytes()
         {
@@ -320,171 +322,232 @@ namespace SerialVisualizer
             logger.Info("Read thread finish");
         }
 
+        bool CheckChanges()
+        {
+            if (serial.IsOpen && !isUserCheckMessage)
+            {
+                MessageBox.Show("The new settings will be applied only after the port is reopened");
+                isUserCheckMessage = true;
+                return true;
+            }
+            return false;
+        }
+
         private void textBoxFrameStart_TextChanged(object sender, EventArgs e)
         {
-            try
+             if (!CheckChanges())
             {
-                classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
-                textBoxFrameStart.BackColor = Color.White;
-            }
-            catch
-            {
-                classDataSaverParser.frameStart = null;
-                textBoxFrameStart.BackColor = Color.OrangeRed;
+                try
+                {
+                    classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
+                    textBoxFrameStart.BackColor = Color.White;
+                }
+                catch
+                {
+                    classDataSaverParser.frameStart = null;
+                    textBoxFrameStart.BackColor = Color.OrangeRed;
+                }
             }
         }
 
         private void radioButtonEndianLittle_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonEndianLittle.Checked)
+            if (!CheckChanges())
             {
-                classDataSaverParser.readingType = ReadingType.LittleEndian;
+                if (radioButtonEndianLittle.Checked)
+                {
+                    classDataSaverParser.readingType = ReadingType.LittleEndian;
+                }
             }
         }
 
         private void radioButtonEndianBig_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonEndianBig.Checked)
+            if (!CheckChanges())
             {
-                classDataSaverParser.readingType = ReadingType.BigEndian;
+                if (radioButtonEndianBig.Checked)
+                {
+                    classDataSaverParser.readingType = ReadingType.BigEndian;
+                }
             }
         }
 
         private void radioButtonNoAddress_CheckedChanged(object sender, EventArgs e)
         {
-            classDataSaverParser.isAddressEnable = radioButtonYesAddress.Checked;
-            
+            if (!CheckChanges())
+            {
+                classDataSaverParser.isAddressEnable = radioButtonYesAddress.Checked;
+            }
         }
 
         private void radioButtonYesAddress_CheckedChanged(object sender, EventArgs e)
         {
-            classDataSaverParser.isAddressEnable = radioButtonYesAddress.Checked;
+            if (!CheckChanges())
+            {
+                classDataSaverParser.isAddressEnable = radioButtonYesAddress.Checked;
+            }
         }
 
         private void textBoxAddresLength_TextChanged(object sender, EventArgs e)
         {
-            try
+            if (!CheckChanges())
             {
-                classDataSaverParser.addressLength = int.Parse(textBoxAddresLength.Text);
-                textBoxAddresLength.BackColor = Color.White;
-            }
-            catch
-            {
-                classDataSaverParser.addressLength = -1;
-                textBoxAddresLength.BackColor = Color.OrangeRed;
+                try
+                {
+                    classDataSaverParser.addressLength = int.Parse(textBoxAddresLength.Text);
+                    textBoxAddresLength.BackColor = Color.White;
+                }
+                catch
+                {
+                    classDataSaverParser.addressLength = -1;
+                    textBoxAddresLength.BackColor = Color.OrangeRed;
+                }
             }
         }
 
         private void radioButtonNoChecksum_CheckedChanged(object sender, EventArgs e)
         {
-            classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
+            if (!CheckChanges())
+            {
+                classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
+            }
         }
 
         private void radioButtonYesChecksum_CheckedChanged(object sender, EventArgs e)
         {
-            classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
+            if (!CheckChanges())
+            {
+                classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
+            }
         }
 
         private void radioButtonInt8_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonInt8.Checked)
+            if (!CheckChanges())
             {
-                currentDataType = DataType.Int8;
+                if (radioButtonInt8.Checked)
+                {
+                    currentDataType = DataType.Int8;
+                }
             }
         }
 
         private void radioButtonUint8_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonUint8.Checked)
+            if (!CheckChanges())
             {
-                currentDataType = DataType.Uint8;
+                if (radioButtonUint8.Checked)
+                {
+                    currentDataType = DataType.Uint8;
+                }
             }
         }
 
         private void radioButtonInt16_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonInt16.Checked)
+            if (!CheckChanges())
             {
-                currentDataType = DataType.Int16;
+                if (radioButtonInt16.Checked)
+                {
+                    currentDataType = DataType.Int16;
+                }
             }
         }
 
         private void radioButtonUint16_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonUint16.Checked)
+            if (!CheckChanges())
             {
-                currentDataType = DataType.Uint16;
+                if (radioButtonUint16.Checked)
+                {
+                    currentDataType = DataType.Uint16;
+                }
             }
         }
 
         private void radioButtonInt32_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonInt32.Checked)
+            if (!CheckChanges())
             {
-                currentDataType = DataType.Int32;
+                if (radioButtonInt32.Checked)
+                {
+                    currentDataType = DataType.Int32;
+                }
             }
         }
 
         private void radioButtonUint32_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonUint32.Checked)
+            if (!CheckChanges())
             {
-                currentDataType = DataType.Uint32;
+                if (radioButtonUint32.Checked)
+                {
+                    currentDataType = DataType.Uint32;
+                }
             }
         }
 
         private void radioButtonFloat_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonFloat.Checked)
+            if (!CheckChanges())
             {
-                currentDataType = DataType.Float;
+                if (radioButtonFloat.Checked)
+                {
+                    currentDataType = DataType.Float;
+                }
             }
         }
 
         private void radioButtonDouble_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonDouble.Checked)
+            if (!CheckChanges())
             {
-                currentDataType = DataType.Double;
+                if (radioButtonDouble.Checked)
+                {
+                    currentDataType = DataType.Double;
+                }
             }
         }
 
         private void numericUpDownDataAmount_ValueChanged(object sender, EventArgs e)
         {
-            int currentSeries = (int) numericUpDownDataAmount.Value;
-
-            if(currentSeries < 1 || currentSeries > 10)
+            if (!CheckChanges())
             {
-                currentSeries = 1;
-            }
+                int currentSeries = (int)numericUpDownDataAmount.Value;
 
-
-            int seriesDiff = CountActiveSeries() - currentSeries;
-
-            if(seriesDiff < 0)
-            {
-                for(int i = 0; i < currentSeries; i++)
+                if (currentSeries < 1 || currentSeries > 10)
                 {
-                    if(chart1.Series.Count <= i)
-                    {
-                        chart1.Series.Add("Series" + (i + 1));
-                    }
-
-                    series[i] = chart1.Series[i];
-                    series[i].LegendText = "Unnamed";
+                    currentSeries = 1;
                 }
-            }
-            else if(seriesDiff > 0) {
-                for(int i = currentSeries; i > 0; i--)
+
+
+                int seriesDiff = CountActiveSeries() - currentSeries;
+
+                if (seriesDiff < 0)
                 {
-                    if(chart1.Series.Count > currentSeries)
+                    for (int i = 0; i < currentSeries; i++)
                     {
-                        chart1.Series.RemoveAt(i);
-                        series[i] = null;
+                        if (chart1.Series.Count <= i)
+                        {
+                            chart1.Series.Add("Series" + (i + 1));
+                        }
+
+                        series[i] = chart1.Series[i];
+                        series[i].LegendText = "Unnamed";
                     }
                 }
+                else if (seriesDiff > 0)
+                {
+                    for (int i = currentSeries; i > 0; i--)
+                    {
+                        if (chart1.Series.Count > currentSeries)
+                        {
+                            chart1.Series.RemoveAt(i);
+                            series[i] = null;
+                        }
+                    }
+                }
             }
-
         }
 
 
@@ -518,6 +581,26 @@ namespace SerialVisualizer
             }
 
             return lastX;
+        }
+
+        private void comboBoxBaudRate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CheckChanges();
+        }
+
+        private void comboBoxParity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CheckChanges();
+        }
+
+        private void numericUpDownDataBits_ValueChanged(object sender, EventArgs e)
+        {
+            CheckChanges();
+        }
+
+        private void comboBoxStopBits_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CheckChanges();
         }
     }
 

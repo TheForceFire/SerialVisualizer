@@ -21,7 +21,6 @@ namespace SerialVisualizer
             this.isChecksumEnable = isChecksumEnable;
         }
 
-
         public ClassDataSaver Parse(byte[] bytes)
         {
             int startIndex = FindFrameStart(bytes);
@@ -117,8 +116,6 @@ namespace SerialVisualizer
             }
             return -1;
         }
-
-
 
         public static byte[] StringToByteArray(string hex)
         {

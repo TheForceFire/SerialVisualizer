@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownDataAmount = new System.Windows.Forms.NumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.radioButtonDouble = new System.Windows.Forms.RadioButton();
             this.radioButtonFloat = new System.Windows.Forms.RadioButton();
@@ -73,11 +75,11 @@
             this.comboBoxStopBits = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.numericUpDownDataAmount = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataAmount)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -86,25 +88,23 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataBits)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataAmount)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea6.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chart1.Legends.Add(legend6);
             this.chart1.Location = new System.Drawing.Point(6, 6);
             this.chart1.MinimumSize = new System.Drawing.Size(388, 150);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chart1.Series.Add(series6);
             this.chart1.Size = new System.Drawing.Size(1258, 491);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -144,11 +144,34 @@
             this.tabPage1.Controls.Add(this.comboBoxStopBits);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1278, 551);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Options";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.numericUpDownDataAmount);
+            this.groupBox6.Location = new System.Drawing.Point(502, 207);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(148, 44);
+            this.groupBox6.TabIndex = 34;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Data Amount";
+            // 
+            // numericUpDownDataAmount
+            // 
+            this.numericUpDownDataAmount.Location = new System.Drawing.Point(6, 18);
+            this.numericUpDownDataAmount.Name = "numericUpDownDataAmount";
+            this.numericUpDownDataAmount.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownDataAmount.TabIndex = 35;
+            this.numericUpDownDataAmount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownDataAmount.ValueChanged += new System.EventHandler(this.numericUpDownDataAmount_ValueChanged);
             // 
             // groupBox5
             // 
@@ -161,9 +184,9 @@
             this.groupBox5.Controls.Add(this.radioButtonUint8);
             this.groupBox5.Controls.Add(this.radioButtonInt8);
             this.groupBox5.Location = new System.Drawing.Point(502, 8);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(2);
             this.groupBox5.Size = new System.Drawing.Size(148, 193);
             this.groupBox5.TabIndex = 33;
             this.groupBox5.TabStop = false;
@@ -173,7 +196,7 @@
             // 
             this.radioButtonDouble.AutoSize = true;
             this.radioButtonDouble.Location = new System.Drawing.Point(4, 165);
-            this.radioButtonDouble.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonDouble.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonDouble.Name = "radioButtonDouble";
             this.radioButtonDouble.Size = new System.Drawing.Size(59, 17);
             this.radioButtonDouble.TabIndex = 7;
@@ -185,7 +208,7 @@
             // 
             this.radioButtonFloat.AutoSize = true;
             this.radioButtonFloat.Location = new System.Drawing.Point(4, 144);
-            this.radioButtonFloat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonFloat.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonFloat.Name = "radioButtonFloat";
             this.radioButtonFloat.Size = new System.Drawing.Size(48, 17);
             this.radioButtonFloat.TabIndex = 6;
@@ -197,7 +220,7 @@
             // 
             this.radioButtonUint32.AutoSize = true;
             this.radioButtonUint32.Location = new System.Drawing.Point(4, 123);
-            this.radioButtonUint32.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonUint32.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonUint32.Name = "radioButtonUint32";
             this.radioButtonUint32.Size = new System.Drawing.Size(144, 17);
             this.radioButtonUint32.TabIndex = 5;
@@ -209,7 +232,7 @@
             // 
             this.radioButtonInt32.AutoSize = true;
             this.radioButtonInt32.Location = new System.Drawing.Point(4, 102);
-            this.radioButtonInt32.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonInt32.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonInt32.Name = "radioButtonInt32";
             this.radioButtonInt32.Size = new System.Drawing.Size(132, 17);
             this.radioButtonInt32.TabIndex = 4;
@@ -221,7 +244,7 @@
             // 
             this.radioButtonUint16.AutoSize = true;
             this.radioButtonUint16.Location = new System.Drawing.Point(4, 80);
-            this.radioButtonUint16.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonUint16.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonUint16.Name = "radioButtonUint16";
             this.radioButtonUint16.Size = new System.Drawing.Size(144, 17);
             this.radioButtonUint16.TabIndex = 3;
@@ -233,7 +256,7 @@
             // 
             this.radioButtonInt16.AutoSize = true;
             this.radioButtonInt16.Location = new System.Drawing.Point(4, 59);
-            this.radioButtonInt16.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonInt16.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonInt16.Name = "radioButtonInt16";
             this.radioButtonInt16.Size = new System.Drawing.Size(132, 17);
             this.radioButtonInt16.TabIndex = 2;
@@ -246,7 +269,7 @@
             this.radioButtonUint8.AutoSize = true;
             this.radioButtonUint8.Checked = true;
             this.radioButtonUint8.Location = new System.Drawing.Point(4, 38);
-            this.radioButtonUint8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonUint8.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonUint8.Name = "radioButtonUint8";
             this.radioButtonUint8.Size = new System.Drawing.Size(139, 17);
             this.radioButtonUint8.TabIndex = 1;
@@ -259,7 +282,7 @@
             // 
             this.radioButtonInt8.AutoSize = true;
             this.radioButtonInt8.Location = new System.Drawing.Point(4, 17);
-            this.radioButtonInt8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.radioButtonInt8.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonInt8.Name = "radioButtonInt8";
             this.radioButtonInt8.Size = new System.Drawing.Size(127, 17);
             this.radioButtonInt8.TabIndex = 0;
@@ -300,10 +323,12 @@
             // radioButtonEndianLittle
             // 
             this.radioButtonEndianLittle.AutoSize = true;
+            this.radioButtonEndianLittle.Checked = true;
             this.radioButtonEndianLittle.Location = new System.Drawing.Point(6, 19);
             this.radioButtonEndianLittle.Name = "radioButtonEndianLittle";
             this.radioButtonEndianLittle.Size = new System.Drawing.Size(83, 17);
             this.radioButtonEndianLittle.TabIndex = 29;
+            this.radioButtonEndianLittle.TabStop = true;
             this.radioButtonEndianLittle.Text = "Little Endian";
             this.radioButtonEndianLittle.UseVisualStyleBackColor = true;
             this.radioButtonEndianLittle.CheckedChanged += new System.EventHandler(this.radioButtonEndianLittle_CheckedChanged);
@@ -311,12 +336,10 @@
             // radioButtonEndianBig
             // 
             this.radioButtonEndianBig.AutoSize = true;
-            this.radioButtonEndianBig.Checked = true;
             this.radioButtonEndianBig.Location = new System.Drawing.Point(118, 19);
             this.radioButtonEndianBig.Name = "radioButtonEndianBig";
             this.radioButtonEndianBig.Size = new System.Drawing.Size(76, 17);
             this.radioButtonEndianBig.TabIndex = 30;
-            this.radioButtonEndianBig.TabStop = true;
             this.radioButtonEndianBig.Text = "Big Endian";
             this.radioButtonEndianBig.UseVisualStyleBackColor = true;
             this.radioButtonEndianBig.CheckedChanged += new System.EventHandler(this.radioButtonEndianBig_CheckedChanged);
@@ -440,6 +463,7 @@
             this.numericUpDownDataBits.Name = "numericUpDownDataBits";
             this.numericUpDownDataBits.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownDataBits.TabIndex = 16;
+            this.numericUpDownDataBits.ValueChanged += new System.EventHandler(this.numericUpDownDataBits_ValueChanged);
             // 
             // label6
             // 
@@ -464,6 +488,7 @@
             this.comboBoxParity.Name = "comboBoxParity";
             this.comboBoxParity.Size = new System.Drawing.Size(121, 21);
             this.comboBoxParity.TabIndex = 14;
+            this.comboBoxParity.SelectedIndexChanged += new System.EventHandler(this.comboBoxParity_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -505,6 +530,7 @@
             this.comboBoxBaudRate.Name = "comboBoxBaudRate";
             this.comboBoxBaudRate.Size = new System.Drawing.Size(121, 21);
             this.comboBoxBaudRate.TabIndex = 11;
+            this.comboBoxBaudRate.SelectedIndexChanged += new System.EventHandler(this.comboBoxBaudRate_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -580,6 +606,7 @@
             this.comboBoxStopBits.Name = "comboBoxStopBits";
             this.comboBoxStopBits.Size = new System.Drawing.Size(120, 21);
             this.comboBoxStopBits.TabIndex = 4;
+            this.comboBoxStopBits.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopBits_SelectedIndexChanged);
             // 
             // tabPage2
             // 
@@ -587,7 +614,7 @@
             this.tabPage2.Controls.Add(this.chart1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(1278, 551);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Data & Graphics";
@@ -601,29 +628,6 @@
             this.button3.TabIndex = 1;
             this.button3.Text = "Clear Graphic";
             this.button3.UseVisualStyleBackColor = true;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.numericUpDownDataAmount);
-            this.groupBox6.Location = new System.Drawing.Point(502, 207);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(148, 44);
-            this.groupBox6.TabIndex = 34;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Data Amount";
-            // 
-            // numericUpDownDataAmount
-            // 
-            this.numericUpDownDataAmount.Location = new System.Drawing.Point(6, 18);
-            this.numericUpDownDataAmount.Name = "numericUpDownDataAmount";
-            this.numericUpDownDataAmount.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDownDataAmount.TabIndex = 35;
-            this.numericUpDownDataAmount.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownDataAmount.ValueChanged += new System.EventHandler(this.numericUpDownDataAmount_ValueChanged);
             // 
             // Form1
             // 
@@ -639,6 +643,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataAmount)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -652,8 +658,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataBits)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataAmount)).EndInit();
             this.ResumeLayout(false);
 
         }

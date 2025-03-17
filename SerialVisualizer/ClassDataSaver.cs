@@ -33,6 +33,10 @@ namespace SerialVisualizer
 
         public short[] ToInt16() {
             List<short> int16Data = new List<short>();
+            if (data_b.Count % 2 != 0)
+            {
+                data_b.Add(0);
+            }
             for (int i = 0; i < data_b.Count; i += 2)
             {
                 if (i + 1 < data_b.Count)
@@ -45,6 +49,10 @@ namespace SerialVisualizer
 
         public ushort[] ToUInt16() {
             List<ushort> uint16Data = new List<ushort>();
+            if (data_b.Count % 2 != 0)
+            {
+                data_b.Add(0);
+            }
             for (int i = 0; i < data_b.Count; i += 2)
             {
                 if (i + 1 < data_b.Count)
@@ -58,6 +66,10 @@ namespace SerialVisualizer
         public int[] ToInt32()
         {
             List<int> int32Data = new List<int>();
+            while (data_b.Count % 4 != 0)
+            {
+                data_b.Add(0);
+            }
             for (int i = 0; i < data_b.Count; i += 4)
             {
                 if (i + 3 < data_b.Count)
@@ -71,6 +83,10 @@ namespace SerialVisualizer
         public uint[] ToUInt32()
         {
             List<uint> uint32Data = new List<uint>();
+            while (data_b.Count % 4 != 0)
+            {
+                data_b.Add(0);
+            }
             for (int i = 0; i < data_b.Count; i += 4)
             {
                 if (i + 3 < data_b.Count)
@@ -84,6 +100,10 @@ namespace SerialVisualizer
         public float[] ToFloat()
         {
             List<float> floatData = new List<float>();
+            while (data_b.Count % 4 != 0)
+            {
+                data_b.Add(0);
+            }
             for (int i = 0; i < data_b.Count; i += 4)
             {
                 if (i + 3 < data_b.Count)
@@ -97,15 +117,18 @@ namespace SerialVisualizer
         public double[] ToDouble()
         {
             List<double> doubleData = new List<double>();
-            for (int i = 0; i < data_b.Count; i += 4)
+            while (data_b.Count % 8 != 0)
             {
-                if (i + 3 < data_b.Count)
+                data_b.Add(0);
+            }
+            for (int i = 0; i < data_b.Count; i += 8)
+            {
+                if (i + 7 < data_b.Count)
                 {
                     doubleData.Add(BitConverter.ToDouble(data_b.ToArray(), i));
                 }
             }
             return doubleData.ToArray();
         }
-
     }
 }
