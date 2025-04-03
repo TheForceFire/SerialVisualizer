@@ -28,12 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.comboBoxSelectedPort = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonRefreshPortList = new System.Windows.Forms.Button();
+            this.buttonConnectComPort = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.labelConnectionStatus = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboBoxStopBits = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.numericUpDownDataBits = new System.Windows.Forms.NumericUpDown();
+            this.comboBoxBaudRate = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.comboBoxParity = new System.Windows.Forms.ComboBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.numericUpDownDataAmount = new System.Windows.Forms.NumericUpDown();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -58,26 +74,17 @@
             this.textBoxAddresLength = new System.Windows.Forms.TextBox();
             this.radioButtonYesAddress = new System.Windows.Forms.RadioButton();
             this.radioButtonNoAddress = new System.Windows.Forms.RadioButton();
-            this.comboBoxSelectedPort = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numericUpDownDataBits = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBoxParity = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBoxBaudRate = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.labelConnectionStatus = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.buttonRefreshPortList = new System.Windows.Forms.Button();
-            this.buttonConnectComPort = new System.Windows.Forms.Button();
-            this.comboBoxStopBits = new System.Windows.Forms.ComboBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
+            this.RenameBox = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.seriesChange = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataBits)).BeginInit();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataAmount)).BeginInit();
             this.groupBox5.SuspendLayout();
@@ -85,26 +92,25 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataBits)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.seriesChange)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea6.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chart1.Legends.Add(legend6);
+            chartArea5.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.chart1.Legends.Add(legend5);
             this.chart1.Location = new System.Drawing.Point(6, 6);
             this.chart1.MinimumSize = new System.Drawing.Size(388, 150);
             this.chart1.Name = "chart1";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chart1.Series.Add(series6);
+            series5.ChartArea = "ChartArea1";
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.chart1.Series.Add(series5);
             this.chart1.Size = new System.Drawing.Size(1258, 491);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -121,27 +127,13 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBox7);
             this.tabPage1.Controls.Add(this.groupBox6);
             this.tabPage1.Controls.Add(this.groupBox5);
             this.tabPage1.Controls.Add(this.groupBox4);
             this.tabPage1.Controls.Add(this.groupBox3);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.comboBoxSelectedPort);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.numericUpDownDataBits);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.comboBoxParity);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.comboBoxBaudRate);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.labelConnectionStatus);
-            this.tabPage1.Controls.Add(this.pictureBox1);
-            this.tabPage1.Controls.Add(this.buttonRefreshPortList);
-            this.tabPage1.Controls.Add(this.buttonConnectComPort);
-            this.tabPage1.Controls.Add(this.comboBoxStopBits);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -149,6 +141,204 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Options";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.comboBoxSelectedPort);
+            this.groupBox7.Controls.Add(this.label1);
+            this.groupBox7.Controls.Add(this.buttonRefreshPortList);
+            this.groupBox7.Controls.Add(this.buttonConnectComPort);
+            this.groupBox7.Controls.Add(this.label3);
+            this.groupBox7.Controls.Add(this.pictureBox1);
+            this.groupBox7.Controls.Add(this.labelConnectionStatus);
+            this.groupBox7.Controls.Add(this.label7);
+            this.groupBox7.Controls.Add(this.comboBoxStopBits);
+            this.groupBox7.Controls.Add(this.label4);
+            this.groupBox7.Controls.Add(this.numericUpDownDataBits);
+            this.groupBox7.Controls.Add(this.comboBoxBaudRate);
+            this.groupBox7.Controls.Add(this.label6);
+            this.groupBox7.Controls.Add(this.label5);
+            this.groupBox7.Controls.Add(this.comboBoxParity);
+            this.groupBox7.Location = new System.Drawing.Point(9, 8);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(234, 243);
+            this.groupBox7.TabIndex = 35;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "COM port";
+            // 
+            // comboBoxSelectedPort
+            // 
+            this.comboBoxSelectedPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSelectedPort.FormattingEnabled = true;
+            this.comboBoxSelectedPort.Location = new System.Drawing.Point(41, 19);
+            this.comboBoxSelectedPort.Name = "comboBoxSelectedPort";
+            this.comboBoxSelectedPort.Size = new System.Drawing.Size(96, 21);
+            this.comboBoxSelectedPort.TabIndex = 18;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Port:";
+            // 
+            // buttonRefreshPortList
+            // 
+            this.buttonRefreshPortList.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonRefreshPortList.Location = new System.Drawing.Point(149, 19);
+            this.buttonRefreshPortList.MinimumSize = new System.Drawing.Size(37, 11);
+            this.buttonRefreshPortList.Name = "buttonRefreshPortList";
+            this.buttonRefreshPortList.Size = new System.Drawing.Size(75, 21);
+            this.buttonRefreshPortList.TabIndex = 6;
+            this.buttonRefreshPortList.Text = "Refresh";
+            this.buttonRefreshPortList.UseVisualStyleBackColor = true;
+            // 
+            // buttonConnectComPort
+            // 
+            this.buttonConnectComPort.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonConnectComPort.Location = new System.Drawing.Point(15, 51);
+            this.buttonConnectComPort.MinimumSize = new System.Drawing.Size(37, 11);
+            this.buttonConnectComPort.Name = "buttonConnectComPort";
+            this.buttonConnectComPort.Size = new System.Drawing.Size(209, 40);
+            this.buttonConnectComPort.TabIndex = 5;
+            this.buttonConnectComPort.Text = "Connect";
+            this.buttonConnectComPort.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 106);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Status:";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Orange;
+            this.pictureBox1.Location = new System.Drawing.Point(52, 97);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            // 
+            // labelConnectionStatus
+            // 
+            this.labelConnectionStatus.AutoSize = true;
+            this.labelConnectionStatus.Location = new System.Drawing.Point(102, 106);
+            this.labelConnectionStatus.Name = "labelConnectionStatus";
+            this.labelConnectionStatus.Size = new System.Drawing.Size(79, 13);
+            this.labelConnectionStatus.TabIndex = 8;
+            this.labelConnectionStatus.Text = "Not Connected";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 217);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(52, 13);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "Stop Bits:";
+            // 
+            // comboBoxStopBits
+            // 
+            this.comboBoxStopBits.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxStopBits.FormattingEnabled = true;
+            this.comboBoxStopBits.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "1,5",
+            "2"});
+            this.comboBoxStopBits.Location = new System.Drawing.Point(73, 215);
+            this.comboBoxStopBits.MinimumSize = new System.Drawing.Size(83, 0);
+            this.comboBoxStopBits.Name = "comboBoxStopBits";
+            this.comboBoxStopBits.Size = new System.Drawing.Size(129, 21);
+            this.comboBoxStopBits.TabIndex = 4;
+            this.comboBoxStopBits.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopBits_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 141);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.TabIndex = 12;
+            this.label4.Text = "Baud Rate:";
+            // 
+            // numericUpDownDataBits
+            // 
+            this.numericUpDownDataBits.Location = new System.Drawing.Point(73, 189);
+            this.numericUpDownDataBits.Maximum = new decimal(new int[] {
+            13,
+            0,
+            0,
+            0});
+            this.numericUpDownDataBits.Name = "numericUpDownDataBits";
+            this.numericUpDownDataBits.Size = new System.Drawing.Size(129, 20);
+            this.numericUpDownDataBits.TabIndex = 16;
+            this.numericUpDownDataBits.ValueChanged += new System.EventHandler(this.numericUpDownDataBits_ValueChanged);
+            // 
+            // comboBoxBaudRate
+            // 
+            this.comboBoxBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxBaudRate.FormattingEnabled = true;
+            this.comboBoxBaudRate.Items.AddRange(new object[] {
+            "600",
+            "1200",
+            "2400",
+            "4800",
+            "9600",
+            "14400",
+            "19200",
+            "28800",
+            "38400",
+            "57600",
+            "115200",
+            "128000",
+            "256000"});
+            this.comboBoxBaudRate.Location = new System.Drawing.Point(73, 138);
+            this.comboBoxBaudRate.Name = "comboBoxBaudRate";
+            this.comboBoxBaudRate.Size = new System.Drawing.Size(129, 21);
+            this.comboBoxBaudRate.TabIndex = 11;
+            this.comboBoxBaudRate.SelectedIndexChanged += new System.EventHandler(this.comboBoxBaudRate_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 189);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 13);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "Data Bits:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 165);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(39, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Parity: ";
+            // 
+            // comboBoxParity
+            // 
+            this.comboBoxParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxParity.FormattingEnabled = true;
+            this.comboBoxParity.Items.AddRange(new object[] {
+            "None",
+            "Odd",
+            "Even",
+            "Mark",
+            "Space"});
+            this.comboBoxParity.Location = new System.Drawing.Point(73, 162);
+            this.comboBoxParity.Name = "comboBoxParity";
+            this.comboBoxParity.Size = new System.Drawing.Size(129, 21);
+            this.comboBoxParity.TabIndex = 14;
+            this.comboBoxParity.SelectedIndexChanged += new System.EventHandler(this.comboBoxParity_SelectedIndexChanged);
             // 
             // groupBox6
             // 
@@ -163,6 +353,16 @@
             // numericUpDownDataAmount
             // 
             this.numericUpDownDataAmount.Location = new System.Drawing.Point(6, 18);
+            this.numericUpDownDataAmount.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownDataAmount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownDataAmount.Name = "numericUpDownDataAmount";
             this.numericUpDownDataAmount.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownDataAmount.TabIndex = 35;
@@ -434,182 +634,11 @@
             this.radioButtonNoAddress.UseVisualStyleBackColor = true;
             this.radioButtonNoAddress.CheckedChanged += new System.EventHandler(this.radioButtonNoAddress_CheckedChanged);
             // 
-            // comboBoxSelectedPort
-            // 
-            this.comboBoxSelectedPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxSelectedPort.FormattingEnabled = true;
-            this.comboBoxSelectedPort.Location = new System.Drawing.Point(38, 8);
-            this.comboBoxSelectedPort.Name = "comboBoxSelectedPort";
-            this.comboBoxSelectedPort.Size = new System.Drawing.Size(96, 21);
-            this.comboBoxSelectedPort.TabIndex = 18;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 213);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(52, 13);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "Stop Bits:";
-            // 
-            // numericUpDownDataBits
-            // 
-            this.numericUpDownDataBits.Location = new System.Drawing.Point(70, 183);
-            this.numericUpDownDataBits.Maximum = new decimal(new int[] {
-            13,
-            0,
-            0,
-            0});
-            this.numericUpDownDataBits.Name = "numericUpDownDataBits";
-            this.numericUpDownDataBits.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDownDataBits.TabIndex = 16;
-            this.numericUpDownDataBits.ValueChanged += new System.EventHandler(this.numericUpDownDataBits_ValueChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 185);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 13);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Data Bits:";
-            // 
-            // comboBoxParity
-            // 
-            this.comboBoxParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxParity.FormattingEnabled = true;
-            this.comboBoxParity.Items.AddRange(new object[] {
-            "None",
-            "Odd",
-            "Even",
-            "Mark",
-            "Space"});
-            this.comboBoxParity.Location = new System.Drawing.Point(70, 154);
-            this.comboBoxParity.Name = "comboBoxParity";
-            this.comboBoxParity.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxParity.TabIndex = 14;
-            this.comboBoxParity.SelectedIndexChanged += new System.EventHandler(this.comboBoxParity_SelectedIndexChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 157);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 13);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Parity: ";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 129);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 13);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Baud Rate:";
-            // 
-            // comboBoxBaudRate
-            // 
-            this.comboBoxBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxBaudRate.FormattingEnabled = true;
-            this.comboBoxBaudRate.Items.AddRange(new object[] {
-            "600",
-            "1200",
-            "2400",
-            "4800",
-            "9600",
-            "14400",
-            "19200",
-            "28800",
-            "38400",
-            "57600",
-            "115200",
-            "128000",
-            "256000"});
-            this.comboBoxBaudRate.Location = new System.Drawing.Point(70, 126);
-            this.comboBoxBaudRate.Name = "comboBoxBaudRate";
-            this.comboBoxBaudRate.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxBaudRate.TabIndex = 11;
-            this.comboBoxBaudRate.SelectedIndexChanged += new System.EventHandler(this.comboBoxBaudRate_SelectedIndexChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 93);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 13);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Status:";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 11);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Port:";
-            // 
-            // labelConnectionStatus
-            // 
-            this.labelConnectionStatus.AutoSize = true;
-            this.labelConnectionStatus.Location = new System.Drawing.Point(112, 93);
-            this.labelConnectionStatus.Name = "labelConnectionStatus";
-            this.labelConnectionStatus.Size = new System.Drawing.Size(79, 13);
-            this.labelConnectionStatus.TabIndex = 8;
-            this.labelConnectionStatus.Text = "Not Connected";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Orange;
-            this.pictureBox1.Location = new System.Drawing.Point(70, 83);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
-            // 
-            // buttonRefreshPortList
-            // 
-            this.buttonRefreshPortList.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonRefreshPortList.Location = new System.Drawing.Point(138, 7);
-            this.buttonRefreshPortList.MinimumSize = new System.Drawing.Size(37, 11);
-            this.buttonRefreshPortList.Name = "buttonRefreshPortList";
-            this.buttonRefreshPortList.Size = new System.Drawing.Size(75, 21);
-            this.buttonRefreshPortList.TabIndex = 6;
-            this.buttonRefreshPortList.Text = "Refresh";
-            this.buttonRefreshPortList.UseVisualStyleBackColor = true;
-            // 
-            // buttonConnectComPort
-            // 
-            this.buttonConnectComPort.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonConnectComPort.Location = new System.Drawing.Point(4, 35);
-            this.buttonConnectComPort.MinimumSize = new System.Drawing.Size(37, 11);
-            this.buttonConnectComPort.Name = "buttonConnectComPort";
-            this.buttonConnectComPort.Size = new System.Drawing.Size(209, 40);
-            this.buttonConnectComPort.TabIndex = 5;
-            this.buttonConnectComPort.Text = "Connect";
-            this.buttonConnectComPort.UseVisualStyleBackColor = true;
-            // 
-            // comboBoxStopBits
-            // 
-            this.comboBoxStopBits.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxStopBits.FormattingEnabled = true;
-            this.comboBoxStopBits.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "1,5",
-            "2"});
-            this.comboBoxStopBits.Location = new System.Drawing.Point(70, 207);
-            this.comboBoxStopBits.MinimumSize = new System.Drawing.Size(83, 0);
-            this.comboBoxStopBits.Name = "comboBoxStopBits";
-            this.comboBoxStopBits.Size = new System.Drawing.Size(120, 21);
-            this.comboBoxStopBits.TabIndex = 4;
-            this.comboBoxStopBits.SelectedIndexChanged += new System.EventHandler(this.comboBoxStopBits_SelectedIndexChanged);
-            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.seriesChange);
+            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.RenameBox);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.chart1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -629,6 +658,45 @@
             this.button3.Text = "Clear Graphic";
             this.button3.UseVisualStyleBackColor = true;
             // 
+            // RenameBox
+            // 
+            this.RenameBox.Location = new System.Drawing.Point(1032, 512);
+            this.RenameBox.Name = "RenameBox";
+            this.RenameBox.Size = new System.Drawing.Size(127, 20);
+            this.RenameBox.TabIndex = 2;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1176, 512);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 20);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Rename";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // seriesChange
+            // 
+            this.seriesChange.Location = new System.Drawing.Point(886, 512);
+            this.seriesChange.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.seriesChange.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.seriesChange.Name = "seriesChange";
+            this.seriesChange.Size = new System.Drawing.Size(120, 20);
+            this.seriesChange.TabIndex = 4;
+            this.seriesChange.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -642,7 +710,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataBits)).EndInit();
             this.groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataAmount)).EndInit();
             this.groupBox5.ResumeLayout(false);
@@ -655,9 +726,9 @@
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDataBits)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.seriesChange)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -708,6 +779,10 @@
         private System.Windows.Forms.RadioButton radioButtonDouble;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.NumericUpDown numericUpDownDataAmount;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox RenameBox;
+        private System.Windows.Forms.NumericUpDown seriesChange;
     }
 }
 
