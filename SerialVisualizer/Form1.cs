@@ -5,7 +5,6 @@ using NLog;
 using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing;
-using System.Text.RegularExpressions;
 
 namespace SerialVisualizer
 {
@@ -32,7 +31,7 @@ namespace SerialVisualizer
 
             series = new Series[10];
             series[0] = chart1.Series[0];
-            series[0].LegendText = "Unnamed";
+            series[0].LegendText = "Series1";
             series[0].ChartType = SeriesChartType.Spline;
 
             comboBoxBaudRate.SelectedIndex = 4;
@@ -487,11 +486,7 @@ namespace SerialVisualizer
                         }
 
                         series[i] = chart1.Series[i];
-                    Regex regex = new Regex(@"^Series\d+$");
-                    if (regex.IsMatch(series[i].LegendText))
-                        {
-                            series[i].LegendText = "Unnamed";
-                        }
+                        series[i].ChartType = SeriesChartType.Spline;
                     }
                 }
                 else if (seriesDiff > 0)
