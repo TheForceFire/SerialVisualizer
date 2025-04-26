@@ -5,6 +5,8 @@ using NLog;
 using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing;
+using System.Windows.Forms.VisualStyles;
+using System.Reflection;
 
 namespace SerialVisualizer
 {
@@ -15,6 +17,8 @@ namespace SerialVisualizer
         Thread myThread;
         ManualResetEvent stopEvent = new ManualResetEvent(false);
         Series[] series;
+        Series[] originSeries;
+        double[] scales;
         static readonly Logger logger = LogManager.GetCurrentClassLogger();
         bool isUserCheckMessage = false;
 
@@ -29,6 +33,12 @@ namespace SerialVisualizer
             buttonRefreshPortList.Click += b_refresh;
             button3.Click += b_clear;
 
+            originSeries = new Series[10];
+            for(int i = 0; i < 10; i++)
+            {
+                originSeries[i] = new Series();
+            }
+            scales = new double[10] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
             series = new Series[10];
             series[0] = chart1.Series[0];
             series[0].LegendText = "Series1";
@@ -164,6 +174,9 @@ namespace SerialVisualizer
             {
                 series[i].Points.Clear();
             }
+            for (int i = 0; i < originSeries.Length; i++)
+                originSeries[i].Points.Clear();
+                
         }
         private void CB_SIC(object sender, EventArgs e)
         {
@@ -215,7 +228,8 @@ namespace SerialVisualizer
 
                                                 for (int i = 0; i < dataAmount; i++)
                                                 {
-                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
+                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
                                                 }
                                             }
                                             break;
@@ -227,7 +241,8 @@ namespace SerialVisualizer
 
                                                 for (int i = 0; i < dataAmount; i++)
                                                 {
-                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
+                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
                                                 }
                                             }
                                             break;
@@ -239,7 +254,8 @@ namespace SerialVisualizer
 
                                                 for (int i = 0; i < dataAmount; i++)
                                                 {
-                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
+                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
                                                 }
                                             }
                                             break;
@@ -251,7 +267,8 @@ namespace SerialVisualizer
 
                                                 for (int i = 0; i < dataAmount; i++)
                                                 {
-                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
+                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
                                                 }
                                             }
                                             break;
@@ -263,7 +280,8 @@ namespace SerialVisualizer
 
                                                 for (int i = 0; i < dataAmount; i++)
                                                 {
-                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
+                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
                                                 }
                                             }
                                             break;
@@ -275,7 +293,8 @@ namespace SerialVisualizer
 
                                                 for (int i = 0; i < dataAmount; i++)
                                                 {
-                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
+                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
                                                 }
                                             }
                                             break;
@@ -287,7 +306,8 @@ namespace SerialVisualizer
 
                                                 for (int i = 0; i < dataAmount; i++)
                                                 {
-                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
+                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
                                                 }
                                             }
                                             break;
@@ -299,7 +319,8 @@ namespace SerialVisualizer
 
                                                 for (int i = 0; i < dataAmount; i++)
                                                 {
-                                                    series[i].Points.AddXY(xCoordinate, data[i]);
+                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
+                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
                                                 }
                                             }      
                                             break;
@@ -563,6 +584,91 @@ namespace SerialVisualizer
             if (currentSeries >= 0 && currentSeries < CountActiveSeries())
             {
                 series[currentSeries].LegendText = nameToRename;
+            }
+        }
+
+        private void seriesChange_ValueChanged(object sender, EventArgs e)
+        {
+            int index = (int)seriesChange.Value - 1;
+            textBoxScaleValues.Text = scales[index].ToString();
+        }
+
+        private void buttonAddScale_Click(object sender, EventArgs e)
+        {
+            int index = (int)seriesChange.Value - 1;
+
+            switch (scales[index])
+            {
+                case 0.001:
+                    scales[index] = 0.01;
+                    break;
+                case 0.01:
+                    scales[index] = 0.1;
+                    break;
+                case 0.1:
+                    scales[index] = 1;
+                    break;
+                case 1:
+                    scales[index] = 10;
+                    break;
+                case 10:
+                    scales[index] = 100;
+                    break;
+                case 100:
+                    scales[index] = 1000;
+                    break;
+                case 1000:
+                    break;
+                default:
+                    break;
+            }
+            textBoxScaleValues.Text = scales[index].ToString();
+
+
+            series[index].Points.Clear();
+
+            foreach (DataPoint p in originSeries[index].Points)
+            {
+                series[index].Points.AddXY(p.XValue, p.YValues[0] * scales[index]);
+            }
+        }
+
+        private void buttonRemoveScale_Click(object sender, EventArgs e)
+        {
+            int index = (int)seriesChange.Value - 1;
+
+            switch (scales[index])
+            {
+                case 0.001:
+                    break;
+                case 0.01:
+                    scales[index] = 0.001;
+                    break;
+                case 0.1:
+                    scales[index] = 0.01;
+                    break;
+                case 1:
+                    scales[index] = 0.1;
+                    break;
+                case 10:
+                    scales[index] = 1;
+                    break;
+                case 100:
+                    scales[index] = 10;
+                    break;
+                case 1000:
+                    scales[index] = 100;
+                    break;
+                default:
+                    break;
+            }
+            textBoxScaleValues.Text = scales[index].ToString();
+
+            series[index].Points.Clear();
+
+            foreach (DataPoint p in originSeries[index].Points)
+            {
+                series[index].Points.AddXY(p.XValue, p.YValues[0] * scales[index]);
             }
         }
     }
