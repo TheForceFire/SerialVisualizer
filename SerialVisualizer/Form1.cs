@@ -115,7 +115,6 @@ namespace SerialVisualizer
             OpenPort(selectedPort, BR, DB, P, SB);
             
         }
-
         private void OpenPort(string selectedPort, int BR, int DB, Parity P, StopBits SB)
         {
             try
