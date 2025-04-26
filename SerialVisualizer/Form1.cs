@@ -5,8 +5,8 @@ using NLog;
 using System.Threading;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing;
-using System.Windows.Forms.VisualStyles;
-using System.Reflection;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SerialVisualizer
 {
@@ -34,7 +34,7 @@ namespace SerialVisualizer
             button3.Click += b_clear;
 
             originSeries = new Series[10];
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
                 originSeries[i] = new Series();
             }
@@ -72,7 +72,7 @@ namespace SerialVisualizer
                 case "Space":
                     return Parity.Space;
             }
-
+            logger.Info("Change parity");
             return Parity.None;
         }
 
@@ -89,7 +89,7 @@ namespace SerialVisualizer
                 case 3:
                     return StopBits.None;
             }
-
+            logger.Info("Change stop bits");
             return StopBits.None;
         }
 
@@ -113,7 +113,7 @@ namespace SerialVisualizer
             StopBits SB = GetStopBits(selectedSB);
 
             OpenPort(selectedPort, BR, DB, P, SB);
-            
+
         }
         private void OpenPort(string selectedPort, int BR, int DB, Parity P, StopBits SB)
         {
@@ -168,14 +168,15 @@ namespace SerialVisualizer
         }
         private void b_clear(object sender, EventArgs e)
         {
-            for(int i = 0; i < series.Length; i++)
-            if (series[i] != null)
-            {
-                series[i].Points.Clear();
-            }
+            logger.Info("Graphics cleared");
+            for (int i = 0; i < series.Length; i++)
+                if (series[i] != null)
+                {
+                    series[i].Points.Clear();
+                }
             for (int i = 0; i < originSeries.Length; i++)
                 originSeries[i].Points.Clear();
-                
+
         }
         private void CB_SIC(object sender, EventArgs e)
         {
@@ -198,7 +199,8 @@ namespace SerialVisualizer
                     int startBytesToRead;
                     if (bytesToRead > 0)
                     {
-                        do {
+                        do
+                        {
                             startBytesToRead = bytesToRead;
                             Thread.Sleep(10);
                             bytesToRead = serial.BytesToRead;
@@ -321,7 +323,7 @@ namespace SerialVisualizer
                                                     series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
                                                     originSeries[i].Points.AddXY(xCoordinate, data[i]);
                                                 }
-                                            }      
+                                            }
                                             break;
                                     }
                                 }));
@@ -348,6 +350,7 @@ namespace SerialVisualizer
             if (serial.IsOpen && !isUserCheckMessage)
             {
                 MessageBox.Show("The new settings will be applied only after the port is reopened");
+                logger.Info("Warning");
                 isUserCheckMessage = true;
                 return true;
             }
@@ -356,170 +359,171 @@ namespace SerialVisualizer
 
         private void textBoxFrameStart_TextChanged(object sender, EventArgs e)
         {
-                try
-                {
-                    classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
-                    textBoxFrameStart.BackColor = Color.White;
-                }
-                catch
-                {
-                    classDataSaverParser.frameStart = null;
-                    textBoxFrameStart.BackColor = Color.OrangeRed;
-                }
+            try
+            {
+                classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
+                textBoxFrameStart.BackColor = Color.White;
+            }
+            catch
+            {
+                classDataSaverParser.frameStart = null;
+                textBoxFrameStart.BackColor = Color.OrangeRed;
+            }
         }
 
         private void radioButtonEndianLittle_CheckedChanged(object sender, EventArgs e)
         {
-                if (radioButtonEndianLittle.Checked)
-                {
-                    classDataSaverParser.readingType = ReadingType.LittleEndian;
-                }
+            if (radioButtonEndianLittle.Checked)
+            {
+                classDataSaverParser.readingType = ReadingType.LittleEndian;
+            }
         }
 
         private void radioButtonEndianBig_CheckedChanged(object sender, EventArgs e)
         {
-                if (radioButtonEndianBig.Checked)
-                {
-                    classDataSaverParser.readingType = ReadingType.BigEndian;
-                }
+            if (radioButtonEndianBig.Checked)
+            {
+                classDataSaverParser.readingType = ReadingType.BigEndian;
+            }
 
         }
 
         private void radioButtonNoAddress_CheckedChanged(object sender, EventArgs e)
         {
-                classDataSaverParser.isAddressEnable = radioButtonYesAddress.Checked;
+            classDataSaverParser.isAddressEnable = radioButtonYesAddress.Checked;
         }
 
         private void radioButtonYesAddress_CheckedChanged(object sender, EventArgs e)
         {
-                classDataSaverParser.isAddressEnable = radioButtonYesAddress.Checked;
+            classDataSaverParser.isAddressEnable = radioButtonYesAddress.Checked;
         }
 
         private void textBoxAddresLength_TextChanged(object sender, EventArgs e)
         {
-                try
-                {
-                    classDataSaverParser.addressLength = int.Parse(textBoxAddresLength.Text);
-                    textBoxAddresLength.BackColor = Color.White;
-                }
-                catch
-                {
-                    classDataSaverParser.addressLength = -1;
-                    textBoxAddresLength.BackColor = Color.OrangeRed;
-                }
+            try
+            {
+                classDataSaverParser.addressLength = int.Parse(textBoxAddresLength.Text);
+                textBoxAddresLength.BackColor = Color.White;
+            }
+            catch
+            {
+                classDataSaverParser.addressLength = -1;
+                textBoxAddresLength.BackColor = Color.OrangeRed;
+            }
         }
 
         private void radioButtonNoChecksum_CheckedChanged(object sender, EventArgs e)
         {
-                classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
+            classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
         }
 
         private void radioButtonYesChecksum_CheckedChanged(object sender, EventArgs e)
         {
-                classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
+            classDataSaverParser.isChecksumEnable = radioButtonYesChecksum.Checked;
         }
 
         private void radioButtonInt8_CheckedChanged(object sender, EventArgs e)
         {
-                if (radioButtonInt8.Checked)
-                {
-                    currentDataType = DataType.Int8;
-                }
+            if (radioButtonInt8.Checked)
+            {
+                currentDataType = DataType.Int8;
+            }
         }
 
         private void radioButtonUint8_CheckedChanged(object sender, EventArgs e)
         {
-                if (radioButtonUint8.Checked)
-                {
-                    currentDataType = DataType.Uint8;
-                }
+            if (radioButtonUint8.Checked)
+            {
+                currentDataType = DataType.Uint8;
+            }
         }
 
         private void radioButtonInt16_CheckedChanged(object sender, EventArgs e)
         {
-                if (radioButtonInt16.Checked)
-                {
-                    currentDataType = DataType.Int16;
-                }
+            if (radioButtonInt16.Checked)
+            {
+                currentDataType = DataType.Int16;
+            }
         }
 
         private void radioButtonUint16_CheckedChanged(object sender, EventArgs e)
         {
-                if (radioButtonUint16.Checked)
-                {
-                    currentDataType = DataType.Uint16;
-                }
+            if (radioButtonUint16.Checked)
+            {
+                currentDataType = DataType.Uint16;
+            }
         }
 
         private void radioButtonInt32_CheckedChanged(object sender, EventArgs e)
         {
-                if (radioButtonInt32.Checked)
-                {
-                    currentDataType = DataType.Int32;
-                }
+            if (radioButtonInt32.Checked)
+            {
+                currentDataType = DataType.Int32;
+            }
         }
 
         private void radioButtonUint32_CheckedChanged(object sender, EventArgs e)
         {
-                if (radioButtonUint32.Checked)
-                {
-                    currentDataType = DataType.Uint32;
-                }
+            if (radioButtonUint32.Checked)
+            {
+                currentDataType = DataType.Uint32;
+            }
         }
 
         private void radioButtonFloat_CheckedChanged(object sender, EventArgs e)
         {
-                if (radioButtonFloat.Checked)
-                {
-                    currentDataType = DataType.Float;
-                }
+            if (radioButtonFloat.Checked)
+            {
+                currentDataType = DataType.Float;
+            }
         }
 
         private void radioButtonDouble_CheckedChanged(object sender, EventArgs e)
         {
-                if (radioButtonDouble.Checked)
-                {
-                    currentDataType = DataType.Double;
-                }
+            if (radioButtonDouble.Checked)
+            {
+                currentDataType = DataType.Double;
+            }
         }
 
         private void numericUpDownDataAmount_ValueChanged(object sender, EventArgs e)
         {
-                int currentSeries = (int)numericUpDownDataAmount.Value;
+            int currentSeries = (int)numericUpDownDataAmount.Value;
 
-                if (currentSeries < 1 || currentSeries > 10)
-                {
-                    currentSeries = 1;
-                }
+            if (currentSeries < 1 || currentSeries > 10)
+            {
+                currentSeries = 1;
+            }
 
 
             int seriesDiff = CountActiveSeries() - currentSeries;
             seriesChange.Maximum = CountActiveSeries() + 1;
 
             if (seriesDiff < 0)
+            {
+                for (int i = 0; i < currentSeries; i++)
                 {
-                    for (int i = 0; i < currentSeries; i++)
+                    if (chart1.Series.Count <= i)
                     {
-                        if (chart1.Series.Count <= i)
-                        {
-                            chart1.Series.Add("Series" + (i + 1));
-                        }
+                        chart1.Series.Add("Series" + (i + 1));
+                    }
 
-                        series[i] = chart1.Series[i];
-                        series[i].ChartType = SeriesChartType.Spline;
-                    }
+                    series[i] = chart1.Series[i];
+                    series[i].ChartType = SeriesChartType.Spline;
                 }
-                else if (seriesDiff > 0)
+            }
+            else if (seriesDiff > 0)
+            {
+                for (int i = currentSeries; i > 0; i--)
                 {
-                    for (int i = currentSeries; i > 0; i--)
+                    if (chart1.Series.Count > currentSeries)
                     {
-                        if (chart1.Series.Count > currentSeries)
-                        {
-                            chart1.Series.RemoveAt(i);
-                            series[i] = null;
-                        }
+                        chart1.Series.RemoveAt(i);
+                        series[i] = null;
                     }
                 }
+            }
+            logger.Info("Series changed to " + chart1.Series.Count);
         }
 
 
@@ -527,7 +531,8 @@ namespace SerialVisualizer
         {
             int length = 0;
 
-            for(int i = 0; i < series.Length; i++) {
+            for (int i = 0; i < series.Length; i++)
+            {
                 if (series[i] != null)
                 {
                     length++;
@@ -545,7 +550,7 @@ namespace SerialVisualizer
             {
                 if (series[i] != null)
                 {
-                    if(series[i].Points.Count > lastX)
+                    if (series[i].Points.Count > lastX)
                     {
                         lastX = series[i].Points.Count;
                     }
@@ -579,7 +584,7 @@ namespace SerialVisualizer
         {
             int currentSeries = (int)seriesChange.Value - 1;
             string nameToRename = RenameBox.Text;
-
+            logger.Info("Graphic " + currentSeries + " renamed");
             if (currentSeries >= 0 && currentSeries < CountActiveSeries())
             {
                 series[currentSeries].LegendText = nameToRename;
@@ -595,7 +600,7 @@ namespace SerialVisualizer
         private void buttonAddScale_Click(object sender, EventArgs e)
         {
             int index = (int)seriesChange.Value - 1;
-
+            logger.Info("Multiplier up");
             switch (scales[index])
             {
                 case 0.001:
@@ -635,7 +640,7 @@ namespace SerialVisualizer
         private void buttonRemoveScale_Click(object sender, EventArgs e)
         {
             int index = (int)seriesChange.Value - 1;
-
+            logger.Info("Multiplier down");
             switch (scales[index])
             {
                 case 0.001:
@@ -670,17 +675,63 @@ namespace SerialVisualizer
                 series[index].Points.AddXY(p.XValue, p.YValues[0] * scales[index]);
             }
         }
-    }
 
-    enum DataType
-    {
-        Int8,
-        Uint8,
-        Int16,
-        Uint16,
-        Int32,
-        Uint32,
-        Float,
-        Double
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (chart1.Series.Any(s => s.Enabled))
+                {
+                    SaveFileDialog save = new SaveFileDialog();
+                    save.Filter = "Image Files|*.png;";
+                    save.Filter = "Bitmap Image (.bmp)|*.bmp|Gif Image (.gif)|*.gif|JPEG Image (.jpeg)|*.jpeg|Png Image (.png)|*.png|Tiff Image (.tiff)|*.tiff";
+                    save.Title = "Save Chart Image As file";
+                    save.FileName = "Chart " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss");
+                    save.DefaultExt = ".png";
+                    if (save.ShowDialog() == DialogResult.OK)
+                    {
+                        var imgFormats = new Dictionary<string, ChartImageFormat>()
+            {
+                {".bmp", ChartImageFormat.Bmp},
+                {".gif", ChartImageFormat.Gif},
+                {".jpg", ChartImageFormat.Jpeg},
+                {".jpeg", ChartImageFormat.Jpeg},
+                {".png", ChartImageFormat.Png},
+                {".tiff", ChartImageFormat.Tiff},
+            };
+                        var fileExt = System.IO.Path.GetExtension(save.FileName).ToString().ToLower();
+                        if (imgFormats.ContainsKey(fileExt))
+                        {
+                            chart1.SaveImage(save.FileName, imgFormats[fileExt]);
+                            MessageBox.Show("Chart saved successfully");
+                        }
+                        else
+                        {
+                            throw new Exception(String.Format("Only image formats '{0}' supported", string.Join(", ", imgFormats.Keys)));
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception("Nothing to export");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("SaveChartAsImage()", ex.Message);
+            }
+        }
+
+        enum DataType
+        {
+            Int8,
+            Uint8,
+            Int16,
+            Uint16,
+            Int32,
+            Uint32,
+            Float,
+            Double
+        }
     }
 }

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -75,15 +75,16 @@
             this.radioButtonYesAddress = new System.Windows.Forms.RadioButton();
             this.radioButtonNoAddress = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonRemoveScale = new System.Windows.Forms.Button();
+            this.buttonAddScale = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textBoxScaleValues = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.seriesChange = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
             this.RenameBox = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.textBoxScaleValues = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.buttonAddScale = new System.Windows.Forms.Button();
-            this.buttonRemoveScale = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -105,22 +106,22 @@
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea7.AxisX.LineColor = System.Drawing.Color.LightGray;
-            chartArea7.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea7.AxisY.LineColor = System.Drawing.Color.LightGray;
-            chartArea7.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea7.BorderColor = System.Drawing.Color.LightGray;
-            chartArea7.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea7);
-            legend7.Name = "Legend1";
-            this.chart1.Legends.Add(legend7);
+            chartArea1.AxisX.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisY.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea1.BorderColor = System.Drawing.Color.LightGray;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 3);
             this.chart1.MinimumSize = new System.Drawing.Size(388, 150);
             this.chart1.Name = "chart1";
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            this.chart1.Series.Add(series7);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(1275, 490);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -646,6 +647,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.saveButton);
             this.tabPage2.Controls.Add(this.buttonRemoveScale);
             this.tabPage2.Controls.Add(this.buttonAddScale);
             this.tabPage2.Controls.Add(this.label9);
@@ -663,6 +665,44 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Data & Graphics";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonRemoveScale
+            // 
+            this.buttonRemoveScale.Location = new System.Drawing.Point(556, 515);
+            this.buttonRemoveScale.Name = "buttonRemoveScale";
+            this.buttonRemoveScale.Size = new System.Drawing.Size(22, 23);
+            this.buttonRemoveScale.TabIndex = 9;
+            this.buttonRemoveScale.Text = "-";
+            this.buttonRemoveScale.UseVisualStyleBackColor = true;
+            this.buttonRemoveScale.Click += new System.EventHandler(this.buttonRemoveScale_Click);
+            // 
+            // buttonAddScale
+            // 
+            this.buttonAddScale.Location = new System.Drawing.Point(527, 515);
+            this.buttonAddScale.Name = "buttonAddScale";
+            this.buttonAddScale.Size = new System.Drawing.Size(23, 23);
+            this.buttonAddScale.TabIndex = 8;
+            this.buttonAddScale.Text = "+";
+            this.buttonAddScale.UseVisualStyleBackColor = true;
+            this.buttonAddScale.Click += new System.EventHandler(this.buttonAddScale_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(482, 501);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(58, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Renaming:";
+            // 
+            // textBoxScaleValues
+            // 
+            this.textBoxScaleValues.Location = new System.Drawing.Point(482, 517);
+            this.textBoxScaleValues.Name = "textBoxScaleValues";
+            this.textBoxScaleValues.ReadOnly = true;
+            this.textBoxScaleValues.Size = new System.Drawing.Size(39, 20);
+            this.textBoxScaleValues.TabIndex = 6;
+            this.textBoxScaleValues.Text = "1";
             // 
             // label8
             // 
@@ -722,43 +762,15 @@
             this.button3.Text = "Clear Graphic";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // textBoxScaleValues
+            // saveButton
             // 
-            this.textBoxScaleValues.Location = new System.Drawing.Point(482, 517);
-            this.textBoxScaleValues.Name = "textBoxScaleValues";
-            this.textBoxScaleValues.ReadOnly = true;
-            this.textBoxScaleValues.Size = new System.Drawing.Size(39, 20);
-            this.textBoxScaleValues.TabIndex = 6;
-            this.textBoxScaleValues.Text = "1";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(482, 501);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(58, 13);
-            this.label9.TabIndex = 7;
-            this.label9.Text = "Renaming:";
-            // 
-            // buttonAddScale
-            // 
-            this.buttonAddScale.Location = new System.Drawing.Point(527, 515);
-            this.buttonAddScale.Name = "buttonAddScale";
-            this.buttonAddScale.Size = new System.Drawing.Size(23, 23);
-            this.buttonAddScale.TabIndex = 8;
-            this.buttonAddScale.Text = "+";
-            this.buttonAddScale.UseVisualStyleBackColor = true;
-            this.buttonAddScale.Click += new System.EventHandler(this.buttonAddScale_Click);
-            // 
-            // buttonRemoveScale
-            // 
-            this.buttonRemoveScale.Location = new System.Drawing.Point(556, 515);
-            this.buttonRemoveScale.Name = "buttonRemoveScale";
-            this.buttonRemoveScale.Size = new System.Drawing.Size(22, 23);
-            this.buttonRemoveScale.TabIndex = 9;
-            this.buttonRemoveScale.Text = "-";
-            this.buttonRemoveScale.UseVisualStyleBackColor = true;
-            this.buttonRemoveScale.Click += new System.EventHandler(this.buttonRemoveScale_Click);
+            this.saveButton.Location = new System.Drawing.Point(1155, 513);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(85, 23);
+            this.saveButton.TabIndex = 10;
+            this.saveButton.Text = "Save graphic";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // Form1
             // 
@@ -851,6 +863,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBoxScaleValues;
         private System.Windows.Forms.Button buttonRemoveScale;
+        private System.Windows.Forms.Button saveButton;
     }
 }
 
