@@ -7,6 +7,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace SerialVisualizer
 {
@@ -217,6 +218,15 @@ namespace SerialVisualizer
 
                             if (dataSaver != null)
                             {
+
+                                //Для записи лога необходимы проверки:
+                                //Стоит ли checkBox на запись в состоянии Selected (true)
+                                //Существует ли папка, на которую ссылается путь для записи (если нет, то нужно предупредить об этом)
+
+                                string log = writeDataLog(dataSaver, currentDataType);
+                                //Запись log в папку
+
+
                                 this.BeginInvoke(new Action(() =>
                                 {
                                     switch (currentDataType)
@@ -356,6 +366,137 @@ namespace SerialVisualizer
             }
             return false;
         }
+
+        private string writeDataLog(ClassDataSaver classDataSaver, DataType dataType)
+        {
+            //start
+            //sender addr
+            //data
+            //data[0]
+            //data[1]
+            //...
+            //data[size-1]
+            //cs
+
+            string logRow = "";
+            logRow += Encoding.ASCII.GetString(classDataSaver.start_b.ToArray()) + ";";
+            if(classDataSaver.sender_b.Count != 0)
+            {
+                logRow += Encoding.ASCII.GetString(classDataSaver.sender_b.ToArray()) + ";";
+            }
+            else
+            {
+                logRow += "null;";
+            }
+
+
+            switch (dataType)
+            {
+                case DataType.Int8:
+                    {
+                        sbyte[] data = classDataSaver.ToInt8();
+                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
+
+                        for (int i = 0; i < dataAmount; i++)
+                        {
+                            logRow += data[i].ToString() + ";";
+                        }
+                    }
+                    break;
+                case DataType.Uint8:
+                    {
+                        byte[] data = classDataSaver.ToUInt8();
+                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
+
+                        for (int i = 0; i < dataAmount; i++)
+                        {
+                            logRow += data[i].ToString() + ";";
+                        }
+                    }
+                    break;
+                case DataType.Int16:
+                    {
+                        short[] data = classDataSaver.ToInt16();
+                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
+
+                        for (int i = 0; i < dataAmount; i++)
+                        {
+                            logRow += data[i].ToString() + ";";
+                        }
+                    }
+                    break;
+                case DataType.Uint16:
+                    {
+                        ushort[] data = classDataSaver.ToUInt16();
+                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
+
+                        for (int i = 0; i < dataAmount; i++)
+                        {
+                            logRow += data[i].ToString() + ";";
+                        }
+                    }
+                    break;
+                case DataType.Int32:
+                    {
+                        int[] data = classDataSaver.ToInt32();
+                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
+
+                        for (int i = 0; i < dataAmount; i++)
+                        {
+                            logRow += data[i].ToString() + ";";
+                        }
+                    }
+                    break;
+                case DataType.Uint32:
+                    {
+                        uint[] data = classDataSaver.ToUInt32();
+                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
+
+                        for (int i = 0; i < dataAmount; i++)
+                        {
+                            logRow += data[i].ToString() + ";";
+                        }
+                    }
+                    break;
+                case DataType.Float:
+                    {
+                        float[] data = classDataSaver.ToFloat();
+                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
+
+                        for (int i = 0; i < dataAmount; i++)
+                        {
+                            logRow += data[i].ToString() + ";";
+                        }
+                    }
+                    break;
+                case DataType.Double:
+                    {
+                        double[] data = classDataSaver.ToDouble();
+                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
+
+                        for (int i = 0; i < dataAmount; i++)
+                        {
+                            logRow += data[i].ToString() + ";";
+                        }
+                    }
+                    break;
+            }
+
+
+            if (classDataSaver.cs_b.Count != 0)
+            {
+                logRow += Encoding.ASCII.GetString(classDataSaver.cs_b.ToArray()) + Environment.NewLine;
+            }
+            else
+            {
+                logRow += "null" + Environment.NewLine;
+            }
+
+            return logRow;
+        }
+
+
+
 
         private void textBoxFrameStart_TextChanged(object sender, EventArgs e)
         {
