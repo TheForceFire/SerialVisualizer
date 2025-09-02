@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace SerialVisualizer
 {
@@ -22,7 +23,7 @@ namespace SerialVisualizer
         double[] scales;
         static readonly Logger logger = LogManager.GetCurrentClassLogger();
         bool isUserCheckMessage = false;
-
+        string log = "";
         ClassDataSaverParser classDataSaverParser;
 
         public Form1()
@@ -222,10 +223,7 @@ namespace SerialVisualizer
                                 //Для записи лога необходимы проверки:
                                 //Стоит ли checkBox на запись в состоянии Selected (true)
                                 //Существует ли папка, на которую ссылается путь для записи (если нет, то нужно предупредить об этом)
-
-                                string log = writeDataLog(dataSaver, currentDataType);
-                                //Запись log в папку
-
+                                log += writeDataLog(dataSaver, currentDataType);
 
                                 this.BeginInvoke(new Action(() =>
                                 {
@@ -369,15 +367,6 @@ namespace SerialVisualizer
 
         private string writeDataLog(ClassDataSaver classDataSaver, DataType dataType)
         {
-            //start
-            //sender addr
-            //data
-            //data[0]
-            //data[1]
-            //...
-            //data[size-1]
-            //cs
-
             string logRow = "";
             logRow += Encoding.ASCII.GetString(classDataSaver.start_b.ToArray()) + ";";
             if(classDataSaver.sender_b.Count != 0)
@@ -863,6 +852,30 @@ namespace SerialVisualizer
             }
         }
 
+        private void Form1_Closed(object sender, FormClosedEventArgs e)
+        {
+            if (serial.IsOpen)
+            {
+                stopEvent.Set();
+                if (myThread != null && myThread.IsAlive) myThread.Join();
+                serial.Close();
+            }
+            if (checkBox1.Checked)
+            {
+                try
+                {
+                    string path = label11.Text + "/tables/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv";
+                    Directory.CreateDirectory(label11.Text + "/tables");
+                    File.Create(path).Close();
+                    File.WriteAllText(path, log);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error writing log file: " + ex.Message);
+                }
+            }
+        }
+
         enum DataType
         {
             Int8,
@@ -873,6 +886,18 @@ namespace SerialVisualizer
             Uint32,
             Float,
             Double
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog DirDialog = new FolderBrowserDialog();
+            DirDialog.Description = "Выбор директории";
+            DirDialog.SelectedPath = @"./tables";
+
+            if (DirDialog.ShowDialog() == DialogResult.OK)
+            {
+                label11.Text = DirDialog.SelectedPath;
+            }
         }
     }
 }
