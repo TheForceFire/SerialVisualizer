@@ -201,9 +201,10 @@ namespace SerialVisualizer
                     int startBytesToRead;
                     if (bytesToRead > 0)
                     {
-                        do
+                        do 
                         {
                             startBytesToRead = bytesToRead;
+
                             Thread.Sleep(10);
                             bytesToRead = serial.BytesToRead;
                         }
