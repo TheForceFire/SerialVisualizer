@@ -425,6 +425,7 @@ namespace SerialVisualizer
                         }
                     }
                     break;
+
                 case DataType.Int32:
                     {
                         int[] data = classDataSaver.ToInt32();
