@@ -23,8 +23,10 @@ namespace SerialVisualizer
         double[] scales;
         static readonly Logger logger = LogManager.GetCurrentClassLogger();
         bool isUserCheckMessage = false;
-        string log = "";
         ClassDataSaverParser classDataSaverParser;
+        bool toCopy = false;
+        FolderBrowserDialog DirDialog = new FolderBrowserDialog();
+        string path = "./tables/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv";
 
         public Form1()
         {
@@ -52,7 +54,18 @@ namespace SerialVisualizer
             comboBoxStopBits.SelectedIndex = 1;
             pictureBox1.BackColor = Color.Red;
             seriesChange.Maximum = CountActiveSeries();
+            DirDialog.Description = "Выбор директории";
+            DirDialog.SelectedPath = @"./tables";
 
+            try
+            {
+                Directory.CreateDirectory("./tables");
+                File.Create(path).Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error writing log file: " + ex.Message);
+            }
 
             classDataSaverParser = new ClassDataSaverParser(ReadingType.BigEndian, 1, true, false);
             classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
@@ -130,6 +143,18 @@ namespace SerialVisualizer
                     buttonConnectComPort.Text = "Connect";
                     pictureBox1.BackColor = Color.Red;
                     labelConnectionStatus.Text = "Disonnected";
+                    if (toCopy && checkBox1.Checked)
+                    {
+                        try
+                        {
+                            File.Move(path, DirDialog.SelectedPath + "/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error writing log file: " + ex.Message);
+                        }
+                        toCopy = false;
+                    }
                 }
                 else
                 {
@@ -224,7 +249,10 @@ namespace SerialVisualizer
                                 //Для записи лога необходимы проверки:
                                 //Стоит ли checkBox на запись в состоянии Selected (true)
                                 //Существует ли папка, на которую ссылается путь для записи (если нет, то нужно предупредить об этом)
-                                log += writeDataLog(dataSaver, currentDataType);
+                                if (checkBox1.Checked)
+                                {
+                                    File.AppendAllText(path, writeDataLog(dataSaver, currentDataType));
+                                }
 
                                 this.BeginInvoke(new Action(() =>
                                 {
@@ -831,7 +859,7 @@ namespace SerialVisualizer
                 {".png", ChartImageFormat.Png},
                 {".tiff", ChartImageFormat.Tiff},
             };
-                        var fileExt = System.IO.Path.GetExtension(save.FileName).ToString().ToLower();
+                        var fileExt = Path.GetExtension(save.FileName).ToString().ToLower();
                         if (imgFormats.ContainsKey(fileExt))
                         {
                             chart1.SaveImage(save.FileName, imgFormats[fileExt]);
@@ -854,6 +882,15 @@ namespace SerialVisualizer
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (DirDialog.ShowDialog() == DialogResult.OK)
+            {
+                label11.Text = DirDialog.SelectedPath;
+                toCopy = true;
+            }
+        }
+
         private void Form1_Closed(object sender, FormClosedEventArgs e)
         {
             if (serial.IsOpen)
@@ -861,19 +898,16 @@ namespace SerialVisualizer
                 stopEvent.Set();
                 if (myThread != null && myThread.IsAlive) myThread.Join();
                 serial.Close();
-            }
-            if (checkBox1.Checked)
-            {
-                try
-                {
-                    string path = label11.Text + "/tables/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv";
-                    Directory.CreateDirectory(label11.Text + "/tables");
-                    File.Create(path).Close();
-                    File.WriteAllText(path, log);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error writing log file: " + ex.Message);
+                if (toCopy && checkBox1.Checked) {
+                    try
+                    {
+                        File.Move(path, DirDialog.SelectedPath + "/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error writing log file: " + ex.Message);
+                    }
+                    toCopy = false;
                 }
             }
         }
@@ -888,18 +922,6 @@ namespace SerialVisualizer
             Uint32,
             Float,
             Double
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog DirDialog = new FolderBrowserDialog();
-            DirDialog.Description = "Выбор директории";
-            DirDialog.SelectedPath = @"./tables";
-
-            if (DirDialog.ShowDialog() == DialogResult.OK)
-            {
-                label11.Text = DirDialog.SelectedPath;
-            }
         }
     }
 }
