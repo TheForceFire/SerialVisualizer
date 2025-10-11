@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Text.Json;
 
 namespace SerialVisualizer
 {
@@ -932,6 +933,50 @@ namespace SerialVisualizer
             Uint32,
             Float,
             Double
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string selectedBR = comboBoxBaudRate.SelectedItem.ToString();
+            string selectedP = comboBoxParity.SelectedItem.ToString();
+            string enterdDB = numericUpDownDataBits.Value.ToString();
+            string selectedSB = comboBoxStopBits.SelectedItem.ToString();
+
+
+            int BR = int.Parse(selectedBR);
+            int DB = int.Parse(enterdDB);
+            Parity P = GetParity(selectedP);
+            StopBits SB = GetStopBits(selectedSB);
+
+            SerialPortSettings portSettings = new SerialPortSettings(BR, P, DB, SB);
+            string toWrite = JsonSerializer.Serialize<SerialPortSettings>(portSettings);
+            File.WriteAllText("./portSetting.json", toWrite);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string toRead = File.ReadAllText("./portSetting.json");
+            SerialPortSettings portSettings = JsonSerializer.Deserialize<SerialPortSettings>(toRead);
+
+            comboBoxBaudRate.SelectedItem = portSettings.getBaudRate().ToString();
+            comboBoxParity.SelectedItem = portSettings.getParity().ToString();
+            numericUpDownDataBits.Value = portSettings.getDataBits();
+            
+            switch (portSettings.getStopBits())
+            { 
+                case StopBits.None:
+                    comboBoxStopBits.SelectedItem = "0";
+                    break;
+                case StopBits.One:
+                    comboBoxStopBits.SelectedItem = "1";
+                    break;
+                case StopBits.OnePointFive:
+                    comboBoxStopBits.SelectedItem = "1,5";
+                    break;
+                case StopBits.Two:
+                    comboBoxStopBits.SelectedItem = "2";
+                    break;
+            }
         }
     }
 }
