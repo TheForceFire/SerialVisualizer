@@ -25,6 +25,7 @@ namespace SerialVisualizer
         bool isUserCheckMessage = false;
         ClassDataSaverParser classDataSaverParser;
         bool toCopy = false;
+        bool firstTimeError = true;
         FolderBrowserDialog DirDialog = new FolderBrowserDialog();
         string path = "./tables/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv";
 
@@ -251,7 +252,15 @@ namespace SerialVisualizer
                                 //Существует ли папка, на которую ссылается путь для записи (если нет, то нужно предупредить об этом)
                                 if (checkBox1.Checked)
                                 {
-                                    File.AppendAllText(path, writeDataLog(dataSaver, currentDataType));
+                                    if (File.Exists(path))
+                                    {
+                                        File.AppendAllText(path, writeDataLog(dataSaver, currentDataType));
+                                    }
+                                    else if(firstTimeError)
+                                    {
+                                        MessageBox.Show("Selected directory has been deleted");
+                                        firstTimeError = false;
+                                    }
                                 }
 
                                 this.BeginInvoke(new Action(() =>
@@ -888,6 +897,7 @@ namespace SerialVisualizer
             {
                 label11.Text = DirDialog.SelectedPath;
                 toCopy = true;
+                firstTimeError = true;
             }
         }
 
