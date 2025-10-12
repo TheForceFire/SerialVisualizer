@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Text.Json;
 
 namespace SerialVisualizer
 {
@@ -23,8 +24,11 @@ namespace SerialVisualizer
         double[] scales;
         static readonly Logger logger = LogManager.GetCurrentClassLogger();
         bool isUserCheckMessage = false;
-        string log = "";
         ClassDataSaverParser classDataSaverParser;
+        bool toCopy = false;
+        bool firstTimeError = true;
+        FolderBrowserDialog DirDialog = new FolderBrowserDialog();
+        string path = "./tables/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv";
 
         public Form1()
         {
@@ -52,7 +56,18 @@ namespace SerialVisualizer
             comboBoxStopBits.SelectedIndex = 1;
             pictureBox1.BackColor = Color.Red;
             seriesChange.Maximum = CountActiveSeries();
+            DirDialog.Description = "Выбор директории";
+            DirDialog.SelectedPath = @"./tables";
 
+            try
+            {
+                Directory.CreateDirectory("./tables");
+                File.Create(path).Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error writing log file: " + ex.Message);
+            }
 
             classDataSaverParser = new ClassDataSaverParser(ReadingType.BigEndian, 1, true, false);
             classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
@@ -130,6 +145,18 @@ namespace SerialVisualizer
                     buttonConnectComPort.Text = "Connect";
                     pictureBox1.BackColor = Color.Red;
                     labelConnectionStatus.Text = "Disonnected";
+                    if (toCopy && checkBox1.Checked)
+                    {
+                        try
+                        {
+                            File.Move(path, DirDialog.SelectedPath + "/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error writing log file: " + ex.Message);
+                        }
+                        toCopy = false;
+                    }
                 }
                 else
                 {
@@ -224,7 +251,18 @@ namespace SerialVisualizer
                                 //Для записи лога необходимы проверки:
                                 //Стоит ли checkBox на запись в состоянии Selected (true)
                                 //Существует ли папка, на которую ссылается путь для записи (если нет, то нужно предупредить об этом)
-                                log += writeDataLog(dataSaver, currentDataType);
+                                if (checkBox1.Checked)
+                                {
+                                    if (File.Exists(path))
+                                    {
+                                        File.AppendAllText(path, writeDataLog(dataSaver, currentDataType));
+                                    }
+                                    else if(firstTimeError)
+                                    {
+                                        MessageBox.Show("Selected directory has been deleted");
+                                        firstTimeError = false;
+                                    }
+                                }
 
                                 this.BeginInvoke(new Action(() =>
                                 {
@@ -831,7 +869,7 @@ namespace SerialVisualizer
                 {".png", ChartImageFormat.Png},
                 {".tiff", ChartImageFormat.Tiff},
             };
-                        var fileExt = System.IO.Path.GetExtension(save.FileName).ToString().ToLower();
+                        var fileExt = Path.GetExtension(save.FileName).ToString().ToLower();
                         if (imgFormats.ContainsKey(fileExt))
                         {
                             chart1.SaveImage(save.FileName, imgFormats[fileExt]);
@@ -854,6 +892,16 @@ namespace SerialVisualizer
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (DirDialog.ShowDialog() == DialogResult.OK)
+            {
+                label11.Text = DirDialog.SelectedPath;
+                toCopy = true;
+                firstTimeError = true;
+            }
+        }
+
         private void Form1_Closed(object sender, FormClosedEventArgs e)
         {
             if (serial.IsOpen)
@@ -861,19 +909,16 @@ namespace SerialVisualizer
                 stopEvent.Set();
                 if (myThread != null && myThread.IsAlive) myThread.Join();
                 serial.Close();
-            }
-            if (checkBox1.Checked)
-            {
-                try
-                {
-                    string path = label11.Text + "/tables/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv";
-                    Directory.CreateDirectory(label11.Text + "/tables");
-                    File.Create(path).Close();
-                    File.WriteAllText(path, log);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error writing log file: " + ex.Message);
+                if (toCopy && checkBox1.Checked) {
+                    try
+                    {
+                        File.Move(path, DirDialog.SelectedPath + "/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error writing log file: " + ex.Message);
+                    }
+                    toCopy = false;
                 }
             }
         }
@@ -890,15 +935,47 @@ namespace SerialVisualizer
             Double
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog DirDialog = new FolderBrowserDialog();
-            DirDialog.Description = "Выбор директории";
-            DirDialog.SelectedPath = @"./tables";
+            string selectedBR = comboBoxBaudRate.SelectedItem.ToString();
+            string selectedP = comboBoxParity.SelectedItem.ToString();
+            string enterdDB = numericUpDownDataBits.Value.ToString();
+            string selectedSB = comboBoxStopBits.SelectedItem.ToString();
 
-            if (DirDialog.ShowDialog() == DialogResult.OK)
-            {
-                label11.Text = DirDialog.SelectedPath;
+
+            int BR = int.Parse(selectedBR);
+            int DB = int.Parse(enterdDB);
+            Parity P = GetParity(selectedP);
+            StopBits SB = GetStopBits(selectedSB);
+
+            SerialPortSettings portSettings = new SerialPortSettings(BR, P, DB, SB);
+            string toWrite = JsonSerializer.Serialize<SerialPortSettings>(portSettings);
+            File.WriteAllText("./portSetting.json", toWrite);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string toRead = File.ReadAllText("./portSetting.json");
+            SerialPortSettings portSettings = JsonSerializer.Deserialize<SerialPortSettings>(toRead);
+
+            comboBoxBaudRate.SelectedItem = portSettings.getBaudRate().ToString();
+            comboBoxParity.SelectedItem = portSettings.getParity().ToString();
+            numericUpDownDataBits.Value = portSettings.getDataBits();
+            
+            switch (portSettings.getStopBits())
+            { 
+                case StopBits.None:
+                    comboBoxStopBits.SelectedItem = "0";
+                    break;
+                case StopBits.One:
+                    comboBoxStopBits.SelectedItem = "1";
+                    break;
+                case StopBits.OnePointFive:
+                    comboBoxStopBits.SelectedItem = "1,5";
+                    break;
+                case StopBits.Two:
+                    comboBoxStopBits.SelectedItem = "2";
+                    break;
             }
         }
     }
