@@ -942,7 +942,6 @@ namespace SerialVisualizer
             string enterdDB = numericUpDownDataBits.Value.ToString();
             string selectedSB = comboBoxStopBits.SelectedItem.ToString();
 
-
             int BR = int.Parse(selectedBR);
             int DB = int.Parse(enterdDB);
             Parity P = GetParity(selectedP);
@@ -976,6 +975,57 @@ namespace SerialVisualizer
                 case StopBits.Two:
                     comboBoxStopBits.SelectedItem = "2";
                     break;
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string currentFS = textBoxFrameStart.Text;
+            bool currentToF = (radioButtonEndianLittle.Checked) ? true : false;
+            int currentAddrLength = (radioButtonYesAddress.Checked) ? Convert.ToInt32(textBoxAddresLength.Text) : 0;
+            bool currentChckSum = (radioButtonYesChecksum.Checked) ? true : false;
+
+            ProtocolSettings protocolSettings = new ProtocolSettings(currentFS, currentToF, currentAddrLength, currentChckSum);
+
+            string toWrite = JsonSerializer.Serialize<ProtocolSettings>(protocolSettings);
+            File.WriteAllText("./protocolSetting.json", toWrite);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string toRead = File.ReadAllText("./protocolSetting.json");
+            ProtocolSettings protocolSettings = JsonSerializer.Deserialize<ProtocolSettings>(toRead);
+
+            textBoxFrameStart.Text = protocolSettings.getFrameStart();
+
+            if (protocolSettings.getEndianess())
+            {
+                radioButtonEndianLittle.Checked = true;
+                radioButtonEndianBig.Checked = false;
+            } else
+            {
+                radioButtonEndianLittle.Checked = false;
+                radioButtonEndianBig.Checked = true;
+            }
+
+            if (protocolSettings.getAddrLength() == 0)
+            {
+                radioButtonNoAddress.Checked = true;
+            } else
+            {
+                radioButtonNoAddress.Checked = false;
+                radioButtonYesAddress.Checked = true;
+                textBoxAddresLength.Text = protocolSettings.getAddrLength().ToString();
+            }
+
+            if (protocolSettings.getChckSum())
+            {
+                radioButtonYesChecksum.Checked = true;
+                radioButtonNoChecksum.Checked = false;
+            } else
+            {
+                radioButtonYesChecksum.Checked = false;
+                radioButtonNoChecksum.Checked = true;
             }
         }
     }
