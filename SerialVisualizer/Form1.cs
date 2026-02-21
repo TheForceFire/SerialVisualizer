@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Text.Json;
+using System.Web;
+using System.Reflection.Emit;
 
 namespace SerialVisualizer
 {
@@ -32,8 +34,18 @@ namespace SerialVisualizer
 
         public Form1()
         {
+            if (!Directory.Exists("logs"))
+            {
+                Directory.CreateDirectory("logs");
+            }
+
+            var config = LogManager.Configuration;
+            config.Variables["logDir"] = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
+            LogManager.ReconfigExistingLoggers();
+
             logger.Info("Initializing");
             InitializeComponent();
+            label12.Text = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs");
             comboBoxSelectedPort.Items.AddRange(SerialPort.GetPortNames());
             buttonConnectComPort.Click += b_connect;
             buttonRefreshPortList.Click += b_refresh;
@@ -1026,6 +1038,21 @@ namespace SerialVisualizer
             {
                 radioButtonYesChecksum.Checked = false;
                 radioButtonNoChecksum.Checked = true;
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (DirDialog.ShowDialog() == DialogResult.OK)
+            {
+                string path = DirDialog.SelectedPath;
+                if (Directory.Exists(path))
+                {
+                    label12.Text = DirDialog.SelectedPath;
+                    var config = LogManager.Configuration;
+                    config.Variables["logDir"] = path;
+                    LogManager.ReconfigExistingLoggers();
+                }
             }
         }
     }
