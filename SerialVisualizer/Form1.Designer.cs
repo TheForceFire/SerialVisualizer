@@ -34,6 +34,8 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
@@ -92,8 +94,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.RenameBox = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -148,6 +148,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.BackColor = System.Drawing.Color.CornflowerBlue;
             this.tabPage1.Controls.Add(this.button6);
             this.tabPage1.Controls.Add(this.button7);
             this.tabPage1.Controls.Add(this.button5);
@@ -166,26 +167,57 @@
             this.tabPage1.Size = new System.Drawing.Size(1278, 551);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Options";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.BackColor = System.Drawing.Color.DarkSlateBlue;
+            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button6.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.button6.Location = new System.Drawing.Point(171, 316);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(156, 53);
+            this.button6.TabIndex = 40;
+            this.button6.Text = "Read protocol settings";
+            this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button7
+            // 
+            this.button7.BackColor = System.Drawing.Color.DarkSlateBlue;
+            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button7.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.button7.Location = new System.Drawing.Point(171, 257);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(156, 53);
+            this.button7.TabIndex = 39;
+            this.button7.Text = "Write protocol settings";
+            this.button7.UseVisualStyleBackColor = false;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button5
             // 
+            this.button5.BackColor = System.Drawing.Color.DarkSlateBlue;
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button5.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button5.Location = new System.Drawing.Point(9, 316);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(156, 53);
             this.button5.TabIndex = 38;
             this.button5.Text = "Read port settings";
-            this.button5.UseVisualStyleBackColor = true;
+            this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
+            this.button4.BackColor = System.Drawing.Color.DarkSlateBlue;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.button4.Location = new System.Drawing.Point(9, 257);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(156, 53);
             this.button4.TabIndex = 37;
             this.button4.Text = "Write port settings";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // groupBox8
@@ -195,6 +227,7 @@
             this.groupBox8.Controls.Add(this.label10);
             this.groupBox8.Controls.Add(this.button2);
             this.groupBox8.Controls.Add(this.checkBox1);
+            this.groupBox8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox8.Location = new System.Drawing.Point(680, 8);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(200, 110);
@@ -222,20 +255,23 @@
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.RoyalBlue;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Location = new System.Drawing.Point(6, 68);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
             this.button2.Text = "Open Folder";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
+            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBox1.Location = new System.Drawing.Point(7, 19);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(110, 17);
+            this.checkBox1.Size = new System.Drawing.Size(107, 17);
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "Enable table write";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -257,6 +293,7 @@
             this.groupBox7.Controls.Add(this.label6);
             this.groupBox7.Controls.Add(this.label5);
             this.groupBox7.Controls.Add(this.comboBoxParity);
+            this.groupBox7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox7.Location = new System.Drawing.Point(9, 8);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(234, 243);
@@ -266,7 +303,9 @@
             // 
             // comboBoxSelectedPort
             // 
+            this.comboBoxSelectedPort.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.comboBoxSelectedPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSelectedPort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxSelectedPort.FormattingEnabled = true;
             this.comboBoxSelectedPort.Location = new System.Drawing.Point(41, 19);
             this.comboBoxSelectedPort.Name = "comboBoxSelectedPort";
@@ -285,6 +324,7 @@
             // buttonRefreshPortList
             // 
             this.buttonRefreshPortList.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonRefreshPortList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRefreshPortList.Location = new System.Drawing.Point(149, 19);
             this.buttonRefreshPortList.MinimumSize = new System.Drawing.Size(37, 11);
             this.buttonRefreshPortList.Name = "buttonRefreshPortList";
@@ -296,13 +336,16 @@
             // buttonConnectComPort
             // 
             this.buttonConnectComPort.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.buttonConnectComPort.BackColor = System.Drawing.Color.DarkBlue;
+            this.buttonConnectComPort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonConnectComPort.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonConnectComPort.Location = new System.Drawing.Point(15, 51);
             this.buttonConnectComPort.MinimumSize = new System.Drawing.Size(37, 11);
             this.buttonConnectComPort.Name = "buttonConnectComPort";
             this.buttonConnectComPort.Size = new System.Drawing.Size(209, 40);
             this.buttonConnectComPort.TabIndex = 5;
             this.buttonConnectComPort.Text = "Connect";
-            this.buttonConnectComPort.UseVisualStyleBackColor = true;
+            this.buttonConnectComPort.UseVisualStyleBackColor = false;
             // 
             // label3
             // 
@@ -344,7 +387,9 @@
             // 
             this.comboBoxStopBits.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxStopBits.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.comboBoxStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxStopBits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxStopBits.FormattingEnabled = true;
             this.comboBoxStopBits.Items.AddRange(new object[] {
             "0",
@@ -369,6 +414,7 @@
             // 
             // numericUpDownDataBits
             // 
+            this.numericUpDownDataBits.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.numericUpDownDataBits.Location = new System.Drawing.Point(73, 189);
             this.numericUpDownDataBits.Maximum = new decimal(new int[] {
             13,
@@ -382,7 +428,9 @@
             // 
             // comboBoxBaudRate
             // 
+            this.comboBoxBaudRate.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.comboBoxBaudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxBaudRate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxBaudRate.FormattingEnabled = true;
             this.comboBoxBaudRate.Items.AddRange(new object[] {
             "600",
@@ -424,7 +472,9 @@
             // 
             // comboBoxParity
             // 
+            this.comboBoxParity.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.comboBoxParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxParity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxParity.FormattingEnabled = true;
             this.comboBoxParity.Items.AddRange(new object[] {
             "None",
@@ -441,6 +491,7 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.numericUpDownDataAmount);
+            this.groupBox6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox6.Location = new System.Drawing.Point(502, 207);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(148, 44);
@@ -450,6 +501,7 @@
             // 
             // numericUpDownDataAmount
             // 
+            this.numericUpDownDataAmount.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.numericUpDownDataAmount.Location = new System.Drawing.Point(6, 18);
             this.numericUpDownDataAmount.Maximum = new decimal(new int[] {
             10,
@@ -481,6 +533,7 @@
             this.groupBox5.Controls.Add(this.radioButtonInt16);
             this.groupBox5.Controls.Add(this.radioButtonUint8);
             this.groupBox5.Controls.Add(this.radioButtonInt8);
+            this.groupBox5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox5.Location = new System.Drawing.Point(502, 8);
             this.groupBox5.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox5.Name = "groupBox5";
@@ -493,10 +546,11 @@
             // radioButtonDouble
             // 
             this.radioButtonDouble.AutoSize = true;
+            this.radioButtonDouble.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonDouble.Location = new System.Drawing.Point(4, 165);
             this.radioButtonDouble.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonDouble.Name = "radioButtonDouble";
-            this.radioButtonDouble.Size = new System.Drawing.Size(59, 17);
+            this.radioButtonDouble.Size = new System.Drawing.Size(58, 17);
             this.radioButtonDouble.TabIndex = 7;
             this.radioButtonDouble.Text = "Double";
             this.radioButtonDouble.UseVisualStyleBackColor = true;
@@ -505,10 +559,11 @@
             // radioButtonFloat
             // 
             this.radioButtonFloat.AutoSize = true;
+            this.radioButtonFloat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonFloat.Location = new System.Drawing.Point(4, 144);
             this.radioButtonFloat.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonFloat.Name = "radioButtonFloat";
-            this.radioButtonFloat.Size = new System.Drawing.Size(48, 17);
+            this.radioButtonFloat.Size = new System.Drawing.Size(47, 17);
             this.radioButtonFloat.TabIndex = 6;
             this.radioButtonFloat.Text = "Float";
             this.radioButtonFloat.UseVisualStyleBackColor = true;
@@ -517,10 +572,11 @@
             // radioButtonUint32
             // 
             this.radioButtonUint32.AutoSize = true;
+            this.radioButtonUint32.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonUint32.Location = new System.Drawing.Point(4, 123);
             this.radioButtonUint32.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonUint32.Name = "radioButtonUint32";
-            this.radioButtonUint32.Size = new System.Drawing.Size(144, 17);
+            this.radioButtonUint32.Size = new System.Drawing.Size(143, 17);
             this.radioButtonUint32.TabIndex = 5;
             this.radioButtonUint32.Text = "Unsigned Integer 4 Bytes";
             this.radioButtonUint32.UseVisualStyleBackColor = true;
@@ -529,10 +585,11 @@
             // radioButtonInt32
             // 
             this.radioButtonInt32.AutoSize = true;
+            this.radioButtonInt32.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonInt32.Location = new System.Drawing.Point(4, 102);
             this.radioButtonInt32.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonInt32.Name = "radioButtonInt32";
-            this.radioButtonInt32.Size = new System.Drawing.Size(132, 17);
+            this.radioButtonInt32.Size = new System.Drawing.Size(131, 17);
             this.radioButtonInt32.TabIndex = 4;
             this.radioButtonInt32.Text = "Signed Integer 4 Bytes";
             this.radioButtonInt32.UseVisualStyleBackColor = true;
@@ -541,10 +598,11 @@
             // radioButtonUint16
             // 
             this.radioButtonUint16.AutoSize = true;
+            this.radioButtonUint16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonUint16.Location = new System.Drawing.Point(4, 80);
             this.radioButtonUint16.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonUint16.Name = "radioButtonUint16";
-            this.radioButtonUint16.Size = new System.Drawing.Size(144, 17);
+            this.radioButtonUint16.Size = new System.Drawing.Size(143, 17);
             this.radioButtonUint16.TabIndex = 3;
             this.radioButtonUint16.Text = "Unsigned Integer 2 Bytes";
             this.radioButtonUint16.UseVisualStyleBackColor = true;
@@ -553,10 +611,11 @@
             // radioButtonInt16
             // 
             this.radioButtonInt16.AutoSize = true;
+            this.radioButtonInt16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonInt16.Location = new System.Drawing.Point(4, 59);
             this.radioButtonInt16.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonInt16.Name = "radioButtonInt16";
-            this.radioButtonInt16.Size = new System.Drawing.Size(132, 17);
+            this.radioButtonInt16.Size = new System.Drawing.Size(131, 17);
             this.radioButtonInt16.TabIndex = 2;
             this.radioButtonInt16.Text = "Signed Integer 2 Bytes";
             this.radioButtonInt16.UseVisualStyleBackColor = true;
@@ -566,10 +625,11 @@
             // 
             this.radioButtonUint8.AutoSize = true;
             this.radioButtonUint8.Checked = true;
+            this.radioButtonUint8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonUint8.Location = new System.Drawing.Point(4, 38);
             this.radioButtonUint8.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonUint8.Name = "radioButtonUint8";
-            this.radioButtonUint8.Size = new System.Drawing.Size(139, 17);
+            this.radioButtonUint8.Size = new System.Drawing.Size(138, 17);
             this.radioButtonUint8.TabIndex = 1;
             this.radioButtonUint8.TabStop = true;
             this.radioButtonUint8.Text = "Unsigned Integer 1 Byte";
@@ -579,10 +639,11 @@
             // radioButtonInt8
             // 
             this.radioButtonInt8.AutoSize = true;
+            this.radioButtonInt8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonInt8.Location = new System.Drawing.Point(4, 17);
             this.radioButtonInt8.Margin = new System.Windows.Forms.Padding(2);
             this.radioButtonInt8.Name = "radioButtonInt8";
-            this.radioButtonInt8.Size = new System.Drawing.Size(127, 17);
+            this.radioButtonInt8.Size = new System.Drawing.Size(126, 17);
             this.radioButtonInt8.TabIndex = 0;
             this.radioButtonInt8.Text = "Signed Integer 1 Byte";
             this.radioButtonInt8.UseVisualStyleBackColor = true;
@@ -591,6 +652,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.textBoxFrameStart);
+            this.groupBox4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox4.Location = new System.Drawing.Point(259, 8);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(200, 50);
@@ -600,6 +662,8 @@
             // 
             // textBoxFrameStart
             // 
+            this.textBoxFrameStart.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.textBoxFrameStart.ForeColor = System.Drawing.SystemColors.MenuText;
             this.textBoxFrameStart.Location = new System.Drawing.Point(6, 24);
             this.textBoxFrameStart.Name = "textBoxFrameStart";
             this.textBoxFrameStart.Size = new System.Drawing.Size(188, 20);
@@ -611,6 +675,7 @@
             // 
             this.groupBox3.Controls.Add(this.radioButtonEndianLittle);
             this.groupBox3.Controls.Add(this.radioButtonEndianBig);
+            this.groupBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox3.Location = new System.Drawing.Point(259, 63);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(200, 44);
@@ -634,9 +699,10 @@
             // radioButtonEndianBig
             // 
             this.radioButtonEndianBig.AutoSize = true;
+            this.radioButtonEndianBig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonEndianBig.Location = new System.Drawing.Point(118, 19);
             this.radioButtonEndianBig.Name = "radioButtonEndianBig";
-            this.radioButtonEndianBig.Size = new System.Drawing.Size(76, 17);
+            this.radioButtonEndianBig.Size = new System.Drawing.Size(75, 17);
             this.radioButtonEndianBig.TabIndex = 30;
             this.radioButtonEndianBig.Text = "Big Endian";
             this.radioButtonEndianBig.UseVisualStyleBackColor = true;
@@ -646,6 +712,7 @@
             // 
             this.groupBox2.Controls.Add(this.radioButtonYesChecksum);
             this.groupBox2.Controls.Add(this.radioButtonNoChecksum);
+            this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox2.Location = new System.Drawing.Point(259, 188);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 63);
@@ -656,9 +723,10 @@
             // radioButtonYesChecksum
             // 
             this.radioButtonYesChecksum.AutoSize = true;
+            this.radioButtonYesChecksum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonYesChecksum.Location = new System.Drawing.Point(6, 40);
             this.radioButtonYesChecksum.Name = "radioButtonYesChecksum";
-            this.radioButtonYesChecksum.Size = new System.Drawing.Size(43, 17);
+            this.radioButtonYesChecksum.Size = new System.Drawing.Size(42, 17);
             this.radioButtonYesChecksum.TabIndex = 29;
             this.radioButtonYesChecksum.Text = "Yes";
             this.radioButtonYesChecksum.UseVisualStyleBackColor = true;
@@ -668,9 +736,10 @@
             // 
             this.radioButtonNoChecksum.AutoSize = true;
             this.radioButtonNoChecksum.Checked = true;
+            this.radioButtonNoChecksum.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonNoChecksum.Location = new System.Drawing.Point(6, 17);
             this.radioButtonNoChecksum.Name = "radioButtonNoChecksum";
-            this.radioButtonNoChecksum.Size = new System.Drawing.Size(39, 17);
+            this.radioButtonNoChecksum.Size = new System.Drawing.Size(38, 17);
             this.radioButtonNoChecksum.TabIndex = 30;
             this.radioButtonNoChecksum.TabStop = true;
             this.radioButtonNoChecksum.Text = "No";
@@ -683,6 +752,7 @@
             this.groupBox1.Controls.Add(this.textBoxAddresLength);
             this.groupBox1.Controls.Add(this.radioButtonYesAddress);
             this.groupBox1.Controls.Add(this.radioButtonNoAddress);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.Location = new System.Drawing.Point(259, 114);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 68);
@@ -701,6 +771,7 @@
             // 
             // textBoxAddresLength
             // 
+            this.textBoxAddresLength.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.textBoxAddresLength.Location = new System.Drawing.Point(134, 40);
             this.textBoxAddresLength.Name = "textBoxAddresLength";
             this.textBoxAddresLength.Size = new System.Drawing.Size(43, 20);
@@ -712,9 +783,10 @@
             // 
             this.radioButtonYesAddress.AutoSize = true;
             this.radioButtonYesAddress.Checked = true;
+            this.radioButtonYesAddress.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonYesAddress.Location = new System.Drawing.Point(6, 42);
             this.radioButtonYesAddress.Name = "radioButtonYesAddress";
-            this.radioButtonYesAddress.Size = new System.Drawing.Size(43, 17);
+            this.radioButtonYesAddress.Size = new System.Drawing.Size(42, 17);
             this.radioButtonYesAddress.TabIndex = 29;
             this.radioButtonYesAddress.TabStop = true;
             this.radioButtonYesAddress.Text = "Yes";
@@ -724,9 +796,10 @@
             // radioButtonNoAddress
             // 
             this.radioButtonNoAddress.AutoSize = true;
+            this.radioButtonNoAddress.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.radioButtonNoAddress.Location = new System.Drawing.Point(6, 19);
             this.radioButtonNoAddress.Name = "radioButtonNoAddress";
-            this.radioButtonNoAddress.Size = new System.Drawing.Size(39, 17);
+            this.radioButtonNoAddress.Size = new System.Drawing.Size(38, 17);
             this.radioButtonNoAddress.TabIndex = 30;
             this.radioButtonNoAddress.Text = "No";
             this.radioButtonNoAddress.UseVisualStyleBackColor = true;
@@ -858,26 +931,6 @@
             this.button3.TabIndex = 1;
             this.button3.Text = "Clear Graphic";
             this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(171, 316);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(156, 53);
-            this.button6.TabIndex = 40;
-            this.button6.Text = "Read protocol settings";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(171, 257);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(156, 53);
-            this.button7.TabIndex = 39;
-            this.button7.Text = "Write protocol settings";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // Form1
             // 
