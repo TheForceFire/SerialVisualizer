@@ -10,6 +10,9 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Text.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.AxHost;
 
 namespace SerialVisualizer
 {
@@ -29,6 +32,8 @@ namespace SerialVisualizer
         bool firstTimeError = true;
         FolderBrowserDialog DirDialog = new FolderBrowserDialog();
         string path = "./tables/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv";
+
+        SerialWorker worker;
 
         public Form1()
         {
@@ -71,6 +76,10 @@ namespace SerialVisualizer
 
             classDataSaverParser = new ClassDataSaverParser(ReadingType.BigEndian, 1, true, false);
             classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
+
+            worker = new SerialWorker(serial, logger, scales, stopEvent, classDataSaverParser, isUserCheckMessage,
+            path, firstTimeError, currentDataType,
+                WriteSeries);
         }
 
 
@@ -162,7 +171,7 @@ namespace SerialVisualizer
                 {
                     SetSerialSettings(selectedPort, BR, DB, P, SB);
 
-                    myThread = new Thread(ReadBytes);
+                    myThread = new Thread(worker.ReadBytes);
                     myThread.IsBackground = true;
                     serial.Open();
                     stopEvent.Reset();
@@ -213,184 +222,7 @@ namespace SerialVisualizer
             logger.Debug("User select COM-port");
         }
 
-        private void ReadBytes()
-        {
-            logger.Info("Read thread start");
-            while (serial.IsOpen)
-            {
-                if (stopEvent.WaitOne(0))
-                {
-                    break;
-                }
-                try
-                {
-                    int bytesToRead = serial.BytesToRead;
-                    int startBytesToRead;
-                    if (bytesToRead > 0)
-                    {
-                        do 
-                        {
-                            startBytesToRead = bytesToRead;
-
-                            Thread.Sleep(10);
-                            bytesToRead = serial.BytesToRead;
-                        }
-                        while (bytesToRead != startBytesToRead);
-
-
-                        byte[] bytes = new byte[bytesToRead];
-                        int bytesRead = serial.Read(bytes, 0, bytesToRead);
-                        logger.Debug($"Received {bytesRead} byte(s): {BitConverter.ToString(bytes)}");
-                        if (bytesRead > 0)
-                        {
-                            ClassDataSaver dataSaver = classDataSaverParser.Parse(bytes);
-
-                            if (dataSaver != null)
-                            {
-
-                                //Для записи лога необходимы проверки:
-                                //Стоит ли checkBox на запись в состоянии Selected (true)
-                                //Существует ли папка, на которую ссылается путь для записи (если нет, то нужно предупредить об этом)
-                                if (checkBox1.Checked)
-                                {
-                                    if (File.Exists(path))
-                                    {
-                                        File.AppendAllText(path, writeDataLog(dataSaver, currentDataType));
-                                    }
-                                    else if(firstTimeError)
-                                    {
-                                        MessageBox.Show("Selected directory has been deleted");
-                                        firstTimeError = false;
-                                    }
-                                }
-
-                                this.BeginInvoke(new Action(() =>
-                                {
-                                    switch (currentDataType)
-                                    {
-                                        case DataType.Int8:
-                                            {
-                                                sbyte[] data = dataSaver.ToInt8();
-                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
-                                                int xCoordinate = GetLastXCoordinate() + 1;
-
-                                                for (int i = 0; i < dataAmount; i++)
-                                                {
-                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
-                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
-                                                }
-                                            }
-                                            break;
-                                        case DataType.Uint8:
-                                            {
-                                                byte[] data = dataSaver.ToUInt8();
-                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
-                                                int xCoordinate = GetLastXCoordinate() + 1;
-
-                                                for (int i = 0; i < dataAmount; i++)
-                                                {
-                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
-                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
-                                                }
-                                            }
-                                            break;
-                                        case DataType.Int16:
-                                            {
-                                                short[] data = dataSaver.ToInt16();
-                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
-                                                int xCoordinate = GetLastXCoordinate() + 1;
-
-                                                for (int i = 0; i < dataAmount; i++)
-                                                {
-                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
-                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
-                                                }
-                                            }
-                                            break;
-                                        case DataType.Uint16:
-                                            {
-                                                ushort[] data = dataSaver.ToUInt16();
-                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
-                                                int xCoordinate = GetLastXCoordinate() + 1;
-
-                                                for (int i = 0; i < dataAmount; i++)
-                                                {
-                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
-                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
-                                                }
-                                            }
-                                            break;
-                                        case DataType.Int32:
-                                            {
-                                                int[] data = dataSaver.ToInt32();
-                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
-                                                int xCoordinate = GetLastXCoordinate() + 1;
-
-                                                for (int i = 0; i < dataAmount; i++)
-                                                {
-                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
-                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
-                                                }
-                                            }
-                                            break;
-                                        case DataType.Uint32:
-                                            {
-                                                uint[] data = dataSaver.ToUInt32();
-                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
-                                                int xCoordinate = GetLastXCoordinate() + 1;
-
-                                                for (int i = 0; i < dataAmount; i++)
-                                                {
-                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
-                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
-                                                }
-                                            }
-                                            break;
-                                        case DataType.Float:
-                                            {
-                                                float[] data = dataSaver.ToFloat();
-                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
-                                                int xCoordinate = GetLastXCoordinate() + 1;
-
-                                                for (int i = 0; i < dataAmount; i++)
-                                                {
-                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
-                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
-                                                }
-                                            }
-                                            break;
-                                        case DataType.Double:
-                                            {
-                                                double[] data = dataSaver.ToDouble();
-                                                int dataAmount = Math.Min(data.Length, CountActiveSeries());
-                                                int xCoordinate = GetLastXCoordinate() + 1;
-
-                                                for (int i = 0; i < dataAmount; i++)
-                                                {
-                                                    series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
-                                                    originSeries[i].Points.AddXY(xCoordinate, data[i]);
-                                                }
-                                            }
-                                            break;
-                                    }
-                                }));
-                            }
-
-                        }
-                    }
-                }
-                catch (InvalidOperationException ex)
-                {
-                    logger.Error(ex);
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex, "Error in read thread");
-                    break;
-                }
-            }
-            logger.Info("Read thread finish");
-        }
+ 
 
         bool CheckChanges()
         {
@@ -404,125 +236,7 @@ namespace SerialVisualizer
             return false;
         }
 
-        private string writeDataLog(ClassDataSaver classDataSaver, DataType dataType)
-        {
-            string logRow = "";
-            logRow += Encoding.ASCII.GetString(classDataSaver.start_b.ToArray()) + ";";
-            if(classDataSaver.sender_b.Count != 0)
-            {
-                logRow += Encoding.ASCII.GetString(classDataSaver.sender_b.ToArray()) + ";";
-            }
-            else
-            {
-                logRow += "null;";
-            }
 
-
-            switch (dataType)
-            {
-                case DataType.Int8:
-                    {
-                        sbyte[] data = classDataSaver.ToInt8();
-                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
-
-                        for (int i = 0; i < dataAmount; i++)
-                        {
-                            logRow += data[i].ToString() + ";";
-                        }
-                    }
-                    break;
-                case DataType.Uint8:
-                    {
-                        byte[] data = classDataSaver.ToUInt8();
-                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
-
-                        for (int i = 0; i < dataAmount; i++)
-                        {
-                            logRow += data[i].ToString() + ";";
-                        }
-                    }
-                    break;
-                case DataType.Int16:
-                    {
-                        short[] data = classDataSaver.ToInt16();
-                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
-
-                        for (int i = 0; i < dataAmount; i++)
-                        {
-                            logRow += data[i].ToString() + ";";
-                        }
-                    }
-                    break;
-                case DataType.Uint16:
-                    {
-                        ushort[] data = classDataSaver.ToUInt16();
-                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
-
-                        for (int i = 0; i < dataAmount; i++)
-                        {
-                            logRow += data[i].ToString() + ";";
-                        }
-                    }
-                    break;
-
-                case DataType.Int32:
-                    {
-                        int[] data = classDataSaver.ToInt32();
-                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
-
-                        for (int i = 0; i < dataAmount; i++)
-                        {
-                            logRow += data[i].ToString() + ";";
-                        }
-                    }
-                    break;
-                case DataType.Uint32:
-                    {
-                        uint[] data = classDataSaver.ToUInt32();
-                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
-
-                        for (int i = 0; i < dataAmount; i++)
-                        {
-                            logRow += data[i].ToString() + ";";
-                        }
-                    }
-                    break;
-                case DataType.Float:
-                    {
-                        float[] data = classDataSaver.ToFloat();
-                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
-
-                        for (int i = 0; i < dataAmount; i++)
-                        {
-                            logRow += data[i].ToString() + ";";
-                        }
-                    }
-                    break;
-                case DataType.Double:
-                    {
-                        double[] data = classDataSaver.ToDouble();
-                        int dataAmount = Math.Min(data.Length, CountActiveSeries());
-
-                        for (int i = 0; i < dataAmount; i++)
-                        {
-                            logRow += data[i].ToString() + ";";
-                        }
-                    }
-                    break;
-            }
-
-
-            if (classDataSaver.cs_b.Count != 0)
-            {
-                logRow += Encoding.ASCII.GetString(classDataSaver.cs_b.ToArray()) + Environment.NewLine;
-            }
-            else
-            {
-                logRow += "null" + Environment.NewLine;
-            }
-
-            return logRow;
-        }
 
 
 
@@ -730,6 +444,24 @@ namespace SerialVisualizer
             return lastX;
         }
 
+
+
+
+
+        private void WriteSeries(int dataAmount, int coord, double[] data, double[] scale)
+        {
+            for (int i = 0; i < dataAmount; i++)
+            {
+                series[i].Points.AddXY(coord, data[i] * scales[i]);
+                originSeries[i].Points.AddXY(coord, data[i]);
+            }
+        }
+
+
+
+
+
+
         private void comboBoxBaudRate_SelectedIndexChanged(object sender, EventArgs e)
         {
             CheckChanges();
@@ -921,18 +653,6 @@ namespace SerialVisualizer
                     toCopy = false;
                 }
             }
-        }
-
-        enum DataType
-        {
-            Int8,
-            Uint8,
-            Int16,
-            Uint16,
-            Int32,
-            Uint32,
-            Float,
-            Double
         }
 
         private void button4_Click(object sender, EventArgs e)
