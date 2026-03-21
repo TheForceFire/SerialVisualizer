@@ -8,6 +8,7 @@ using System.IO.Ports;
 using NLog;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace SerialVisualizer
 {
@@ -23,11 +24,12 @@ namespace SerialVisualizer
         bool firstTimeError = true;
         DataType currentDataType;
         private Action<int, int, double[], double[]> guiCallback;
+        Series[] series;
         private CancellationToken token;
 
         public SerialWorker(SerialPort serial, Logger logger, double[] scales, ManualResetEvent stopEvent, 
             ClassDataSaverParser classDataSaverParser, bool isNeedToWriteLog, string path, bool firstTimeError,
-            DataType currentDataType, Action<int, int, double[], double[]> guiCallback)
+            DataType currentDataType, Action<int, int, double[], double[]> guiCallback, Series[] series)
         {
             this.serial = serial;
             this.logger = logger;
@@ -39,6 +41,7 @@ namespace SerialVisualizer
             this.firstTimeError = firstTimeError;
             this.currentDataType = currentDataType;
             this.guiCallback = guiCallback;
+            this.series = series;
         }
 
         public void updateScales(double[] scales)
@@ -58,6 +61,38 @@ namespace SerialVisualizer
             this.currentDataType = currentDataType;
         }
 
+        private int CountActiveSeries()
+        {
+            int length = 0;
+
+            for (int i = 0; i < series.Length; i++)
+            {
+                if (series[i] != null)
+                {
+                    length++;
+                }
+            }
+
+            return length;
+        }
+
+        private int GetLastXCoordinate()
+        {
+            int lastX = 0;
+
+            for (int i = 0; i < series.Length; i++)
+            {
+                if (series[i] != null)
+                {
+                    if (series[i].Points.Count > lastX)
+                    {
+                        lastX = series[i].Points.Count;
+                    }
+                }
+            }
+
+            return lastX;
+        }
 
         public void ReadBytes()
         {
@@ -106,8 +141,8 @@ namespace SerialVisualizer
                                     }
                                 }
 
-                                int currentActiveSeries = 1;
-                                int lastXcoordinate = 0;
+                                int currentActiveSeries = CountActiveSeries();
+                                int lastXcoordinate = GetLastXCoordinate();
 
                                 switch (currentDataType)
                                 {
@@ -255,7 +290,7 @@ namespace SerialVisualizer
                 logRow += "null;";
             }
 
-            int currentActiveSeries = 0;
+            int currentActiveSeries = CountActiveSeries();
 
             switch (dataType)
             {

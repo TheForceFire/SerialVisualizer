@@ -79,7 +79,7 @@ namespace SerialVisualizer
 
             worker = new SerialWorker(serial, logger, scales, stopEvent, classDataSaverParser, isUserCheckMessage,
             path, firstTimeError, currentDataType,
-                WriteSeries);
+                WriteSeries, series);
         }
 
 
@@ -311,6 +311,11 @@ namespace SerialVisualizer
             if (radioButtonInt8.Checked)
             {
                 currentDataType = DataType.Int8;
+
+                if(worker != null)
+                {
+                    worker.updateCurrentDataType(currentDataType);
+                }
             }
         }
 
@@ -319,6 +324,11 @@ namespace SerialVisualizer
             if (radioButtonUint8.Checked)
             {
                 currentDataType = DataType.Uint8;
+
+                if (worker != null)
+                {
+                    worker.updateCurrentDataType(currentDataType);
+                }
             }
         }
 
@@ -327,6 +337,11 @@ namespace SerialVisualizer
             if (radioButtonInt16.Checked)
             {
                 currentDataType = DataType.Int16;
+
+                if (worker != null)
+                {
+                    worker.updateCurrentDataType(currentDataType);
+                }
             }
         }
 
@@ -335,6 +350,11 @@ namespace SerialVisualizer
             if (radioButtonUint16.Checked)
             {
                 currentDataType = DataType.Uint16;
+
+                if (worker != null)
+                {
+                    worker.updateCurrentDataType(currentDataType);
+                }
             }
         }
 
@@ -343,6 +363,11 @@ namespace SerialVisualizer
             if (radioButtonInt32.Checked)
             {
                 currentDataType = DataType.Int32;
+
+                if (worker != null)
+                {
+                    worker.updateCurrentDataType(currentDataType);
+                }
             }
         }
 
@@ -351,6 +376,11 @@ namespace SerialVisualizer
             if (radioButtonUint32.Checked)
             {
                 currentDataType = DataType.Uint32;
+
+                if (worker != null)
+                {
+                    worker.updateCurrentDataType(currentDataType);
+                }
             }
         }
 
@@ -359,6 +389,11 @@ namespace SerialVisualizer
             if (radioButtonFloat.Checked)
             {
                 currentDataType = DataType.Float;
+
+                if (worker != null)
+                {
+                    worker.updateCurrentDataType(currentDataType);
+                }
             }
         }
 
@@ -367,6 +402,11 @@ namespace SerialVisualizer
             if (radioButtonDouble.Checked)
             {
                 currentDataType = DataType.Double;
+
+                if (worker != null)
+                {
+                    worker.updateCurrentDataType(currentDataType);
+                }
             }
         }
 
@@ -424,24 +464,6 @@ namespace SerialVisualizer
             }
 
             return length;
-        }
-
-        private int GetLastXCoordinate()
-        {
-            int lastX = 0;
-
-            for (int i = 0; i < series.Length; i++)
-            {
-                if (series[i] != null)
-                {
-                    if (series[i].Points.Count > lastX)
-                    {
-                        lastX = series[i].Points.Count;
-                    }
-                }
-            }
-
-            return lastX;
         }
 
 
@@ -537,6 +559,11 @@ namespace SerialVisualizer
             {
                 series[index].Points.AddXY(p.XValue, p.YValues[0] * scales[index]);
             }
+
+            if (worker != null)
+            {
+                worker.updateScales(scales);
+            }
         }
 
         private void buttonRemoveScale_Click(object sender, EventArgs e)
@@ -631,6 +658,11 @@ namespace SerialVisualizer
                 label11.Text = DirDialog.SelectedPath;
                 toCopy = true;
                 firstTimeError = true;
+
+                if (worker != null)
+                {
+                    worker.updateFirstTimeError(true);
+                }
             }
         }
 
@@ -746,6 +778,14 @@ namespace SerialVisualizer
             {
                 radioButtonYesChecksum.Checked = false;
                 radioButtonNoChecksum.Checked = true;
+            }
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if(worker != null)
+            {
+                worker.updateIsNeedToWriteLog(checkBox1.Checked);
             }
         }
     }
