@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SerialVisualizer
 {
+    //
     internal class SerialPortSettings
     {
         [JsonInclude]
