@@ -13,6 +13,7 @@ using System.Text.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.AxHost;
+using System.Collections.Concurrent;
 
 namespace SerialVisualizer
 {
@@ -21,6 +22,7 @@ namespace SerialVisualizer
         SerialPort serial = new SerialPort();
         DataType currentDataType = DataType.Uint8;
         Thread myThread;
+        Thread processingThread;
         ManualResetEvent stopEvent = new ManualResetEvent(false);
         Series[] series;
         Series[] originSeries;
@@ -34,6 +36,10 @@ namespace SerialVisualizer
         string path = "./tables/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv";
 
         SerialWorker worker;
+        SerialProcessor processor;
+
+
+        private BlockingCollection<byte[]> readQueue = new BlockingCollection<byte[]>();
 
         public Form1()
         {
@@ -77,9 +83,10 @@ namespace SerialVisualizer
             classDataSaverParser = new ClassDataSaverParser(ReadingType.BigEndian, 1, true, false);
             classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
 
-            worker = new SerialWorker(serial, logger, scales, stopEvent, classDataSaverParser, isUserCheckMessage,
-            path, firstTimeError, currentDataType,
-                WriteSeries, series);
+            readQueue = new BlockingCollection<byte[]>();
+            worker = new SerialWorker(serial, readQueue, logger, stopEvent);
+            processor = new SerialProcessor(readQueue, classDataSaverParser, true, path,
+                firstTimeError, currentDataType, WriteSeries, series, scales, logger);
         }
 
 
@@ -173,9 +180,12 @@ namespace SerialVisualizer
 
                     myThread = new Thread(worker.ReadBytes);
                     myThread.IsBackground = true;
+                    processingThread = new Thread(processor.ProcessBytes);
+                    processingThread.IsBackground = true;
                     serial.Open();
                     stopEvent.Reset();
                     myThread.Start();
+                    processingThread.Start();
                     buttonConnectComPort.Text = "Disconnect";
                     pictureBox1.BackColor = Color.Green;
                     labelConnectionStatus.Text = $"Connected to {selectedPort}";
@@ -312,9 +322,9 @@ namespace SerialVisualizer
             {
                 currentDataType = DataType.Int8;
 
-                if(worker != null)
+                if(processor != null)
                 {
-                    worker.updateCurrentDataType(currentDataType);
+                    processor.updateCurrentDataType(currentDataType);
                 }
             }
         }
@@ -325,9 +335,9 @@ namespace SerialVisualizer
             {
                 currentDataType = DataType.Uint8;
 
-                if (worker != null)
+                if (processor != null)
                 {
-                    worker.updateCurrentDataType(currentDataType);
+                    processor.updateCurrentDataType(currentDataType);
                 }
             }
         }
@@ -338,9 +348,9 @@ namespace SerialVisualizer
             {
                 currentDataType = DataType.Int16;
 
-                if (worker != null)
+                if (processor != null)
                 {
-                    worker.updateCurrentDataType(currentDataType);
+                    processor.updateCurrentDataType(currentDataType);
                 }
             }
         }
@@ -351,9 +361,9 @@ namespace SerialVisualizer
             {
                 currentDataType = DataType.Uint16;
 
-                if (worker != null)
+                if (processor != null)
                 {
-                    worker.updateCurrentDataType(currentDataType);
+                    processor.updateCurrentDataType(currentDataType);
                 }
             }
         }
@@ -364,9 +374,9 @@ namespace SerialVisualizer
             {
                 currentDataType = DataType.Int32;
 
-                if (worker != null)
+                if (processor != null)
                 {
-                    worker.updateCurrentDataType(currentDataType);
+                    processor.updateCurrentDataType(currentDataType);
                 }
             }
         }
@@ -377,9 +387,9 @@ namespace SerialVisualizer
             {
                 currentDataType = DataType.Uint32;
 
-                if (worker != null)
+                if (processor != null)
                 {
-                    worker.updateCurrentDataType(currentDataType);
+                    processor.updateCurrentDataType(currentDataType);
                 }
             }
         }
@@ -390,9 +400,9 @@ namespace SerialVisualizer
             {
                 currentDataType = DataType.Float;
 
-                if (worker != null)
+                if (processor != null)
                 {
-                    worker.updateCurrentDataType(currentDataType);
+                    processor.updateCurrentDataType(currentDataType);
                 }
             }
         }
@@ -403,9 +413,9 @@ namespace SerialVisualizer
             {
                 currentDataType = DataType.Double;
 
-                if (worker != null)
+                if (processor != null)
                 {
-                    worker.updateCurrentDataType(currentDataType);
+                    processor.updateCurrentDataType(currentDataType);
                 }
             }
         }
@@ -472,6 +482,12 @@ namespace SerialVisualizer
 
         private void WriteSeries(int dataAmount, int coord, double[] data, double[] scale)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => WriteSeries(dataAmount, coord, data, scale)));
+                return;
+            }
+
             for (int i = 0; i < dataAmount; i++)
             {
                 series[i].Points.AddXY(coord, data[i] * scales[i]);
@@ -560,9 +576,9 @@ namespace SerialVisualizer
                 series[index].Points.AddXY(p.XValue, p.YValues[0] * scales[index]);
             }
 
-            if (worker != null)
+            if (processor != null)
             {
-                worker.updateScales(scales);
+                processor.updateScales(scales);
             }
         }
 
@@ -659,9 +675,9 @@ namespace SerialVisualizer
                 toCopy = true;
                 firstTimeError = true;
 
-                if (worker != null)
+                if (processor != null)
                 {
-                    worker.updateFirstTimeError(true);
+                    processor.updateFirstTimeError(true);
                 }
             }
         }
@@ -783,9 +799,9 @@ namespace SerialVisualizer
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if(worker != null)
+            if(processor != null)
             {
-                worker.updateIsNeedToWriteLog(checkBox1.Checked);
+                processor.updateIsNeedToWriteLog(checkBox1.Checked);
             }
         }
     }
