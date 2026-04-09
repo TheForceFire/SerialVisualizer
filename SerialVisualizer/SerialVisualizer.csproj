@@ -86,6 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandGenerator.cs" />
     <Compile Include="ClassDataSaver.cs" />
     <Compile Include="ClassDataSaverParser.cs" />
     <Compile Include="Form1.cs">
