@@ -228,7 +228,7 @@ namespace SerialVisualizer
                     int startBytesToRead;
                     if (bytesToRead > 0)
                     {
-                        do 
+                        do
                         {
                             startBytesToRead = bytesToRead;
 
@@ -257,7 +257,7 @@ namespace SerialVisualizer
                                     {
                                         File.AppendAllText(path, writeDataLog(dataSaver, currentDataType));
                                     }
-                                    else if(firstTimeError)
+                                    else if (firstTimeError)
                                     {
                                         MessageBox.Show("Selected directory has been deleted");
                                         firstTimeError = false;
@@ -408,7 +408,7 @@ namespace SerialVisualizer
         {
             string logRow = "";
             logRow += Encoding.ASCII.GetString(classDataSaver.start_b.ToArray()) + ";";
-            if(classDataSaver.sender_b.Count != 0)
+            if (classDataSaver.sender_b.Count != 0)
             {
                 logRow += Encoding.ASCII.GetString(classDataSaver.sender_b.ToArray()) + ";";
             }
@@ -909,7 +909,8 @@ namespace SerialVisualizer
                 stopEvent.Set();
                 if (myThread != null && myThread.IsAlive) myThread.Join();
                 serial.Close();
-                if (toCopy && checkBox1.Checked) {
+                if (toCopy && checkBox1.Checked)
+                {
                     try
                     {
                         File.Move(path, DirDialog.SelectedPath + "/table " + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".csv");
@@ -960,9 +961,9 @@ namespace SerialVisualizer
             comboBoxBaudRate.SelectedItem = portSettings.getBaudRate().ToString();
             comboBoxParity.SelectedItem = portSettings.getParity().ToString();
             numericUpDownDataBits.Value = portSettings.getDataBits();
-            
+
             switch (portSettings.getStopBits())
-            { 
+            {
                 case StopBits.None:
                     comboBoxStopBits.SelectedItem = "0";
                     break;
@@ -1002,7 +1003,8 @@ namespace SerialVisualizer
             {
                 radioButtonEndianLittle.Checked = true;
                 radioButtonEndianBig.Checked = false;
-            } else
+            }
+            else
             {
                 radioButtonEndianLittle.Checked = false;
                 radioButtonEndianBig.Checked = true;
@@ -1011,7 +1013,8 @@ namespace SerialVisualizer
             if (protocolSettings.getAddrLength() == 0)
             {
                 radioButtonNoAddress.Checked = true;
-            } else
+            }
+            else
             {
                 radioButtonNoAddress.Checked = false;
                 radioButtonYesAddress.Checked = true;
@@ -1022,11 +1025,40 @@ namespace SerialVisualizer
             {
                 radioButtonYesChecksum.Checked = true;
                 radioButtonNoChecksum.Checked = false;
-            } else
+            }
+            else
             {
                 radioButtonYesChecksum.Checked = false;
                 radioButtonNoChecksum.Checked = true;
             }
+        }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            // If grid has no columns yet, add a default column
+            if (dataGridView1.Columns.Count == 0)
+            {
+                dataGridView1.Columns.Add("col1", "Value");
+            }
+
+            // Add a new row and set a default value
+            int rowIndex = dataGridView1.Rows.Add();
+            dataGridView1.Rows[rowIndex].Cells[0].Value = "New row " + (rowIndex + 1);
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            // Remove all rows from the table
+            dataGridView1.Rows.Clear();
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

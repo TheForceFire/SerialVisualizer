@@ -6,13 +6,13 @@ namespace SerialVisualizer
     internal class SerialPortSettings
     {
         [JsonInclude]
-        private int BaudRate;
+        public int BaudRate;
         [JsonInclude]
-        private Parity Parity;
+        public Parity Parity;
         [JsonInclude]
-        private int DataBits;
+        public int DataBits;
         [JsonInclude]
-        private StopBits StopBits;
+        public StopBits StopBits;
 
         public SerialPortSettings() { }
 
@@ -24,40 +24,16 @@ namespace SerialVisualizer
             this.StopBits = StopBits;
         }
 
-        public int getBaudRate()
-        {
-            return BaudRate;
-        }
-        public void setBaudRate(int value)
-        {
-            BaudRate = value;
-        }
+        public int getBaudRate() { return BaudRate; }
+        public void setBaudRate(int value) { BaudRate = value; }
 
-        public Parity getParity()
-        {
-            return Parity;
-        }
-        public void setParity(Parity value)
-        {
-            Parity = value;
-        }
+        public Parity getParity() { return Parity; }
+        public void setParity(Parity value) { Parity = value; }
 
-        public int getDataBits()
-        {
-            return DataBits;
-        }
-        public void setDataBits(int value)
-        {
-            DataBits = value;
-        }
+        public int getDataBits() { return DataBits; }
+        public void setDataBits(int value) { DataBits = value; }
 
-        public StopBits getStopBits()
-        {
-            return StopBits;
-        }
-        public void setStopBits(StopBits value)
-        {
-            StopBits = value;
-        }
+        public StopBits getStopBits() { return StopBits; }
+        public void setStopBits(StopBits value) { StopBits = value; }
     }
 }
