@@ -15,6 +15,7 @@ namespace SerialVisualizer
 {
     public partial class Form1 : Form
     {
+
         SerialPort serial = new SerialPort();
         DataType currentDataType = DataType.Uint8;
         Thread myThread;
@@ -38,6 +39,13 @@ namespace SerialVisualizer
             buttonConnectComPort.Click += b_connect;
             buttonRefreshPortList.Click += b_refresh;
             button3.Click += b_clear;
+            // Ensure DataGridView has initial single column named "Данные"
+            if (dataGridView1.Columns.Count == 0)
+            {
+                dataGridView1.Columns.Add("Данные", "Данные");
+            }
+
+            // Note: click handlers are wired in Designer to avoid double-invocation
 
             originSeries = new Series[10];
             for (int i = 0; i < 10; i++)
@@ -71,6 +79,8 @@ namespace SerialVisualizer
 
             classDataSaverParser = new ClassDataSaverParser(ReadingType.BigEndian, 1, true, false);
             classDataSaverParser.frameStart = ClassDataSaverParser.StringToByteArray(textBoxFrameStart.Text);
+
+            // DataGridView CellValidating is wired in Designer
         }
 
 
@@ -1039,15 +1049,27 @@ namespace SerialVisualizer
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            // If grid has no columns yet, add a default column
-            if (dataGridView1.Columns.Count == 0)
+            // Require a name from the txt input when available
+            string name = null;
+            if (this.txtRowName != null)
             {
-                dataGridView1.Columns.Add("col1", "Value");
+                name = this.txtRowName.Text.Trim();
+                if (string.IsNullOrEmpty(name))
+                {
+                    MessageBox.Show("Введите имя строки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
 
-            // Add a new row and set a default value
+            // If grid has no columns yet, add a default column named "Данные"
+            if (dataGridView1.Columns.Count == 0)
+            {
+                dataGridView1.Columns.Add("Данные", "Данные");
+            }
+
+            // Add a new row and set the name in the first cell
             int rowIndex = dataGridView1.Rows.Add();
-            dataGridView1.Rows[rowIndex].Cells[0].Value = "New row " + (rowIndex + 1);
+            dataGridView1.Rows[rowIndex].Cells[0].Value = name ?? ("New row " + (rowIndex + 1));
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
@@ -1056,7 +1078,145 @@ namespace SerialVisualizer
             dataGridView1.Rows.Clear();
         }
 
+        private void btnDeleteRow_Click(object sender, EventArgs e)
+        {
+            string name = txtDeleteRow?.Text.Trim();
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("Введите имя для удаления", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool found = false;
+            for (int i = dataGridView1.Rows.Count - 1; i >= 0; i--)
+            {
+                var cell = dataGridView1.Rows[i].Cells.Count > 0 ? dataGridView1.Rows[i].Cells[0] : null;
+                if (cell != null && cell.Value != null && string.Equals(cell.Value.ToString(), name, StringComparison.OrdinalIgnoreCase))
+                {
+                    dataGridView1.Rows.RemoveAt(i);
+                    found = true;
+                    if (chkDeleteFirstOnly != null && chkDeleteFirstOnly.Checked)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            if (!found)
+            {
+                MessageBox.Show("Строки с таким именем не найдены", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            // Enforce non-empty name in the first column
+            if (e.ColumnIndex == 0)
+            {
+                string newVal = e.FormattedValue?.ToString();
+                if (string.IsNullOrWhiteSpace(newVal))
+                {
+                    dataGridView1.Rows[e.RowIndex].ErrorText = "Имя не может быть пустым";
+                    e.Cancel = true;
+                }
+                else
+                {
+                    dataGridView1.Rows[e.RowIndex].ErrorText = string.Empty;
+                }
+            }
+        }
+
+        private void btnAddColumn_Click(object sender, EventArgs e)
+        {
+            // Clear all rows when changing columns
+            dataGridView1.Rows.Clear();
+
+            // Add a new column. If user provided a name use it, otherwise generate a unique name based on "Данные"
+            string provided = null;
+            if (this.txtColumnName != null)
+            {
+                provided = this.txtColumnName.Text.Trim();
+            }
+
+            string name;
+            if (!string.IsNullOrEmpty(provided))
+            {
+                // ensure uniqueness
+                if (dataGridView1.Columns.Cast<System.Windows.Forms.DataGridViewColumn>().Any(c => string.Equals(c.HeaderText, provided, StringComparison.OrdinalIgnoreCase) || string.Equals(c.Name, provided, StringComparison.OrdinalIgnoreCase)))
+                {
+                    MessageBox.Show("Столбец с таким именем уже существует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                name = provided;
+            }
+            else
+            {
+                string baseName = "Данные";
+                name = baseName;
+                int i = 1;
+                while (dataGridView1.Columns.Cast<System.Windows.Forms.DataGridViewColumn>().Any(c => c.Name == name || c.HeaderText == name))
+                {
+                    name = baseName + " " + i.ToString();
+                    i++;
+                }
+            }
+
+            dataGridView1.Columns.Add(name, name);
+        }
+
+        private void btnDeleteColumn_Click(object sender, EventArgs e)
+        {
+            // Delete a single column by name provided in the same textbox as row deletion (txtDeleteRow)
+            // Clear all rows when removing a column to keep table consistent
+            dataGridView1.Rows.Clear();
+
+            string name = this.txtDeleteRow?.Text.Trim();
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("Введите имя столбца для удаления", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var col = dataGridView1.Columns.Cast<System.Windows.Forms.DataGridViewColumn>().FirstOrDefault(c => string.Equals(c.HeaderText, name, StringComparison.OrdinalIgnoreCase) || string.Equals(c.Name, name, StringComparison.OrdinalIgnoreCase));
+            if (col == null)
+            {
+                MessageBox.Show("Столбец с таким именем не найден", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            dataGridView1.Columns.Remove(col);
+
+            // Ensure at least one default column remains
+            if (dataGridView1.Columns.Count == 0)
+            {
+                dataGridView1.Columns.Add("Данные", "Данные");
+            }
+        }
+
+        private void btnDeleteAllColumns_Click(object sender, EventArgs e)
+        {
+            // Remove all columns and restore a single default column named "Данные"
+            dataGridView1.Rows.Clear();
+            dataGridView1.Columns.Clear();
+            dataGridView1.Columns.Add("Данные", "Данные");
+        }
+
         private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtDeleteRow_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtColumnName_TextChanged(object sender, EventArgs e)
         {
 
         }

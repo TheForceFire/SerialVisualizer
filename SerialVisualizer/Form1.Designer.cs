@@ -28,13 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.buttonClear = new System.Windows.Forms.Button();
+            this.txtRowName = new System.Windows.Forms.TextBox();
+            this.txtColumnName = new System.Windows.Forms.TextBox();
+            this.txtDeleteRow = new System.Windows.Forms.TextBox();
+            this.btnDeleteRow = new System.Windows.Forms.Button();
+            this.chkDeleteFirstOnly = new System.Windows.Forms.CheckBox();
+            this.btnAddColumn = new System.Windows.Forms.Button();
+            this.btnDeleteColumn = new System.Windows.Forms.Button();
+            this.btnDeleteAllColumns = new System.Windows.Forms.Button();
+            this.btnClearRows = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button6 = new System.Windows.Forms.Button();
@@ -120,22 +128,22 @@
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.AxisX.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisY.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.BorderColor = System.Drawing.Color.LightGray;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea4.AxisX.LineColor = System.Drawing.Color.LightGray;
+            chartArea4.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea4.AxisY.LineColor = System.Drawing.Color.LightGray;
+            chartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea4.BorderColor = System.Drawing.Color.LightGray;
+            chartArea4.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart1.Legends.Add(legend4);
             this.chart1.Location = new System.Drawing.Point(0, 3);
             this.chart1.MinimumSize = new System.Drawing.Size(388, 150);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart1.Series.Add(series4);
             this.chart1.Size = new System.Drawing.Size(1275, 490);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -153,7 +161,15 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.tabPage1.Controls.Add(this.buttonClear);
+            this.tabPage1.Controls.Add(this.txtRowName);
+            this.tabPage1.Controls.Add(this.txtColumnName);
+            this.tabPage1.Controls.Add(this.txtDeleteRow);
+            this.tabPage1.Controls.Add(this.btnDeleteRow);
+            this.tabPage1.Controls.Add(this.chkDeleteFirstOnly);
+            this.tabPage1.Controls.Add(this.btnAddColumn);
+            this.tabPage1.Controls.Add(this.btnDeleteColumn);
+            this.tabPage1.Controls.Add(this.btnDeleteAllColumns);
+            this.tabPage1.Controls.Add(this.btnClearRows);
             this.tabPage1.Controls.Add(this.buttonAdd);
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Controls.Add(this.button6);
@@ -176,32 +192,121 @@
             this.tabPage1.Text = "+-";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
-            // buttonClear
+            // txtRowName
             // 
-            this.buttonClear.Location = new System.Drawing.Point(815, 445);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(105, 46);
-            this.buttonClear.TabIndex = 43;
-            this.buttonClear.Text = "Убрать все строки";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            this.txtRowName.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.txtRowName.Location = new System.Drawing.Point(721, 290);
+            this.txtRowName.Name = "txtRowName";
+            this.txtRowName.Size = new System.Drawing.Size(145, 20);
+            this.txtRowName.TabIndex = 46;
+            // 
+            // txtColumnName
+            // 
+            this.txtColumnName.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.txtColumnName.Location = new System.Drawing.Point(721, 378);
+            this.txtColumnName.Name = "txtColumnName";
+            this.txtColumnName.Size = new System.Drawing.Size(145, 20);
+            this.txtColumnName.TabIndex = 47;
+            this.txtColumnName.TextChanged += new System.EventHandler(this.txtColumnName_TextChanged);
+            // 
+            // txtDeleteRow
+            // 
+            this.txtDeleteRow.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.txtDeleteRow.Location = new System.Drawing.Point(919, 290);
+            this.txtDeleteRow.Name = "txtDeleteRow";
+            this.txtDeleteRow.Size = new System.Drawing.Size(160, 20);
+            this.txtDeleteRow.TabIndex = 48;
+            this.txtDeleteRow.TextChanged += new System.EventHandler(this.txtDeleteRow_TextChanged);
+            // 
+            // btnDeleteRow
+            // 
+            this.btnDeleteRow.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnDeleteRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteRow.Location = new System.Drawing.Point(1089, 289);
+            this.btnDeleteRow.Name = "btnDeleteRow";
+            this.btnDeleteRow.Size = new System.Drawing.Size(136, 21);
+            this.btnDeleteRow.TabIndex = 47;
+            this.btnDeleteRow.Text = "Удалить строку";
+            this.btnDeleteRow.UseVisualStyleBackColor = false;
+            this.btnDeleteRow.Click += new System.EventHandler(this.btnDeleteRow_Click);
+            // 
+            // chkDeleteFirstOnly
+            // 
+            this.chkDeleteFirstOnly.AutoSize = true;
+            this.chkDeleteFirstOnly.Location = new System.Drawing.Point(915, 319);
+            this.chkDeleteFirstOnly.Name = "chkDeleteFirstOnly";
+            this.chkDeleteFirstOnly.Size = new System.Drawing.Size(164, 17);
+            this.chkDeleteFirstOnly.TabIndex = 48;
+            this.chkDeleteFirstOnly.Text = "Удалять только последнее";
+            this.chkDeleteFirstOnly.UseVisualStyleBackColor = true;
+            // 
+            // btnAddColumn
+            // 
+            this.btnAddColumn.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnAddColumn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddColumn.Location = new System.Drawing.Point(742, 406);
+            this.btnAddColumn.Name = "btnAddColumn";
+            this.btnAddColumn.Size = new System.Drawing.Size(105, 46);
+            this.btnAddColumn.TabIndex = 50;
+            this.btnAddColumn.Text = "Добавить столбец";
+            this.btnAddColumn.UseVisualStyleBackColor = false;
+            this.btnAddColumn.Click += new System.EventHandler(this.btnAddColumn_Click);
+            // 
+            // btnDeleteColumn
+            // 
+            this.btnDeleteColumn.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnDeleteColumn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteColumn.Location = new System.Drawing.Point(1089, 319);
+            this.btnDeleteColumn.Name = "btnDeleteColumn";
+            this.btnDeleteColumn.Size = new System.Drawing.Size(136, 24);
+            this.btnDeleteColumn.TabIndex = 51;
+            this.btnDeleteColumn.Text = "Удалить столбец";
+            this.btnDeleteColumn.UseVisualStyleBackColor = false;
+            this.btnDeleteColumn.Click += new System.EventHandler(this.btnDeleteColumn_Click);
+            // 
+            // btnDeleteAllColumns
+            // 
+            this.btnDeleteAllColumns.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnDeleteAllColumns.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteAllColumns.Location = new System.Drawing.Point(1145, 413);
+            this.btnDeleteAllColumns.Name = "btnDeleteAllColumns";
+            this.btnDeleteAllColumns.Size = new System.Drawing.Size(80, 39);
+            this.btnDeleteAllColumns.TabIndex = 52;
+            this.btnDeleteAllColumns.Text = "Убрать все столбы";
+            this.btnDeleteAllColumns.UseVisualStyleBackColor = false;
+            this.btnDeleteAllColumns.Click += new System.EventHandler(this.btnDeleteAllColumns_Click);
+            // 
+            // btnClearRows
+            // 
+            this.btnClearRows.BackColor = System.Drawing.Color.SteelBlue;
+            this.btnClearRows.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClearRows.Location = new System.Drawing.Point(1144, 368);
+            this.btnClearRows.Name = "btnClearRows";
+            this.btnClearRows.Size = new System.Drawing.Size(81, 39);
+            this.btnClearRows.TabIndex = 43;
+            this.btnClearRows.Text = "Убрать все строки";
+            this.btnClearRows.UseVisualStyleBackColor = false;
+            this.btnClearRows.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(680, 445);
+            this.buttonAdd.BackColor = System.Drawing.Color.RoyalBlue;
+            this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAdd.Location = new System.Drawing.Point(742, 319);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(105, 46);
             this.buttonAdd.TabIndex = 42;
             this.buttonAdd.Text = "Добавить новую строку";
-            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.UseVisualStyleBackColor = false;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(680, 276);
+            this.dataGridView1.Location = new System.Drawing.Point(721, 133);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(504, 150);
             this.dataGridView1.TabIndex = 41;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -1076,8 +1181,16 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button buttonClear;
+        private System.Windows.Forms.Button btnClearRows;
         private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.Button btnDeleteColumn;
+        private System.Windows.Forms.Button btnAddColumn;
+        private System.Windows.Forms.Button btnDeleteAllColumns;
+        private System.Windows.Forms.TextBox txtRowName;
+        private System.Windows.Forms.TextBox txtColumnName;
+        private System.Windows.Forms.TextBox txtDeleteRow;
+        private System.Windows.Forms.Button btnDeleteRow;
+        private System.Windows.Forms.CheckBox chkDeleteFirstOnly;
     }
 }
 
