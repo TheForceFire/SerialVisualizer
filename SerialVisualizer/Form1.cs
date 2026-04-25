@@ -1083,5 +1083,96 @@ namespace SerialVisualizer
         {
 
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                byte[] header = GetByteArrayFromByteString(textBox2.Text);
+                byte[] address;
+                if (checkBox2.Checked)
+                {
+                    address = GetByteArrayFromByteString(textBox3.Text);
+                }
+                else
+                {
+                    address = null;
+                }
+                byte[] payload = GetByteArrayFromByteString(textBox4.Text);
+                bool useCrc = checkBox3.Checked;
+
+                byte[] command = CommandGenerator.GenerateCommand(header, address, payload, useCrc);
+                textBox5.Text = ByteArrayToString(command);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось преобразовать строку в команду, проверьте правильность ввода");
+            }
+        }
+
+        private string ByteArrayToString(byte[] ba)
+        {
+            StringBuilder hex = new StringBuilder(ba.Length * 2);
+            foreach (byte b in ba)
+                hex.AppendFormat("{0:x2}", b);
+            return hex.ToString();
+        }
+
+        private IEnumerable<byte> GetBytesFromByteString(string s)
+        {
+            for (int index = 0; index < s.Length; index += 2)
+            {
+                yield return Convert.ToByte(s.Substring(index, 2), 16);
+            }
+        }
+
+        private byte[] getArrayFromIEnumerable(IEnumerable<byte> data)
+        {
+            int length = data.Count();
+            byte[] array = new byte[length];
+            for(int i = 0; i < length; i++)
+            {
+                array[i] = data.ElementAt(i);
+            }
+
+            return array;
+        }
+
+        private byte[] GetByteArrayFromByteString(string s)
+        {
+            IEnumerable<byte> data = GetBytesFromByteString(s);
+            return getArrayFromIEnumerable(data);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (!serial.IsOpen)
+            {
+                return;
+            }
+
+            try
+            {
+                string commandToSendRaw = textBox1.Text;
+
+                string commandToSend;
+                if (radioButton1.Checked)
+                {
+                    commandToSend = commandToSendRaw.Replace("$", String.Empty);
+                }
+                else
+                {
+                    commandToSend = commandToSendRaw;
+                }
+
+                byte[] commandToSendBytes = GetBytesFromByteString(commandToSend).ToArray();
+
+                serial.Write(commandToSendBytes, 0, commandToSendBytes.Length);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось преобразовать строку в команду, проверьте правильность ввода");
+            }
+        }
     }
 }
