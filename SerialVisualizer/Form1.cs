@@ -1098,11 +1098,19 @@ namespace SerialVisualizer
                 {
                     address = null;
                 }
-                byte[] payload = GetByteArrayFromByteString(textBox4.Text);
+                byte[] payload;
+                if (radioButtonASCII.Checked)
+                {
+                    payload = ASCIIStringToByteArray(textBox4.Text);
+                }
+                else
+                {
+                    payload = GetByteArrayFromByteString(textBox4.Text);
+                }
                 bool useCrc = checkBox3.Checked;
 
                 byte[] command = CommandGenerator.GenerateCommand(header, address, payload, useCrc);
-                textBox5.Text = ByteArrayToString(command);
+                textBoxGenerationResult.Text = ByteArrayToString(command);
             }
             catch (Exception)
             {
@@ -1153,7 +1161,7 @@ namespace SerialVisualizer
 
             try
             {
-                string commandToSendRaw = textBox1.Text;
+                string commandToSendRaw = textBoxCommandData.Text;
 
                 string commandToSend;
                 if (radioButton1.Checked)
@@ -1172,6 +1180,19 @@ namespace SerialVisualizer
             catch (Exception)
             {
                 MessageBox.Show("Не удалось преобразовать строку в команду, проверьте правильность ввода");
+            }
+        }
+
+        public static byte[] ASCIIStringToByteArray(string ascii)
+        {
+            return Encoding.ASCII.GetBytes(ascii);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if(textBoxGenerationResult.Text.Length != 0)
+            {
+                textBoxCommandData.Text = textBoxGenerationResult.Text;
             }
         }
     }
