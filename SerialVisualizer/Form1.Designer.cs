@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -138,23 +138,23 @@
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea3.AxisX.LineColor = System.Drawing.Color.LightGray;
-            chartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea3.AxisY.LineColor = System.Drawing.Color.LightGray;
-            chartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea3.BorderColor = System.Drawing.Color.LightGray;
-            chartArea3.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart1.Legends.Add(legend3);
+            chartArea2.AxisX.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.AxisY.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea2.BorderColor = System.Drawing.Color.LightGray;
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart1.Legends.Add(legend2);
             this.chart1.Location = new System.Drawing.Point(0, 2);
             this.chart1.Margin = new System.Windows.Forms.Padding(2);
             this.chart1.MinimumSize = new System.Drawing.Size(291, 122);
             this.chart1.Name = "chart1";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart1.Series.Add(series3);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(956, 398);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -214,9 +214,9 @@
             this.label13.Location = new System.Drawing.Point(880, 426);
             this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(176, 13);
+            this.label13.Size = new System.Drawing.Size(121, 13);
             this.label13.TabIndex = 57;
-            this.label13.Text = "введите новое название столбца";
+            this.label13.Text = "Enter new column name";
             // 
             // label12
             // 
@@ -224,9 +224,9 @@
             this.label12.Location = new System.Drawing.Point(880, 387);
             this.label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(181, 13);
+            this.label12.Size = new System.Drawing.Size(115, 13);
             this.label12.TabIndex = 56;
-            this.label12.Text = "введите старое название столбца";
+            this.label12.Text = "Enter old column name";
             this.label12.Click += new System.EventHandler(this.label12_Click);
             // 
             // txtRowName
@@ -273,7 +273,7 @@
             this.btnRenameColumn.Name = "btnRenameColumn";
             this.btnRenameColumn.Size = new System.Drawing.Size(102, 36);
             this.btnRenameColumn.TabIndex = 55;
-            this.btnRenameColumn.Text = "Переименовать столбец";
+            this.btnRenameColumn.Text = "Rename column";
             this.btnRenameColumn.UseVisualStyleBackColor = false;
             this.btnRenameColumn.Click += new System.EventHandler(this.btnRenameColumn_Click);
             // 
@@ -295,7 +295,7 @@
             this.btnDeleteRow.Name = "btnDeleteRow";
             this.btnDeleteRow.Size = new System.Drawing.Size(136, 21);
             this.btnDeleteRow.TabIndex = 47;
-            this.btnDeleteRow.Text = "Удалить строку";
+            this.btnDeleteRow.Text = "Delete line";
             this.btnDeleteRow.UseVisualStyleBackColor = false;
             this.btnDeleteRow.Click += new System.EventHandler(this.btnDeleteRow_Click);
             // 
@@ -304,9 +304,9 @@
             this.chkDeleteFirstOnly.AutoSize = true;
             this.chkDeleteFirstOnly.Location = new System.Drawing.Point(883, 341);
             this.chkDeleteFirstOnly.Name = "chkDeleteFirstOnly";
-            this.chkDeleteFirstOnly.Size = new System.Drawing.Size(164, 17);
+            this.chkDeleteFirstOnly.Size = new System.Drawing.Size(98, 17);
             this.chkDeleteFirstOnly.TabIndex = 48;
-            this.chkDeleteFirstOnly.Text = "Удалять только последнее";
+            this.chkDeleteFirstOnly.Text = "Delete only last";
             this.chkDeleteFirstOnly.UseVisualStyleBackColor = true;
             // 
             // btnAddColumn
@@ -318,7 +318,7 @@
             this.btnAddColumn.Name = "btnAddColumn";
             this.btnAddColumn.Size = new System.Drawing.Size(105, 46);
             this.btnAddColumn.TabIndex = 50;
-            this.btnAddColumn.Text = "Добавить столбец";
+            this.btnAddColumn.Text = "Add new column";
             this.btnAddColumn.UseVisualStyleBackColor = false;
             this.btnAddColumn.Click += new System.EventHandler(this.btnAddColumn_Click);
             // 
@@ -330,7 +330,7 @@
             this.btnDeleteColumn.Name = "btnDeleteColumn";
             this.btnDeleteColumn.Size = new System.Drawing.Size(136, 24);
             this.btnDeleteColumn.TabIndex = 51;
-            this.btnDeleteColumn.Text = "Удалить столбец";
+            this.btnDeleteColumn.Text = "Delete column";
             this.btnDeleteColumn.UseVisualStyleBackColor = false;
             this.btnDeleteColumn.Click += new System.EventHandler(this.btnDeleteColumn_Click);
             // 
@@ -342,7 +342,7 @@
             this.btnDeleteAllColumns.Name = "btnDeleteAllColumns";
             this.btnDeleteAllColumns.Size = new System.Drawing.Size(80, 39);
             this.btnDeleteAllColumns.TabIndex = 52;
-            this.btnDeleteAllColumns.Text = "Убрать все столбы";
+            this.btnDeleteAllColumns.Text = "Delete all columns";
             this.btnDeleteAllColumns.UseVisualStyleBackColor = false;
             this.btnDeleteAllColumns.Click += new System.EventHandler(this.btnDeleteAllColumns_Click);
             // 
@@ -354,7 +354,7 @@
             this.btnClearRows.Name = "btnClearRows";
             this.btnClearRows.Size = new System.Drawing.Size(81, 39);
             this.btnClearRows.TabIndex = 43;
-            this.btnClearRows.Text = "Убрать все строки";
+            this.btnClearRows.Text = "Delete all lines";
             this.btnClearRows.UseVisualStyleBackColor = false;
             this.btnClearRows.Click += new System.EventHandler(this.buttonClear_Click);
             // 
@@ -367,7 +367,7 @@
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(105, 46);
             this.buttonAdd.TabIndex = 42;
-            this.buttonAdd.Text = "Добавить новую строку";
+            this.buttonAdd.Text = "Add new line";
             this.buttonAdd.UseVisualStyleBackColor = false;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
