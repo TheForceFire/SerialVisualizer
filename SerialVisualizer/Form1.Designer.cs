@@ -28,14 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.txtRowName = new System.Windows.Forms.TextBox();
             this.txtColumnName = new System.Windows.Forms.TextBox();
+            this.txtOldColumnName = new System.Windows.Forms.TextBox();
+            this.txtNewColumnName = new System.Windows.Forms.TextBox();
+            this.btnRenameColumn = new System.Windows.Forms.Button();
             this.txtDeleteRow = new System.Windows.Forms.TextBox();
             this.btnDeleteRow = new System.Windows.Forms.Button();
             this.chkDeleteFirstOnly = new System.Windows.Forms.CheckBox();
@@ -105,6 +108,13 @@
             this.button1 = new System.Windows.Forms.Button();
             this.RenameBox = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.lblRowName = new System.Windows.Forms.Label();
+            this.lblColumnName = new System.Windows.Forms.Label();
+            this.lblDelete = new System.Windows.Forms.Label();
+            this.lblOldColumnName = new System.Windows.Forms.Label();
+            this.lblNewColumnName = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -128,22 +138,22 @@
             // 
             this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea4.AxisX.LineColor = System.Drawing.Color.LightGray;
-            chartArea4.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea4.AxisY.LineColor = System.Drawing.Color.LightGray;
-            chartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea4.BorderColor = System.Drawing.Color.LightGray;
-            chartArea4.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart1.Legends.Add(legend4);
+            chartArea6.AxisX.LineColor = System.Drawing.Color.LightGray;
+            chartArea6.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea6.AxisY.LineColor = System.Drawing.Color.LightGray;
+            chartArea6.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
+            chartArea6.BorderColor = System.Drawing.Color.LightGray;
+            chartArea6.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.chart1.Legends.Add(legend6);
             this.chart1.Location = new System.Drawing.Point(0, 3);
             this.chart1.MinimumSize = new System.Drawing.Size(388, 150);
             this.chart1.Name = "chart1";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart1.Series.Add(series4);
+            series6.ChartArea = "ChartArea1";
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.chart1.Series.Add(series6);
             this.chart1.Size = new System.Drawing.Size(1275, 490);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -161,8 +171,13 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.tabPage1.Controls.Add(this.label13);
+            this.tabPage1.Controls.Add(this.label12);
             this.tabPage1.Controls.Add(this.txtRowName);
             this.tabPage1.Controls.Add(this.txtColumnName);
+            this.tabPage1.Controls.Add(this.txtOldColumnName);
+            this.tabPage1.Controls.Add(this.txtNewColumnName);
+            this.tabPage1.Controls.Add(this.btnRenameColumn);
             this.tabPage1.Controls.Add(this.txtDeleteRow);
             this.tabPage1.Controls.Add(this.btnDeleteRow);
             this.tabPage1.Controls.Add(this.chkDeleteFirstOnly);
@@ -209,10 +224,38 @@
             this.txtColumnName.TabIndex = 47;
             this.txtColumnName.TextChanged += new System.EventHandler(this.txtColumnName_TextChanged);
             // 
+            // txtOldColumnName
+            // 
+            this.txtOldColumnName.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.txtOldColumnName.Location = new System.Drawing.Point(915, 368);
+            this.txtOldColumnName.Name = "txtOldColumnName";
+            this.txtOldColumnName.Size = new System.Drawing.Size(160, 20);
+            this.txtOldColumnName.TabIndex = 53;
+            // 
+            // txtNewColumnName
+            // 
+            this.txtNewColumnName.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.txtNewColumnName.Location = new System.Drawing.Point(915, 413);
+            this.txtNewColumnName.Name = "txtNewColumnName";
+            this.txtNewColumnName.Size = new System.Drawing.Size(160, 20);
+            this.txtNewColumnName.TabIndex = 54;
+            // 
+            // btnRenameColumn
+            // 
+            this.btnRenameColumn.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.btnRenameColumn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRenameColumn.Location = new System.Drawing.Point(915, 448);
+            this.btnRenameColumn.Name = "btnRenameColumn";
+            this.btnRenameColumn.Size = new System.Drawing.Size(136, 44);
+            this.btnRenameColumn.TabIndex = 55;
+            this.btnRenameColumn.Text = "Переименовать столбец";
+            this.btnRenameColumn.UseVisualStyleBackColor = false;
+            this.btnRenameColumn.Click += new System.EventHandler(this.btnRenameColumn_Click);
+            // 
             // txtDeleteRow
             // 
             this.txtDeleteRow.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.txtDeleteRow.Location = new System.Drawing.Point(919, 290);
+            this.txtDeleteRow.Location = new System.Drawing.Point(915, 289);
             this.txtDeleteRow.Name = "txtDeleteRow";
             this.txtDeleteRow.Size = new System.Drawing.Size(160, 20);
             this.txtDeleteRow.TabIndex = 48;
@@ -244,7 +287,7 @@
             // 
             this.btnAddColumn.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnAddColumn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddColumn.Location = new System.Drawing.Point(742, 406);
+            this.btnAddColumn.Location = new System.Drawing.Point(721, 409);
             this.btnAddColumn.Name = "btnAddColumn";
             this.btnAddColumn.Size = new System.Drawing.Size(105, 46);
             this.btnAddColumn.TabIndex = 50;
@@ -292,7 +335,7 @@
             // 
             this.buttonAdd.BackColor = System.Drawing.Color.RoyalBlue;
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAdd.Location = new System.Drawing.Point(742, 319);
+            this.buttonAdd.Location = new System.Drawing.Point(721, 319);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(105, 46);
             this.buttonAdd.TabIndex = 42;
@@ -304,7 +347,7 @@
             // 
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(721, 133);
+            this.dataGridView1.Location = new System.Drawing.Point(721, 124);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(504, 150);
             this.dataGridView1.TabIndex = 41;
@@ -1074,6 +1117,66 @@
             this.button3.Text = "Clear Graphic";
             this.button3.UseVisualStyleBackColor = true;
             // 
+            // lblRowName
+            // 
+            this.lblRowName.AutoSize = true;
+            this.lblRowName.Location = new System.Drawing.Point(721, 272);
+            this.lblRowName.Name = "lblRowName";
+            this.lblRowName.Size = new System.Drawing.Size(95, 13);
+            this.lblRowName.TabIndex = 60;
+            this.lblRowName.Text = "Имя строки (добавить):";
+            // 
+            // lblColumnName
+            // 
+            this.lblColumnName.AutoSize = true;
+            this.lblColumnName.Location = new System.Drawing.Point(721, 360);
+            this.lblColumnName.Name = "lblColumnName";
+            this.lblColumnName.Size = new System.Drawing.Size(102, 13);
+            this.lblColumnName.TabIndex = 61;
+            this.lblColumnName.Text = "Имя столбца (добавить):";
+            // 
+            // lblDelete
+            // 
+            this.lblDelete.AutoSize = true;
+            this.lblDelete.Location = new System.Drawing.Point(919, 272);
+            this.lblDelete.Name = "lblDelete";
+            this.lblDelete.Size = new System.Drawing.Size(133, 13);
+            this.lblDelete.TabIndex = 62;
+            this.lblDelete.Text = "Имя для удаления (строка/ст.):";
+            // 
+            // lblOldColumnName
+            // 
+            this.lblOldColumnName.Location = new System.Drawing.Point(0, 0);
+            this.lblOldColumnName.Name = "lblOldColumnName";
+            this.lblOldColumnName.Size = new System.Drawing.Size(100, 23);
+            this.lblOldColumnName.TabIndex = 0;
+            // 
+            // lblNewColumnName
+            // 
+            this.lblNewColumnName.Location = new System.Drawing.Point(0, 0);
+            this.lblNewColumnName.Name = "lblNewColumnName";
+            this.lblNewColumnName.Size = new System.Drawing.Size(100, 23);
+            this.lblNewColumnName.TabIndex = 0;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(912, 352);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(181, 13);
+            this.label12.TabIndex = 56;
+            this.label12.Text = "введите старое название столбца";
+            this.label12.Click += new System.EventHandler(this.label12_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(912, 397);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(176, 13);
+            this.label13.TabIndex = 57;
+            this.label13.Text = "введите новое название столбца";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1188,9 +1291,19 @@
         private System.Windows.Forms.Button btnDeleteAllColumns;
         private System.Windows.Forms.TextBox txtRowName;
         private System.Windows.Forms.TextBox txtColumnName;
+        private System.Windows.Forms.Label lblRowName;
+        private System.Windows.Forms.Label lblColumnName;
+        private System.Windows.Forms.Label lblDelete;
+        private System.Windows.Forms.Label lblOldColumnName;
+        private System.Windows.Forms.Label lblNewColumnName;
+        private System.Windows.Forms.TextBox txtOldColumnName;
+        private System.Windows.Forms.TextBox txtNewColumnName;
+        private System.Windows.Forms.Button btnRenameColumn;
         private System.Windows.Forms.TextBox txtDeleteRow;
         private System.Windows.Forms.Button btnDeleteRow;
         private System.Windows.Forms.CheckBox chkDeleteFirstOnly;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
     }
 }
 

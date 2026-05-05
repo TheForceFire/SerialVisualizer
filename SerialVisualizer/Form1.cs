@@ -1049,7 +1049,7 @@ namespace SerialVisualizer
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            // Require a name from the txt input when available
+
             string name = null;
             if (this.txtRowName != null)
             {
@@ -1061,20 +1061,20 @@ namespace SerialVisualizer
                 }
             }
 
-            // If grid has no columns yet, add a default column named "Данные"
+
             if (dataGridView1.Columns.Count == 0)
             {
                 dataGridView1.Columns.Add("Данные", "Данные");
             }
 
-            // Add a new row and set the name in the first cell
+
             int rowIndex = dataGridView1.Rows.Add();
             dataGridView1.Rows[rowIndex].Cells[0].Value = name ?? ("New row " + (rowIndex + 1));
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
         {
-            // Remove all rows from the table
+
             dataGridView1.Rows.Clear();
         }
 
@@ -1110,7 +1110,7 @@ namespace SerialVisualizer
 
         private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            // Enforce non-empty name in the first column
+
             if (e.ColumnIndex == 0)
             {
                 string newVal = e.FormattedValue?.ToString();
@@ -1128,10 +1128,9 @@ namespace SerialVisualizer
 
         private void btnAddColumn_Click(object sender, EventArgs e)
         {
-            // Clear all rows when changing columns
             dataGridView1.Rows.Clear();
 
-            // Add a new column. If user provided a name use it, otherwise generate a unique name based on "Данные"
+
             string provided = null;
             if (this.txtColumnName != null)
             {
@@ -1141,7 +1140,6 @@ namespace SerialVisualizer
             string name;
             if (!string.IsNullOrEmpty(provided))
             {
-                // ensure uniqueness
                 if (dataGridView1.Columns.Cast<System.Windows.Forms.DataGridViewColumn>().Any(c => string.Equals(c.HeaderText, provided, StringComparison.OrdinalIgnoreCase) || string.Equals(c.Name, provided, StringComparison.OrdinalIgnoreCase)))
                 {
                     MessageBox.Show("Столбец с таким именем уже существует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1166,8 +1164,7 @@ namespace SerialVisualizer
 
         private void btnDeleteColumn_Click(object sender, EventArgs e)
         {
-            // Delete a single column by name provided in the same textbox as row deletion (txtDeleteRow)
-            // Clear all rows when removing a column to keep table consistent
+
             dataGridView1.Rows.Clear();
 
             string name = this.txtDeleteRow?.Text.Trim();
@@ -1186,7 +1183,6 @@ namespace SerialVisualizer
 
             dataGridView1.Columns.Remove(col);
 
-            // Ensure at least one default column remains
             if (dataGridView1.Columns.Count == 0)
             {
                 dataGridView1.Columns.Add("Данные", "Данные");
@@ -1195,10 +1191,45 @@ namespace SerialVisualizer
 
         private void btnDeleteAllColumns_Click(object sender, EventArgs e)
         {
-            // Remove all columns and restore a single default column named "Данные"
             dataGridView1.Rows.Clear();
             dataGridView1.Columns.Clear();
             dataGridView1.Columns.Add("Данные", "Данные");
+        }
+
+        private void btnRenameColumn_Click(object sender, EventArgs e)
+        {
+            string oldName = this.txtOldColumnName?.Text.Trim();
+            string newName = this.txtNewColumnName?.Text.Trim();
+
+            if (string.IsNullOrEmpty(oldName))
+            {
+                MessageBox.Show("Введите текущее имя столбца", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (string.IsNullOrEmpty(newName))
+            {
+                MessageBox.Show("Введите новое имя столбца", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var col = dataGridView1.Columns.Cast<System.Windows.Forms.DataGridViewColumn>()
+                .FirstOrDefault(c => string.Equals(c.HeaderText, oldName, StringComparison.OrdinalIgnoreCase) || string.Equals(c.Name, oldName, StringComparison.OrdinalIgnoreCase));
+            if (col == null)
+            {
+                MessageBox.Show("Столбец с таким именем не найден", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var conflict = dataGridView1.Columns.Cast<System.Windows.Forms.DataGridViewColumn>()
+                .Any(c => string.Equals(c.HeaderText, newName, StringComparison.OrdinalIgnoreCase) || string.Equals(c.Name, newName, StringComparison.OrdinalIgnoreCase));
+            if (conflict)
+            {
+                MessageBox.Show("Столбец с новым именем уже существует", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            col.HeaderText = newName;
+            col.Name = newName;
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
@@ -1217,6 +1248,11 @@ namespace SerialVisualizer
         }
 
         private void txtColumnName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
         {
 
         }
