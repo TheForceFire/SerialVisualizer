@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace SerialVisualizer
 {
@@ -276,6 +277,16 @@ namespace SerialVisualizer
 
                                 this.BeginInvoke(new Action(() =>
                                 {
+                                    int rowIndex = dataGridView1.Rows.Add();
+                                    dataGridView1.Rows[rowIndex].Cells[0].Value = ByteArrayToStringHEX(dataSaver.start_b);
+
+                                    int cellIndex = 1;
+                                    if (classDataSaverParser.isAddressEnable)
+                                    {
+                                        dataGridView1.Rows[rowIndex].Cells[cellIndex].Value = ByteArrayToStringHEX(dataSaver.sender_b);
+                                        cellIndex++;
+                                    }
+
                                     switch (currentDataType)
                                     {
                                         case DataType.Int8:
@@ -288,6 +299,9 @@ namespace SerialVisualizer
                                                 {
                                                     series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
                                                     originSeries[i].Points.AddXY(xCoordinate, data[i]);
+
+                                                    dataGridView1.Rows[rowIndex].Cells[cellIndex].Value = data[i];
+                                                    cellIndex++;
                                                 }
                                             }
                                             break;
@@ -301,6 +315,9 @@ namespace SerialVisualizer
                                                 {
                                                     series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
                                                     originSeries[i].Points.AddXY(xCoordinate, data[i]);
+
+                                                    dataGridView1.Rows[rowIndex].Cells[cellIndex].Value = data[i];
+                                                    cellIndex++;
                                                 }
                                             }
                                             break;
@@ -314,6 +331,9 @@ namespace SerialVisualizer
                                                 {
                                                     series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
                                                     originSeries[i].Points.AddXY(xCoordinate, data[i]);
+
+                                                    dataGridView1.Rows[rowIndex].Cells[cellIndex].Value = data[i];
+                                                    cellIndex++;
                                                 }
                                             }
                                             break;
@@ -327,6 +347,9 @@ namespace SerialVisualizer
                                                 {
                                                     series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
                                                     originSeries[i].Points.AddXY(xCoordinate, data[i]);
+
+                                                    dataGridView1.Rows[rowIndex].Cells[cellIndex].Value = data[i];
+                                                    cellIndex++;
                                                 }
                                             }
                                             break;
@@ -340,6 +363,9 @@ namespace SerialVisualizer
                                                 {
                                                     series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
                                                     originSeries[i].Points.AddXY(xCoordinate, data[i]);
+
+                                                    dataGridView1.Rows[rowIndex].Cells[cellIndex].Value = data[i];
+                                                    cellIndex++;
                                                 }
                                             }
                                             break;
@@ -353,6 +379,9 @@ namespace SerialVisualizer
                                                 {
                                                     series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
                                                     originSeries[i].Points.AddXY(xCoordinate, data[i]);
+
+                                                    dataGridView1.Rows[rowIndex].Cells[cellIndex].Value = data[i];
+                                                    cellIndex++;
                                                 }
                                             }
                                             break;
@@ -366,6 +395,9 @@ namespace SerialVisualizer
                                                 {
                                                     series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
                                                     originSeries[i].Points.AddXY(xCoordinate, data[i]);
+
+                                                    dataGridView1.Rows[rowIndex].Cells[cellIndex].Value = data[i];
+                                                    cellIndex++;
                                                 }
                                             }
                                             break;
@@ -379,10 +411,20 @@ namespace SerialVisualizer
                                                 {
                                                     series[i].Points.AddXY(xCoordinate, data[i] * scales[i]);
                                                     originSeries[i].Points.AddXY(xCoordinate, data[i]);
+
+                                                    dataGridView1.Rows[rowIndex].Cells[cellIndex].Value = data[i];
+                                                    cellIndex++;
                                                 }
                                             }
                                             break;
                                     }
+
+                                    if (classDataSaverParser.isChecksumEnable)
+                                    {
+                                        dataGridView1.Rows[rowIndex].Cells[cellIndex].Value = ByteArrayToStringHEX(dataSaver.cs_b);
+                                    }
+
+                                    dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.RowCount - 1;
                                 }));
                             }
 
@@ -400,6 +442,11 @@ namespace SerialVisualizer
                 }
             }
             logger.Info("Read thread finish");
+        }
+
+        public static string ByteArrayToStringHEX(List<byte> data)
+        {
+            return BitConverter.ToString(data.ToArray()).Replace("-", "");
         }
 
         bool CheckChanges()
@@ -1159,6 +1206,12 @@ namespace SerialVisualizer
                 }
             }
 
+            addColumn(name);
+        }
+
+        public void addColumn(string name)
+        {
+            dataGridView1.Rows.Clear();
             dataGridView1.Columns.Add(name, name);
         }
 
